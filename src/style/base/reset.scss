@@ -24,9 +24,9 @@ html {
 
 body,
 html {
-    //height: 100%;
     font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
     -webkit-tap-highlight-color: transparent;
+    background-color: $bgBody;
 }
 
 body {
@@ -36,7 +36,6 @@ body {
     line-height: 1.4;
     margin: 0;
     padding: 0;
-    background-color: $bgBody;
     background-image: none;
     overflow: visible;
     text-rendering: optimizeLegibility;

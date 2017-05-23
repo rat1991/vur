@@ -66,9 +66,12 @@ export default {
             }
         }
     },
+    created(){
+        this.inputVal = this.value;
+    },
     watch:{
         value(newVal) {
-          this.inputVal = newVal;
+            this.inputVal = newVal;
         }
     },
     methods:{

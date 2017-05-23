@@ -1,5 +1,5 @@
 <template>
-  <label :class="['ui-cell','ui-check-label', {'ui-check-label_disabled': options.disabled}]">
+  <label :class="['ui-cell','ui-check-label', {'ui-check-label_disabled': options.disabled}]" :for="id">
     <div class="ui-cell__bd">
       {{options.label||options.value}}<slot></slot>
     </div>
@@ -7,9 +7,10 @@
       <input 
         type="radio" 
         class="ui-check"
+        :id="id"
         :name="name || options.name"
-        :value="options.value"
         :disabled="options.disabled"
+        :value="options.value"
         @change="onChange">
       <span class="ui-radio"></span>
     </div>
@@ -21,10 +22,12 @@
 export default {
   name: "ui-radio",
   props:{
+    id: [String,Number],
     name: {
       type: String,
       default: "radio"
     },
+    disabled: Boolean,
     options:{
       type: Object,
       default: function(){
@@ -34,8 +37,12 @@ export default {
           disabled: false
         }
       }
-    },
-    count: Array
+    }
+  },
+  data(){
+    return {
+      checked: false
+    }
   },
   methods:{
     onChange: function(event){

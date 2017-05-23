@@ -22,6 +22,7 @@
     "sass-loader": "^4.1.1",
     "shelljs": "^0.7.6",
     "vue": "^2.1.8",
+    "vue-loader": "^10.3.0",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.1.1",
     "vue-template-compiler": "^2.1.8",
@@ -67,5 +68,15 @@
   "engines": {
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rat1991/vur.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rat1991/vur/issues"
+  },
+  "homepage": "https://github.com/rat1991/vur#readme"
 }

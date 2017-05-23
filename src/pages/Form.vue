@@ -1,31 +1,38 @@
 <template>
   <page current>
-    <ui-cells :title="text">
-        <ui-input label="手机类型" type="phone" v-model="text" clear=""></ui-input>
+    <ui-cells title="输入框">
+        <ui-input label="手机类型" type="phone" v-model="text"></ui-input>
         <ui-input label="邮箱" type="email" v-model="text"></ui-input>
-        <ui-input label="普通" v-model="text"></ui-input>
+        <ui-input label="普通(带清除)" v-model="text" clear></ui-input>
+        <ui-cell>{{text}}</ui-cell>
     </ui-cells>
-    <ui-cells>
+    <ui-cells title="多项选择">
       <ui-checkbox v-for="item in checkList" v-model="checkItem" :options="item" :checked="checkItem"></ui-checkbox>
-      <ui-radio v-for="item in checkList" v-model="checkItem" :options="item"></ui-radio>
+      <ui-cell>{{checkItem}}</ui-cell>
     </ui-cells>
-    <p>{{checkItem}}</p>
-    <ui-textarea v-model="text" :max="30"></ui-textarea>
-    <p>{{text}}</p>
-    <ui-cells>
+    <ui-cells title="单项选择">
+      <ui-radio v-for="(item, index) in checkList" v-model="checkRadio" :options="item"></ui-radio>
+      <ui-cell>{{checkRadio}}</ui-cell>
+    </ui-cells>
+    <ui-cells title="多行文本">
+      <ui-textarea v-model="textarea" :max="30"></ui-textarea>
+      <ui-cell>{{textarea}}</ui-cell>
+    </ui-cells>
+    <ui-cells title="开关">
         <ui-switch 
         :label="switchDate.label"     
         :disabled="switchDate.disabled"
         :value="switchDate.value"
         v-model="switchItem"></ui-switch>
-        <ui-select label="付款" 
+        <ui-cell>{{switchItem}}</ui-cell>
+    </ui-cells>
+    <ui-cells title="开关">
+      <ui-select label="付款" 
         placeholder="请选择" 
         :options="selectItem"
-        v-model="selected"
-        ></ui-select>
+        v-model="selected"></ui-select>
+      <ui-cell>{{selected}}</ui-cell>  
     </ui-cells>
-    <p>{{selected}}</p>
-    <p>{{switchItem}}</p>
   </page>
 </template>
 
@@ -49,9 +56,11 @@
     },
     data () {
       return {
+        text: 'input同步数据',
+        textarea: '',
         checkItem: [],
+        checkRadio: [],
         switchItem: '',
-        text: '050505',
         selectItem: [
           { text: 'One', value: 'A' },
           { text: 'Two', value: 'B' },
@@ -64,17 +73,17 @@
       this.checkList = [
         {
           label: '选项01',
-          value: 'b01',
+          value: 'checked01',
           checked: 0,
           disabled: true
         },{
           label: '选项02',
-          value: 'b02',
+          value: 'checked02',
           checked: 0,
           disabled: false
         },{
           label: '选项03',
-          value: 'b03',
+          value: 'checked03',
           checked: 1,
           disabled: false
         }

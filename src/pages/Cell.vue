@@ -1,9 +1,22 @@
 <template>
   <page current>
-    <ui-cells title="你好">
+    <ui-cells title="cell">
+      <ui-cell>
+      <span slot="hd">头部</span>
+      cell
+      <span slot="ft">尾部</span>
+      </ui-cell>
+      <ui-cell access>
+      没链接带箭头
+      </ui-cell>
+      <ui-cell link="//www.baidu.com">
+      链接
+      <span slot="ft">链接到百度</span>
+      </ui-cell>
+    </ui-cells>
+    <ui-cells title="组件">
       <ui-cell link='/form'>
-        <span slot="hd">01</span> <p>from</p>
-        <span slot="ft">kk</span>
+        from
       </ui-cell>
       <ui-cell link="/button">
         button

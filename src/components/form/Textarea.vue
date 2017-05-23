@@ -1,22 +1,20 @@
 <template>
-  <div class="ui-cells">
-    <section class="ui-cell">
-      <textarea 
-        class="ui-textarea"
-        :name="name"
-        :autocomplete="autocomplete"
-        :autocapitalize="autocapitalize"
-        :autocorrect="autocorrect"
-        :spellcheck="spellcheck"
-        :maxlength="max"
-        :placeholder="placeholder"
-        :rows="rows"
-        :value="value"
-        @input="onInput">
-      </textarea>
-      <div class="ui-cell__desc text-right text-12 text-lighter" v-if="max">{{count}}/{{max}}</div>
-    </section>
-  </div>
+  <section class="ui-cell">
+    <textarea 
+      class="ui-textarea"
+      :name="name"
+      :autocomplete="autocomplete"
+      :autocapitalize="autocapitalize"
+      :autocorrect="autocorrect"
+      :spellcheck="spellcheck"
+      :maxlength="max"
+      :placeholder="placeholder"
+      :rows="rows"
+      :value="value"
+      @input="onInput">
+    </textarea>
+    <div class="ui-cell__desc text-right text-12 text-lighter" v-if="max">{{count}}/{{max}}</div>
+  </section>
 </template>
 
 <script>

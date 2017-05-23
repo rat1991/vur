@@ -3,8 +3,8 @@ import router from './router'
 import App from './App'
 
 //plugins
-import FastClick from'fastclick'
-FastClick.attach(document.body)
+// import FastClick from'fastclick'
+// FastClick.attach(document.body)
 //vux plugins
 import Toast from './plugins/toast'
 import Dialog from './plugins/dialog'

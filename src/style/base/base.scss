@@ -10,14 +10,8 @@
 }
 // BASE COMPONENT
 // ==========================
-html{
-  position: relative;
-}
-body{
-   @extend %pageLayout;
-}
 .container{
-  @extend %pageLayout;
+  min-height: torem(1334px);
   margin: 0 auto;
   background-color: $bgBody;
   @media (min-width: $screen-md) {
