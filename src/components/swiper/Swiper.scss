@@ -1,0 +1,28 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// SWIPER VARIABLES
+// ------------------------------------------->
+
+// SWIPER COMPONENT
+// ============================================>
+.ui-swiper{
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  &__item{
+    position: relative;
+    float: left;
+    height: 100%;
+    background-position: center center;
+    background-size: cover;
+    overflow: hidden;
+    &.active{
+      animation-fill-mode: both;
+      //opacity: 1;
+    }
+    &:not(.active){
+      animation: none;
+      // opacity: 0;
+    }
+  }
+}

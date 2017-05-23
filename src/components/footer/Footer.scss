@@ -1,0 +1,44 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// CELL VARIABLES
+// ------------------------------------------->
+$footerFontSize: $text-14;
+$footerColor: $grayLight;
+$fonterLinkGap: torem(18px);
+// CELL COMPONENT
+// ============================================>
+.ui-footer{
+    padding: torem(18px) 0;
+    font-size: $footerFontSize;
+    color: $footerColor;
+    text-align: center;
+    &_fixed-bottom{
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    &__link{
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 $fonterLinkGap;
+        & + &{
+            &:after{
+                content: '';
+                position: absolute;
+                top: 4px;
+                bottom: 4px;
+                left: -$fonterLinkGap;
+                width: 1px;
+                border-left: 1px solid $colorBorder;
+                transform-origin: 0 0;
+                transform: scaleX(0.5);
+            }
+        }
+    }
+    &__text{
+        padding: 0 $gapSides;
+        font-size: $text-12;
+    }
+}

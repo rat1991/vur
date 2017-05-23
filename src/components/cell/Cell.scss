@@ -1,0 +1,98 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// CELL VARIABLES
+// ------------------------------------------->
+$cellHeight: torem(88px);
+$cellGapV: torem(20px);
+$cellGapH: $gapSides;
+$cellFontSize: $text-16;
+$cellLineHeight: ($cellHeight - $cellGapV * 2) / torem($text-16 * 2);
+$cellActiveBg: $bgActive;
+$cellElGap: torem(20px);
+// CELL COMPONENT
+// ============================================>
+.ui-cells {
+    position: relative;
+    line-height: 0;
+    background-color: #fff;
+    @extend %borderVertical;
+    &+& {
+        margin-top: $gap-20;
+    }
+    &.title {
+        margin-top: torem(72px);
+        &:before {
+            position: absolute;
+            top: torem(-72px);
+            left: 0;
+            content: attr(data-title);
+            display: block;
+            padding: torem(34px) $gapSides;
+            font-size: $text-14;
+            color: $grayLight;
+            line-height: 1;
+        }
+    }
+}
+
+.ui-cell {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: $cellHeight;
+    padding: $cellGapV $cellGapH;
+    font-size: $cellFontSize;
+    line-height: $cellLineHeight;
+    &:not(:first-child) {
+        @extend %borderTop;
+        &:after {
+            left: $gapSides;
+        }
+    }
+    &_access {
+        &:before {
+            content: '';
+            order: 5;
+            margin-left: torem(10px);
+            @include setArrow();
+        }
+        &:active {
+            background-color: $cellActiveBg;
+        }
+    }
+    &_switch{
+        padding: calc(#{$cellGapV} - 4px) $cellGapH;
+        line-height: 0;
+    }
+    &_select{
+        padding: 0;
+        &:before {
+            content: '';
+            position: absolute;
+            top: calc(50% - #{torem(7px)});
+            right: $gapSides;
+            margin-left: torem(10px);
+            @include setArrow();
+        }
+        >.ui-cell__hd{
+            padding-left: $gapSides;
+            margin-right: -($gapSides - $cellElGap);
+        }
+    }
+    &__hd {
+        margin-right: $cellElGap;
+    }
+    &__bd {
+        flex: 1;
+    }
+    &__ft {
+        margin-left: $cellElGap;
+        color: $grayLight;
+        text-align: right;
+    }
+    &__desc {
+        width: 100%;
+        margin-top: $gap-10;
+    }
+}

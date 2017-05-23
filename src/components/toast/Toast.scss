@@ -1,0 +1,55 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// TOAST VARIABLES
+// ------------------------------------------->
+$toastW: torem(240px);
+$toastH: torem(240px);
+$toastBg: rgba($black, .6);
+$toastRadius: torem(12px);
+
+$toastIconSize: torem(100px);
+$toastIconColor: rgba($white,1);
+$toastIconGap: torem(16px);
+$toastLoadingIconSize: torem(88px);
+// TOAST COMPONENT
+// ============================================>
+
+.ui-toast{
+    position: fixed;
+    top: 26%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: $toastW;
+    min-height: $toastH;
+    text-align: center;
+    color: $white;
+    background-color: $toastBg;
+    border-radius: $toastRadius;
+    transform: translateX(-50%);
+    z-index: $lv4;
+    &_text{
+      width: auto;
+      max-width: 80%;
+      min-height: inherit;
+      padding: torem(20px) 0;
+      >.ui-toast__icon{
+          display: none;
+      }
+    }
+    &__icon{
+        font-size: $toastIconSize;
+        color: $toastIconColor;
+        margin: $toastIconGap 0;
+      &.ui-loading{
+        width: $toastLoadingIconSize;
+        height: $toastLoadingIconSize;
+      }
+    }
+    &__text{
+        font-size: $text-14;
+        padding: 0 $gapSides;
+    }
+}

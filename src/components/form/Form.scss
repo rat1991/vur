@@ -1,0 +1,200 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// FORM VARIABLES
+// --------------------------
+
+// FORM_INPUT COMPONENT
+// ==========================
+.ui-input {
+    width: 100%;
+    height: torem(48px);
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    outline: 0;
+    background-color: transparent;
+    border: 0;
+    overflow-x: scroll;
+    -webkit-appearance: none;
+    &::-webkit-input-placeholder {
+        color: $grayLightest;
+    }
+}
+
+// FORM_TEXTAREA COMPONENT
+// ==========================
+.ui-textarea {
+    display: block;
+    width: 100%;
+    padding: 0;
+    font-size: $text-14;
+    color: inherit;
+    line-height: 1.6;
+    border: 0;
+    outline: 0;
+    overflow-y: scroll;
+    resize: none;
+    &::-webkit-input-placeholder {
+        color: $grayLightest;
+    }
+}
+// FORM_CHECKBOX&RADIO COMPONENT
+// ==========================
+.ui-check-label {
+    &:active {
+      background-color: $bgActive;
+    }
+    &_disabled{
+        color: $grayLight;
+        &:active{
+            background-color: transparent;
+        }
+        .ui-check:checked + .ui-checkbox:before{
+            color: rgba($primary, .5);
+        }
+    }
+}
+
+.ui-check {
+    position: absolute;
+    left: -9999em;
+    &:checked+.ui-radio:before {
+        display: block;
+        content: "\c005";
+        @extend %fontIcon;
+        font-size: $text-16;
+        color: $success;
+    }
+    &+.ui-checkbox:before {
+        content: "\c001";
+        display: block;
+        @extend %fontIcon;
+        font-size: $text-20;
+        color: $grayLighter;
+    }
+    &:checked+.ui-checkbox:before {
+        content: "\c002";
+        display: block;
+        @extend %fontIcon;
+        font-size: $text-20;
+        color: $success;
+    }
+}
+
+// FORM_SELECT COMPONENT
+// ==========================
+.ui-select {
+    width: 100%;
+    min-height: torem(88px);
+    padding: 0 $gap-40 0 $gapSides;
+    font-size: inherit;
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    -webkit-appearance: none;
+}
+// FORM_SWITCH VARIABLES
+// --------------------------
+$switchWidth: 50px;
+$switchHeight: 30px;
+
+%switchBase {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: $switchHeight - 2px;
+    border-radius: ($switchHeight - 2px) / 2;
+    transition: transform .35s cubic-bezier(0.4, 0.4, 0.25, 1.35);
+}
+
+// FORM_SWITCH COMPONENT
+// ==========================
+.ui-switch[type=checkbox] {
+    position: relative;
+    width: $switchWidth;
+    height: $switchHeight;
+    margin: -2px 0;
+    line-height: 0;
+    background-color: #dfdfdf;
+    border: 1px solid rgba($gray, .06);
+    border-radius: $switchHeight / 2;
+    outline: 0;
+    -webkit-appearance: none;
+    &:checked {
+        background-color: $primary;
+    }
+    &:checked:before {
+        transform: scale(0);
+    }
+    &:before {
+        width: $switchWidth - 2px;
+        background-color: #dfdfdf;
+        @extend %switchBase;
+    }
+    &:checked:after {
+        transform: translateX($switchWidth - $switchHeight);
+    }
+    &:after {
+        width: $switchHeight - 2px;
+        background-color: $white;
+        box-shadow: 0 1px 3px rgba($gray, .6);
+        @extend %switchBase;
+    }
+}
+
+// FORM_COUNT COMPONENT
+// ==========================
+.ui-count {
+    display: flex;
+    align-items: center;
+    line-height: torem(48px);
+    border-radius: torem(8px);
+    overflow: hidden;
+    >button {
+        position: relative;
+        width: torem(48px);
+        height: torem(48px);
+        padding: 0;
+        text-align: center;
+        color: $secondary;
+        background-color: $primary;
+        border: none;
+        &:after {
+            display: inline-block;
+            vertical-align: middle;
+            font-weight: 700;
+            font-size: torem(48px);
+            line-height: 0;
+            pointer-events: none;
+        }
+        &:active {
+            background-color: darken($primary, 20%);
+            ;
+        }
+        &:disabled {
+            color: $grayLighter;
+            background-color: #f3f0f7;
+        }
+    }
+    >.decrease {
+        &:after {
+            content: '﹣';
+        }
+    }
+    >.increase {
+        &:after {
+            content: '﹢';
+        }
+    }
+    >input {
+        width: torem(60px);
+        height: torem(48px);
+        padding: 0 $gap-5;
+        text-align: center;
+        font-weight: 700;
+        color: $gray;
+        background-color: #fbf9fe;
+        border: 0;
+    }
+}

@@ -1,0 +1,52 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// DIALOG VARIABLES
+// ------------------------------------------->
+$dialogWidth: torem(600px);
+$dialogSideGap: torem(40px);
+$dialogRadius: torem(8px);
+// DIALOG COMPONENT
+// ============================================>
+.ui-dialog{
+  position: fixed;
+  top: 38%;
+  left: 50%;
+  width: 80%;
+  max-width: $dialogWidth;
+  text-align: center;
+  background-color: $white;
+  border-radius: torem(6px);
+  transform: translate(-50%,-50%);
+  overflow: hidden;
+  z-index: $lv4;
+  &__hd{
+    padding: torem(50px) $dialogSideGap $gap-20;
+  }
+  &__bd{
+    min-height: torem(80px);
+    padding: 0 $dialogSideGap $gap-20;
+    font-size: $text-14;
+    color: $grayLight;
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+  &__ft{
+    position: relative;
+    display: flex;
+    font-size: $text-18;
+    line-height: 48px;
+    @extend %borderTop;
+  }
+  &__btn{
+    display: block;
+    flex: 1;
+    color: $colorText;
+    text-decoration: none;
+    &:active{
+      background-color: $bgActive;
+    }
+    & + &{
+      @extend %borderLeft;
+    }
+  }
+}

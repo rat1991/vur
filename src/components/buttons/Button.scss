@@ -1,0 +1,134 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// BUTTON VARIABLES
+// ------------------------------------------->
+$btnHeight:        torem(92px);
+$btnFontSize:      $text-18;
+$btnColor:         $white;
+$btnActive:        $bgActive;
+$btnRadius:        torem(10px);
+$btnElGap:         $gap-20;
+$btnDisabledColor: rgba($white, .8);
+$btnDisabledBg:    rgba($white, .6);
+
+$btnSmHeight:      torem(60px);
+$btnSmFontSize:    $text-14;
+
+$btnDefaultColor:  $colorText;
+$btnDefaultBg:       #fff;
+// BUTTON COMPONENT
+// ============================================>
+
+.ui-btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: $btnHeight;
+    margin: 0 auto;
+    padding: 0 $gapSides;
+    font-size: $btnFontSize;
+    text-align: center;
+    text-decoration: none;
+    color: $btnColor;
+    line-height: calc(#{$btnHeight} / #{$btnFontSize} * 2);
+    background-color: transparent;
+    border-radius: $btnRadius;
+    overflow: hidden;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    @extend %border;
+    &:after{
+        border-radius: $btnRadius * 2;
+    }
+    &:active{
+        &:after{
+            background-color: $btnActive;
+        }
+    }
+    & + &{
+        margin-top: $btnElGap;
+    }
+    &_disabled{
+        color: $btnDisabledColor;
+        pointer-events: none;
+        &:after{
+            background-color: $btnDisabledBg;
+        }
+    }
+    &_round{
+        border-radius: $btnHeight / 2;
+        &:after{
+            border-radius: $btnHeight;
+        }
+    }
+    &_default{
+        color: $btnDefaultColor;
+        background-color: $btnDefaultBg;
+    }
+    &_primary{
+        background-color: $primary;
+    }
+    &_success{
+        background-color: $success;
+    }
+    &_info{
+        background-color: $info;
+    }
+    &_warn{
+        background-color: $warn;
+    }
+    &_danger{
+        background-color: $danger;
+    }
+    &_sm{
+        display: inline-block;
+        width: auto;
+        height: $btnSmHeight;
+        font-size: $btnSmFontSize;
+    }
+}
+.ui-btn-plain{
+    @extend .ui-btn;
+    &.ui-btn_disabled{
+        color: $grayLighter;
+        &:after{
+            background-color: transparent;
+            border-color: $colorBorder;
+        }
+    }
+    &_default{
+        color: $btnDefaultColor;
+        &:after{
+            border-color: rgba($btnDefaultColor, .5);
+        }
+    }
+    &_primary{
+        color: $primary;
+        &:after{
+            border-color: $primary;
+        }
+    }
+    &_success{
+        color: $success;
+        &:after{
+            border-color: $success;
+        }
+    }
+    &_info{
+        color: $info;
+        &:after{
+            border-color: $info;
+        }
+    }
+    &_warn{
+        color: $warn;
+        &:after{
+            border-color: $warn;
+        }
+    }
+    &_danger{
+        color: $danger;
+        &:after{
+            border-color: $danger;
+        }
+    }
+}

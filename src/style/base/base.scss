@@ -1,0 +1,42 @@
+// BASE VARIABLES
+// ---------------------------
+%pageLayout{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+// BASE COMPONENT
+// ==========================
+.container{
+  position: relative;
+  min-height: 100%;
+  margin: 0 auto;
+  overflow-x: hidden;
+  background-color: $bgBody;
+  @media (min-width: $screen-md) {
+    max-width: $screen-md;
+  }
+}
+.container-fluid {
+  margin: 0 auto;
+}
+.page{
+  @extend %pageLayout;
+  display: none;
+  background-color: $bgBody;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.page-current{
+  display: block;
+  z-index: $lv1;
+}
+.page-gap-top {
+	padding-top: torem(98px);
+}
+.page-gap-bottom {
+	padding-bottom: torem(98px);
+}

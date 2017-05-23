@@ -1,0 +1,24 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// MASK VARIABLES
+// ------------------------------------------->
+%maskBase {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: $lv3;
+}
+$maskBg: rgba($black,.4);
+// MASK COMPONENT
+// ============================================>
+
+.ui-mask{
+    @extend %maskBase;
+    background-color: $maskBg;
+    &_transparent{
+        @extend %maskBase;
+        background-color: transparent;
+    }
+}

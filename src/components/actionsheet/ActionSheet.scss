@@ -1,0 +1,47 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// ACTIONSHEET VARIABLES
+// ------------------------------------------->
+$actionsheetBg: #EFEFF4;
+$actionsheetCellGap: torem(23px);
+$actionsheetActionGap: torem(12px);
+// ACTIONSHEET COMPONENT
+// ============================================>
+.ui-actionsheet {
+	position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: $actionsheetBg;
+  backface-visibility: hidden;
+  z-index: $lv4;
+  &__title{
+    padding: $actionsheetCellGap $gapSides;
+    text-align: center;
+    background-color: $white;
+    @extend %borderBottom;
+    >small{
+      display: block;
+      padding-top: 2px;
+      font-size: $text-12;
+      line-height: 1.4;
+      color: $grayLight;
+    }
+  }
+  &__cell{
+    position: relative;
+    padding: $actionsheetCellGap 0;
+    text-align: center;
+    font-size: $text-18;
+    background-color: $white;
+    &:active{
+      background-color: $bgActive;
+    }
+    &:not(:first-child){
+      @extend %borderTop;
+    }
+  }
+  &__action{
+    margin-top: $actionsheetActionGap;
+  }
+}
