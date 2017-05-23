@@ -10,11 +10,15 @@
 }
 // BASE COMPONENT
 // ==========================
-.container{
+html{
   position: relative;
-  min-height: 100%;
+}
+body{
+   @extend %pageLayout;
+}
+.container{
+  @extend %pageLayout;
   margin: 0 auto;
-  overflow-x: hidden;
   background-color: $bgBody;
   @media (min-width: $screen-md) {
     max-width: $screen-md;
