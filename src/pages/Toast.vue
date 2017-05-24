@@ -1,6 +1,7 @@
 <template>
   <page current>
     <div class="gap-sides mt-10">
+      <ui-button @click="showToastDefault">默认提示</ui-button>
       <ui-button @click="showToast">默认提示</ui-button>
       <ui-button @click="showLoading">加载提示</ui-button>
       <ui-button type="success" @click="showToastPlugins">提示(插件)</ui-button>
