@@ -6,12 +6,11 @@ export default {
     const VM = vue.extend(UiToast)
     //定义TOAST 函数
     function Toast(opt, type){
-      this.wrapper = document.querySelector('.container')
       this.options = Object.assign({}, options, opt)
+      this.wrapper = document.querySelector('.container')
       this.type    = type
       $vm = new VM().$mount()
       $vm.$el.setAttribute('data-plugins', type)
-
       this.init();
       this.show();
     }
@@ -31,7 +30,7 @@ export default {
           }
         }
         unwatch = $vm.$watch("state", (newVal) =>{
-          if(!newVal) this.wrapper.removeChild($vm.$el)
+          //if(!newVal) this.wrapper.removeChild($vm.$el)
           if(typeof _self.options === 'object' && _self.options.onShow || typeof _self.options === 'object' && _self.options.onHide){
             newVal && _self.options.onShow && _self.options.onShow($vm)
             !newVal && _self.options.onHide && _self.options.onHide($vm)
@@ -46,7 +45,6 @@ export default {
         $vm.state = false
       }
     }
-
     //定义插件
     if (!vue.$toast) {
       vue.prototype.$toast = function(opt){

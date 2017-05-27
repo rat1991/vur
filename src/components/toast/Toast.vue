@@ -62,24 +62,24 @@ export default {
         }
     },
     watch: {
-        state(newVal){
-          this.$emit('input', newVal)
-          if (newVal && this.type !== 'loading') {
-            this.$emit('on-show')
-            //延时消息
-            clearTimeout(this.timeout)
-            this.timeout = setTimeout(() => {
-              this.state = false
-              this.$emit('on-hide')
-            }, this.duration)
-          }
-          if(this.type === 'loading'){
-            newVal ? this.$emit('on-show') : this.$emit('on-hide')
-          }
-        },
-        value(newVal){
-          this.state = newVal;
+      state(newVal){
+        this.$emit('input', newVal)
+        if (newVal && this.type !== 'loading') {
+          this.$emit('on-show')
+          //延时消息
+          clearTimeout(this.timeout)
+          this.timeout = setTimeout(() => {
+            this.state = false
+            this.$emit('on-hide')
+          }, this.duration)
         }
-    }
+        if(this.type === 'loading'){
+          newVal ? this.$emit('on-show') : this.$emit('on-hide')
+        }
+      },
+      value(newVal){
+        this.state = newVal;
+      }
+  }
 }
 </script>
