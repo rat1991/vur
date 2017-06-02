@@ -45,6 +45,9 @@
       <ui-cell link='/infinite'>
         infinite
       </ui-cell>
+      <ui-cell link='/calendar'>
+        calendar
+      </ui-cell>
     </ui-cells>
   </page>
 </template>

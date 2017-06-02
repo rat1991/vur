@@ -39,6 +39,9 @@ const routes = [{
 }, {
     path: '/infinite',
     component: App.components.Infinite
+}, {
+    path: '/calendar',
+    component: App.components.Calendar
 }]
 
 // router实例

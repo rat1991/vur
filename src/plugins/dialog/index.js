@@ -12,7 +12,7 @@ export default {
       this.wrapper.appendChild($vm.$el)
       //destroy watcher
       unwatch && unwatch()
-      if(type) $vm.type = type
+      $vm.type = type && type
       if(typeof opt === 'string'){
         $vm.text = opt
       }else if(typeof opt === 'object'){
@@ -21,8 +21,10 @@ export default {
           $vm[i] = opt[i]
         }
       }
+      $vm.destroyVm = ()=>{
+        this.wrapper.removeChild($vm.$el)
+      }
       unwatch = $vm.$watch("state", (newVal) =>{
-        if(!newVal) this.wrapper.removeChild($vm.$el)
         if(typeof opt === 'object' && (opt.onShow || opt.onHide)){
           newVal && opt.onShow && opt.onShow($vm)
           !newVal && opt.onHide && opt.onHide($vm)

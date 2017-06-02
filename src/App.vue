@@ -18,6 +18,7 @@
   import Tab from './pages/Tab.vue'
   import Swiper from './pages/Swiper.vue'
   import Infinite from './pages/Infinite.vue'
+  import Calendar from './pages/Calendar.vue'
 
 
   export default {
@@ -34,7 +35,8 @@
         Picker,
         Tab,
         Swiper,
-        Infinite
+        Infinite,
+        Calendar
     },
   };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
       <ui-mask transparent v-if="state"></ui-mask>
-      <transition name="fade">
+      <transition name="fade" @after-leave="destroyVm">
       <div :class="['ui-toast', {'ui-toast_text': this.type === 'text'}]" v-if="state">
         <i :class="['ui-toast__icon', toastIcon]" v-if="this.type !== 'loading'"></i>
         <ui-loading class="ui-toast__icon" v-if="this.type === 'loading'"></ui-loading>
@@ -51,6 +51,9 @@ export default {
         this.state = true
       }
     },
+    destroyed(){
+      console.log('toast 实例销毁');
+    },
     computed: {
         toastIcon(){
           return {
@@ -80,6 +83,9 @@ export default {
       value(newVal){
         this.state = newVal;
       }
+  },
+  methods: {
+    destroyVm(el){}
   }
 }
 </script>

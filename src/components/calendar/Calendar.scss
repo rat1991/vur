@@ -1,0 +1,172 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// CALENDAR VARIABLES
+// ------------------------------------------->
+$hdHeight: torem(88px);
+$dayItemHeight: torem(72px);
+$currentSize: torem(60px);
+// CALENDAR COMPONENT
+// ============================================>
+.ui-calendar{
+  width: 100%;
+  background-color: $white;
+  overflow: hidden;
+  &__hd{
+    display: flex;
+    justify-content: space-between;
+    height: $hdHeight;
+    font-size: $text-16;
+  }
+  &__toolbarLeft, &__toolbarRight{
+    display: flex;
+    align-items: center;
+  }
+  &__switchYear{
+    display: flex;
+    align-items: center;
+    height: $hdHeight;
+    font-weight: 500;
+    >span{
+      display: inline-block;
+      padding: 0 $gap-5;
+    }
+    >.arrow{
+      height: 100%;
+      padding: 0 torem(24px);
+      font-size: $text-14;
+      line-height: $hdHeight;
+      color: $grayLighter;
+      &:active{
+        color: $primary;
+        background-color: $bgActive;
+      }
+    }
+  }
+  &__switchMonth{
+    display: flex;
+    align-items: center;
+    height: $hdHeight;
+    padding: 0 torem(30px);
+    font-weight: 500;
+    &:active{
+      background-color: $bgActive;
+    }
+    >.arrow{
+      display: inline-block;
+      padding-bottom: 8px;
+      font-size: $text-10;
+      color: $grayLighter;
+      transform: rotate(90deg);
+      //transition: all .3s ease;
+    }
+    &.open{
+      >.arrow{
+        padding-top: 8px;
+        padding-bottom: 0px;
+        color:$primary;
+        transform: rotate(270deg);
+      }
+    }
+  }
+  &__todayDisplay{
+    width: $hdHeight;
+    height: $hdHeight;
+    margin-right: $gap-10;
+    font-size: $text-12;
+    font-weight: 500;
+    text-align: center;
+    color: $primary;
+    line-height: torem(98px);
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDk2IDk2Ij4KICA8bWV0YWRhdGE+PD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxMzggNzkuMTU5ODI0LCAyMDE2LzA5LzE0LTAxOjA5OjAxICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAKPD94cGFja2V0IGVuZD0idyI/PjwvbWV0YWRhdGE+CjxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNiYmI7CiAgICAgICAgZmlsbC1ydWxlOiBldmVub2RkOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBpZD0iY2FsZW5kYXIiIGNsYXNzPSJjbHMtMSIgZD0iTTY4LDhIMjhWMEgxNlY4SDEwYTkuNTkyLDkuNTkyLDAsMCwwLTcsMyw5LjYsOS42LDAsMCwwLTMsN1Y4NmE5LjU5Miw5LjU5MiwwLDAsMCwzLDcsOS41OTIsOS41OTIsMCwwLDAsNywzSDg2QTEwLjI1MywxMC4yNTMsMCwwLDAsOTYsODZWMThhOS42LDkuNiwwLDAsMC0zLTcsOS42LDkuNiwwLDAsMC03LTNIODBWMEg2OFY4Wk0xMCw4NlYyOUg4NlY4NkgxMFoiLz4KPC9zdmc+Cg==);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: torem(48px);
+  }
+  &__bd{
+    position: relative;
+  }
+  &__monthslist{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: $white;
+    z-index: 3;
+    @extend %borderTop;
+    >li{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 25%;
+      font-size: $text-16;
+      //font-weight: 500;
+      text-align: center;
+      &.current{
+        color: $primary;
+        font-weight: 500;
+        background-color: rgba($primary,.06);
+      }
+      &:active{
+        background-color: $bgActive;
+      }
+    }
+  }
+  &__weekslist{
+    display: flex;
+    align-items: center;
+    padding: $gap-10 0;
+    color: $gray;
+    background-color: $bgBody;
+    >span{
+      flex: 1;
+      font-size: $text-12;
+      text-align: center;
+    }
+  }
+  &__inner{
+    position: relative;
+    display: flex;
+    min-height: $dayItemHeight * 6;
+    transition: all 300ms;
+  }
+  &__months{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: $white;
+    &.current{
+      z-index: 2;
+    }
+  }
+  &__weeks{
+    display: flex;
+    align-items: center;
+  }
+  &__day{
+    flex: 1;
+    height: $dayItemHeight;
+    line-height: $dayItemHeight;
+    font-size: $text-16;
+    text-align: center;
+    &.disabled{
+      >span{
+        color: $grayLighter;
+      }
+    }
+    &-current{
+      >span{
+        display: inline-block;
+        width: $currentSize;
+        height: $currentSize;
+        line-height: $currentSize;
+        color: $white;
+        background-color: $primary;
+        border-radius: 50%;
+      }
+    }
+  }
+}

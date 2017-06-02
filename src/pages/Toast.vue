@@ -63,7 +63,7 @@
         this.$loading();
         setTimeout(()=>{
           _self.$loading.hide();
-        },8000)
+        },3000)
       }
     }
   }

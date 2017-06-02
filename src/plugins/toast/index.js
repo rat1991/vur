@@ -6,21 +6,22 @@ export default {
     const VM = vue.extend(UiToast)
     //定义TOAST 函数
     function Toast(opt, type){
-      this.options = Object.assign({}, options, opt)
-      this.wrapper = document.querySelector('.container')
-      this.type    = type
       $vm = new VM().$mount()
       $vm.$el.setAttribute('data-plugins', type)
-      this.init();
-      this.show();
+      this.options = Object.assign({}, options, opt)
+      this.wrapper = document.querySelector(this.options.container || '.container')
+      this.type    = type
+      this.init()
+      this.show()
     }
     //定义DIAKOG 方法
     Toast.prototype = {
       init(){
         var _self = this;
         //destroy watcher
+        this.wrapper.appendChild($vm.$el)
         unwatch && unwatch()
-        if(_self.type === 'loading') $vm.type = _self.type
+        $vm.type = _self.type === 'loading' && _self.type
         if(typeof _self.options === 'string'){
           $vm.text = _self.options
         }
@@ -29,14 +30,15 @@ export default {
             $vm[i] = _self.options[i]
           }
         }
-        unwatch = $vm.$watch("state", (newVal) =>{
-          //if(!newVal) this.wrapper.removeChild($vm.$el)
-          if(typeof _self.options === 'object' && _self.options.onShow || typeof _self.options === 'object' && _self.options.onHide){
+        $vm.destroyVm = ()=>{
+          this.wrapper.removeChild($vm.$el)
+        }
+        unwatch = $vm.$watch("state", (newVal) =>{ 
+          if(typeof _self.options === 'object'){
             newVal && _self.options.onShow && _self.options.onShow($vm)
             !newVal && _self.options.onHide && _self.options.onHide($vm)
           }
         })
-        _self.wrapper.appendChild($vm.$el)
       },
       show(){
         $vm.state = true;

@@ -3,7 +3,7 @@
       <transition name="fade">
         <ui-mask v-if="state"></ui-mask>
       </transition>
-      <transition name="fade">
+      <transition name="fade" @after-leave="destroyVm">
       <div :class="['ui-dialog']" @touchmove.prevent v-if="state">
         <div class="ui-dialog__hd">
           <strong class="text-18">{{title}}</strong>
@@ -81,7 +81,8 @@ export default {
       onCancel () {
         this.state = false
         this.$emit('on-cancel')
-      }
+      },
+      destroyVm(){}
     }
 }
 </script>
