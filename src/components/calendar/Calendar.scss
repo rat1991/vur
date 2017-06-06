@@ -84,6 +84,7 @@ $currentSize: torem(60px);
   }
   &__bd{
     position: relative;
+    overflow: hidden;
   }
   &__monthslist{
     position: absolute;
@@ -93,6 +94,7 @@ $currentSize: torem(60px);
     right: 0;
     display: flex;
     flex-wrap: wrap;
+    padding: torem(20px) 0;
     background-color: $white;
     z-index: 3;
     @extend %borderTop;
@@ -129,7 +131,7 @@ $currentSize: torem(60px);
   &__inner{
     position: relative;
     display: flex;
-    min-height: $dayItemHeight * 6;
+    height: $dayItemHeight * 6;
     transition: all 300ms ease;
   }
   &__months{

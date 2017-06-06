@@ -3,14 +3,14 @@
     <div class="ui-calendar__hd">
       <section class="ui-calendar__toolbarLeft">
         <div class="ui-calendar__switchYear">
-          <a class="arrow icon-prev" href="javascript:"></a>
-          <span>{{curValue[0]}}</span>
-          <a class="arrow icon-next" href="javascript:"></a>
+          <a class="arrow icon-prev" href="javascript:" @click="curYaer--"></a>
+          <span>{{curYaer}}</span>
+          <a class="arrow icon-next" href="javascript:" @click="curYaer++"></a>
         </div>
       </section>
       <section class="ui-calendar__toolbarRight">
         <div :class="['ui-calendar__switchMonth',switchMonthState && 'open']" @click="switchMonthState ? switchMonthState=false : switchMonthState=true">
-         <span>{{curMonth}}</span><i class="arrow icon-next"></i>
+         <span>{{monthsText[curMonth - 1]}}</span><i class="arrow icon-next"></i>
         </div>
         <div class="ui-calendar__todayDisplay">
           <span>{{curValue[2]}}</span>
@@ -19,7 +19,9 @@
     </div>
     <div class="ui-calendar__bd">
       <ul class="ui-calendar__monthslist" v-show="switchMonthState">
-        <li :class="[index + 1 === curValue[1] && 'current' ]" v-for="(item, index) in monthsText">{{item}}</li>
+        <li v-for="(item, index) in monthsText"
+        :class="[index + 1 === curMonth && 'current' ]"
+        @click="updateMonthList(index)">{{item}}</li>
       </ul>
       <div class="ui-calendar__weekslist">
         <span v-for="item in weeksText">{{item}}</span>
@@ -28,7 +30,7 @@
         <section 
         :class="[
           'ui-calendar__months',
-          month.name[1] === curValue[1] && 'current',
+          month.name[1] === curMonth[1] && 'current',
           month.name[1] === prevValue[1] && 'prev',
           month.name[1] === nextValue[1] && 'next'
           ]" 
@@ -70,28 +72,27 @@ export default {
     data(){
       return {
         curValue: this.formatArr(this.value),
+        curYaer: this.formatArr(this.value)[0],
+        curMonth: this.formatArr(this.value)[1],
         switchMonthState: false
       }
     },
     computed: {
-      curMonth(){
-        return this.monthsText[this.curValue[1] - 1]
-      },
       prevValue(){
         let dataArr = [];
-        let dataYear = this.curValue[0],
-            dataMonth = this.curValue[1];
+        let dataYear = this.curYaer,
+            dataMonth = this.curMonth;
         return dataArr = dataMonth === 1 ? [dataYear-1, 12] : [dataYear, dataMonth-1]
       },
       nextValue(){
         let dataArr = [];
-        let dataYear = this.curValue[0],
-            dataMonth = this.curValue[1];
+        let dataYear = this.curYaer,
+            dataMonth = this.curMonth;
         return dataArr = dataMonth === 12 ? [dataYear+1, 1] : [dataYear, dataMonth+1]
       },
       curData(){
         let dataArr = [];
-        let curMonthData = {name:this.curValue, value:this.getMonthData(this.curValue[0],this.curValue[1])},
+        let curMonthData = {name:[this.curYaer,this.curMonth], value:this.getMonthData(this.curYaer,this.curMonth)},
             prevMonthData = {name:this.prevValue, value:this.getMonthData(this.prevValue[0],this.prevValue[1])},
             nextMonthData = {name:this.nextValue, value:this.getMonthData(this.nextValue[0],this.nextValue[1])};
         dataArr.push(prevMonthData,curMonthData,nextMonthData)
@@ -99,12 +100,21 @@ export default {
       }
     },
     created(){
-      console.log(this.prevValue,this.curValue,this.nextValue);
+      console.log(this.curYaer,this.curMonth);
     },
     mounted(){
       this.calendarSwiper();
     },
     watch: {
+      curMonth(newVal){
+        if(newVal < 1){
+          this.curMonth = 12
+          this.curYaer--
+        }if(newVal > 12){
+          this.curMonth = 1
+          this.curYaer++
+        }
+      }
     },
     methods: {
       formatArr(date){
@@ -156,31 +166,33 @@ export default {
             swiperPrev = swiperList[0],
             swiperNext = swiperList[2];
         let swiperWrapWidth =  swiperWrap.offsetWidth;
-        let setTranslate = (per)=>{
-          return 'translate3d(' + per + '%, 0, 0)'
+        let setTranslate = (el, per)=>{
+          el.style.transform = 'translate3d(' + per + '%, 0, 0)'
         };
         let getTranslate = (el)=>{
            let matrix = window.getComputedStyle(el, null).transform;
            let formatPer = matrix.split(',')[4] / swiperWrapWidth * 100
            return formatPer ? formatPer : 0
         };
-        swiperCurrent.style.transform = setTranslate('0')
-        swiperPrev.style.transform = setTranslate('-100')
-        swiperNext.style.transform = setTranslate('100')
+        setTranslate(swiperWrap,'0')
+        setTranslate(swiperCurrent,'0')
+        setTranslate(swiperPrev,'-100')
+        setTranslate(swiperNext,'100')
         let _start={}, _move={}, _end={};
         let _startTime, _endTime;
         let _wrapTranslate,_curTranslate,_prevTranslate,_nextTranslate;
         //SWIPER start
         swiperWrap.addEventListener('touchstart', function (e) {
-            _startTime = new Date().getTime()
-            _start.x = e.changedTouches[0].pageX;
-            _start.y = e.changedTouches[0].pageY;
-            _wrapTranslate = getTranslate(swiperWrap)
+            _wrapTranslate = getTranslate(swiperCurrent) * -1
             _curTranslate = getTranslate(swiperCurrent)
             _prevTranslate = getTranslate(swiperPrev)
             _nextTranslate = getTranslate(swiperNext)
+            _startTime = new Date().getTime()
+            _start.x = e.changedTouches[0].pageX;
+            _start.y = e.changedTouches[0].pageY;
             swiperWrap.style.transition = 'none'
-            console.log(_curTranslate,_prevTranslate,_nextTranslate)
+            console.log(_wrapTranslate)
+            e.preventDefault();
         }, false);
         //SWIPER move
         swiperWrap.addEventListener('touchmove', function (e) {
@@ -188,7 +200,7 @@ export default {
             _move.y = e.changedTouches[0].pageY;
             let distance = _move.x - _start.x
             let distancePer = (distance / swiperWrapWidth * 100) + _wrapTranslate;
-            swiperWrap.style.transform = setTranslate(distancePer)
+            setTranslate(swiperWrap, distancePer)
             e.preventDefault();
         }, false);
         //SWIPER end
@@ -199,17 +211,31 @@ export default {
             let interval = _endTime - _startTime;
             let distance = _end.x - _start.x;
             let distancePer = distance / swiperWrapWidth * 100;
-            if(Math.abs(distancePer) > 50 || interval < 120){
-              swiperWrap.style.transform = distancePer > 0 ? setTranslate(_wrapTranslate+=100) : setTranslate(_wrapTranslate-=100)
-              // swiperCurrent.style.transform = distancePer > 0 ? setTranslate(_curTranslate+=100) : setTranslate(_curTranslate-=100)
-              // swiperPrev.style.transform = distancePer > 0 ? setTranslate(_prevTranslate+=100) : setTranslate(_prevTranslate-=100)
-              // swiperNext.style.transform = distancePer > 0 ? setTranslate(_nextTranslate+=100) : setTranslate(_nextTranslate-=100)
+
+            if(Math.abs(distancePer) > 50 || Math.abs(distance) > 10 && interval < 120){
+              if(distancePer > 0){
+                setTranslate(swiperWrap, _wrapTranslate+=100)
+                setTranslate(swiperCurrent, _curTranslate-=100)
+                setTranslate(swiperPrev, _prevTranslate-=100)
+                setTranslate(swiperNext, _nextTranslate-=100)
+                _self.curMonth--
+              }else{
+                setTranslate(swiperWrap, _wrapTranslate-=100)
+                setTranslate(swiperCurrent, _curTranslate+=100)
+                setTranslate(swiperPrev, _prevTranslate+=100)
+                setTranslate(swiperNext, _nextTranslate+=100)
+                _self.curMonth++
+              }
             }else{
-              swiperWrap.style.transform = setTranslate(_wrapTranslate)
+              setTranslate(swiperWrap,_wrapTranslate)
             }
             swiperWrap.style.transition = 'all 300ms ease'
             e.preventDefault();
         }, false);
+      },
+      updateMonthList(index){
+        this.curMonth = index + 1
+        this.switchMonthState = false
       }
     }
 }
