@@ -1,6 +1,7 @@
 <template>
   <page current>
-    <ui-calendar></ui-calendar>
+    <ui-calendar v-model="date"></ui-calendar>
+    <p>{{date}}</p>
   </page>
 </template>
 <script>
@@ -12,7 +13,8 @@
     data(){
       return {
         navbar: ['已完成','未完成','已结束','待结束'],
-        active: 0
+        active: 0,
+        date: ''
       }   
     },
     components: {

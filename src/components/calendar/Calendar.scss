@@ -154,20 +154,39 @@ $currentSize: torem(60px);
     line-height: $dayItemHeight;
     font-size: $text-16;
     text-align: center;
+    >span{
+      display: inline-block;
+      width: $currentSize;
+      height: $currentSize;
+      line-height: $currentSize;
+      text-align: center;
+      border-radius: 50%;
+    }
     &.disabled{
+      background-color: #F0F0F0;
+      >span{
+        color: $grayLight;
+      }
+    }
+    &.exclude{
       >span{
         color: $grayLighter;
       }
     }
+    &.today{
+      border-bottom: 1px solid $primary;
+    }
     &-current{
+      @extend .ui-calendar__day;
       >span{
-        display: inline-block;
-        width: $currentSize;
-        height: $currentSize;
-        line-height: $currentSize;
         color: $white;
         background-color: $primary;
-        border-radius: 50%;
+      }
+      &.exclude{
+        >span{
+          color: $white;
+          background-color: rgba($primary,.4);
+        }
       }
     }
   }

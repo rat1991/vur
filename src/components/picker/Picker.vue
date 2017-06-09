@@ -123,6 +123,7 @@ export default {
       if (offset < -this.itemH * (length-4)) {
         offset = -this.itemH * (length-4) - this.itemH / 2
       }
+      this.$refs.list.style.transition = 'none'
       this.$refs.list.translateY = offset
     },
     onTouchEnd(event){
@@ -145,6 +146,7 @@ export default {
       }
       this.currentY=offset
       //be compatible with the low vision android
+      this.$refs.list.style.transition = 'all .2s ease-out'
       this.$refs.list.translateY = offset
       let index = offset / this.itemH - 3
       this.index = Math.abs(index)
