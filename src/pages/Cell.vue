@@ -1,6 +1,6 @@
 <template>
   <page current>
-    <ui-cells title="cell">
+    <ui-cells title="列表带标题">
       <ui-cell>
       <span slot="hd">头部</span>
       cell
@@ -14,39 +14,10 @@
       <span slot="ft">链接到百度</span>
       </ui-cell>
     </ui-cells>
-    <ui-cells title="组件">
-      <ui-cell link='/form'>
-        from
-      </ui-cell>
-      <ui-cell link="/button">
-        button
-      </ui-cell>
-      <ui-cell link='/search'>
-        searchBar
-      </ui-cell>
-      <ui-cell link='/toast'>
-        toast
-      </ui-cell>
-      <ui-cell link='/dialog'>
-        dialog
-      </ui-cell>
-      <ui-cell link='/actionsheet'>
-        actionsheet
-      </ui-cell>
-      <ui-cell link='/picker'>
-        picker
-      </ui-cell>
-      <ui-cell link='/tab'>
-        tab
-      </ui-cell>
-      <ui-cell link='/swiper'>
-        swiper
-      </ui-cell>
-      <ui-cell link='/infinite'>
-        infinite
-      </ui-cell>
-      <ui-cell link='/calendar'>
-        calendar
+    <ui-cells>
+      <ui-cell>
+      列表不带标题
+      <span slot="desc">另一行</span>
       </ui-cell>
     </ui-cells>
   </page>

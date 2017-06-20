@@ -1,0 +1,27 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// GRIDS VARIABLES
+// ------------------------------------------->
+
+// GRIDS COMPONENT
+// ============================================>
+.ui-grids{
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  background-color: $white;
+  overflow: hidden;
+  &__item{
+    padding: torem(22px) 0;
+    text-align: center;
+    @extend %borderBottom;
+    >.icon{
+      display: block;
+      margin-bottom: torem(10px);
+      font-size: torem(80px);
+      color: $grayLightest;
+    }
+  }
+}

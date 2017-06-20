@@ -1,12 +1,15 @@
 
 <template>
   <div class="container">
-    <router-view></router-view>
+    <transition name="slideIn">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
   import UiStyle from './style'
+  import Index from './pages/Index.vue'
   import UiCell from './pages/Cell.vue'
   import UiForm from './pages/Form.vue'
   import UiButton from './pages/Button.vue'
@@ -24,19 +27,20 @@
   export default {
     name: 'app',
     components: {
-        UiStyle,
-        UiCell,
-        UiForm,
-        UiButton,
-        SearchBar,
-        Toast,
-        UiDialog,
-        ActionSheet,
-        Picker,
-        Tab,
-        Swiper,
-        Infinite,
-        Calendar
+      Index,
+      UiStyle,
+      UiCell,
+      UiForm,
+      UiButton,
+      SearchBar,
+      Toast,
+      UiDialog,
+      ActionSheet,
+      Picker,
+      Tab,
+      Swiper,
+      Infinite,
+      Calendar
     },
   };
 </script>

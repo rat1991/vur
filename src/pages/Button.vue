@@ -11,7 +11,6 @@
             <ui-button plain>按钮01</ui-button>
             <ui-button type="primary" plain>按钮plain-info</ui-button>
             <ui-button type="primary" plain disabled>按钮plain-info</ui-button>
-            
             <ui-button type="primary" size="sm" plain>按钮sm-plain-info</ui-button>
         </div>
     </page>
@@ -26,6 +25,9 @@
     components: {
       Page,
       UiButton
+    },
+    created(){
+      console.log(this.$route);
     }
   }
 </script>

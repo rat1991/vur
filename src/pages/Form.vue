@@ -15,8 +15,10 @@
       <ui-cell>{{checkRadio}}</ui-cell>
     </ui-cells>
     <ui-cells title="多行文本">
-      <ui-textarea v-model="textarea" :max="30"></ui-textarea>
-      <ui-cell>{{textarea}}</ui-cell>
+      <ui-textarea v-model="textarea" :max="130"></ui-textarea>
+    </ui-cells>
+    <ui-cells title="多行文本（高度自适应）">
+      <ui-textarea v-model="textarea" autoheight placeholder="高度自适应"></ui-textarea>
     </ui-cells>
     <ui-cells title="开关">
         <ui-switch 
@@ -26,7 +28,7 @@
         v-model="switchItem"></ui-switch>
         <ui-cell>{{switchItem}}</ui-cell>
     </ui-cells>
-    <ui-cells title="开关">
+    <ui-cells title="选择">
       <ui-select label="付款" 
         placeholder="请选择" 
         :options="selectItem"
@@ -95,9 +97,9 @@
         }
       });
       this.switchDate = {
-          label: '开关',
-          value: false,
-          disabled: false
+        label: '开关',
+        value: false,
+        disabled: false
       };
     }
   };

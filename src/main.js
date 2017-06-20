@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import router from './router'
 import App from './App'
-
+// import vConsole from 'vconsole'
 //plugins
 // import FastClick from'fastclick'
 // FastClick.attach(document.body)

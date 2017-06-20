@@ -37,6 +37,24 @@
     &::-webkit-input-placeholder {
         color: $grayLightest;
     }
+    &_autoheight{
+        @extend .ui-textarea;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        //height: 100%;
+        //opacity: .4;
+        z-index: 1;
+    }
+}
+.ui-textarea-seat{
+    width: 100%;
+    margin: 0;
+    font-size: $text-14;
+    line-height: 1.6;
+    visibility: hidden;
 }
 // FORM_CHECKBOX&RADIO COMPONENT
 // ==========================

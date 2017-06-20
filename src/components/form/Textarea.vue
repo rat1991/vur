@@ -1,7 +1,8 @@
 <template>
   <section class="ui-cell">
+    <div style="position: relative; width: 100%;">
     <textarea 
-      class="ui-textarea"
+      :class="[autoheight ? 'ui-textarea_autoheight' : 'ui-textarea']"
       :name="name"
       :autocomplete="autocomplete"
       :autocapitalize="autocapitalize"
@@ -11,8 +12,13 @@
       :placeholder="placeholder"
       :rows="rows"
       :value="value"
-      @input="onInput">
+      ref="textarea"
+      @compositionstart="cpstStart"
+      @compositionend="cpstEnd"
+      @keyup="onInput">
     </textarea>
+    <p class="ui-textarea-seat" ref="seat" v-if="autoheight">{{value ? value : '0'}}</p>
+    </div>
     <div class="ui-cell__desc text-right text-12 text-lighter" v-if="max">{{count}}/{{max}}</div>
   </section>
 </template>
@@ -32,6 +38,8 @@ export default {
       type: String,
       default: '请输入...'
     },
+    autoheight: Boolean,
+    maxheight: String,
     // https://github.com/yisibl/blog/issues/3
     autocomplete: {
       type: String,
@@ -53,13 +61,29 @@ export default {
   computed:{
     count(){
       let len = 0;
-      if(this.value && this.max) len = this.value.replace(/\n/g, 'aa').length;
+      if(this.value && this.max) len = this.value.replace(/\n/g, '&&').length;
       return len > this.max ? this.max : len;
     }
   },
+  mounted(){
+    //window.getComputedStyle(this.$refs.textarea, null).height
+    this.setHeight();
+  },
   methods:{
-    onInput: function(event){
-        if(this.count === this.max) alert("超出可输入范围！");
+    setHeight(){
+      if(!this.autoheight) return;
+      let defaultHeight = this.value ? this.$refs.seat.offsetHeight : this.$refs.seat.offsetHeight * this.rows;
+      this.$refs.seat.style.minHeight = defaultHeight + 'px'
+    },
+    cpstStart(event){
+      //console.log('satrt',event);
+    },
+    cpstEnd(event){
+      //console.log('end',event);
+    },
+    onInput(event){
+      console.log(event.key);
+      if(this.count === this.max && event.key !== 'Backspace') alert("超出可输入范围！");
       this.$emit('input', event.target.value)
     },
   }

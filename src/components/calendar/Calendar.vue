@@ -217,11 +217,12 @@ export default {
            let formatPer = matrix.split(',')[4] / swiperWrapWidth * 100
            return formatPer ? formatPer : 0
         };
-        let go = function(v){
+        function go(v){
           let _wrapTranslate = getTranslate(swiperCurrent) * -1,
               _curTranslate = getTranslate(swiperCurrent),
               _prevTranslate = getTranslate(swiperPrev),
               _nextTranslate = getTranslate(swiperNext);
+          
           if(v === 'prev'){
             setTranslate(swiperWrap, _wrapTranslate+=100)
             setTranslate(swiperCurrent, _curTranslate-=100)
