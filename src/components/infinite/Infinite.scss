@@ -11,12 +11,14 @@
   justify-content: center;
   //padding: $gap-30 $gap-40;
   width: 70%;
-  margin: $gap-20 auto;
+  margin: 0 auto;
+  padding: $gap-20 0;
   background-color: transparent;
   &-complete{
     @extend %borderTop;
     margin-top: torem(44px);
     margin-bottom: torem(20px);
+    padding: 0;
     >.ui-infinite__tips{
       top: -8px;
       padding: 0 $gap-30;

@@ -22,15 +22,17 @@ $cellElGap: torem(20px);
     &.title {
         margin-top: torem(72px);
         &:before {
+            content: attr(data-title);
             position: absolute;
             top: torem(-72px);
             left: 0;
-            content: attr(data-title);
             display: block;
-            padding: torem(34px) $gapSides;
+            width: 100%;
+            height: torem(72px);
+            padding: 0 $gapSides;
             font-size: $text-14;
             color: $grayLight;
-            line-height: 1;
+            line-height: 3;
         }
     }
 }

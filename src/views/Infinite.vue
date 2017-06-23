@@ -22,7 +22,7 @@
     },
     data(){
       return{
-        list: new Array(8),
+        list: new Array(14),
         count: 0,
         complete: false
       }
