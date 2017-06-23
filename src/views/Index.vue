@@ -1,10 +1,12 @@
 <template>
+  <page current>
   <ui-grids :col="4">
     <ui-grid slot="grid" v-for="item in menu" :to="item.to">
       <i slot="icon" class="icon icon-circle-act"></i>
       <span slot="text">{{item.name}}</span>
     </ui-grid>
   </ui-grids>
+  </page>
 </template>
 <script>
   import Page from '../components/page'

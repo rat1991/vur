@@ -6,12 +6,11 @@
   right: 0;
   bottom: 0;
   left: 0;
-  overflow: hidden;
 }
 // BASE COMPONENT
 // ==========================
 .container{
-  min-height: torem(1334px);
+  height: 100%;
   margin: 0 auto;
   background-color: $bgBody;
   @media (min-width: $screen-md) {
@@ -22,7 +21,6 @@
   margin: 0 auto;
 }
 .page{
-  @extend %pageLayout;
   display: none;
   background-color: $bgBody;
   overflow-y: auto;
@@ -30,6 +28,7 @@
 }
 .page-current{
   display: block;
+  min-height: 100%;
   z-index: $lv1;
 }
 .page-gap-top {

@@ -19,6 +19,7 @@ export default {
         el.parentNode.insertBefore($vm.$el, el.nextSibling)
         clientHeight = document.documentElement.clientHeight
         scrollHeight = document.documentElement.scrollHeight
+        console.log('scrollHeight:'+ scrollHeight);
         loadEvent = function (){
           let scrollTop = this.document.body.scrollTop
           let offset = scrollHeight - (clientHeight + scrollTop)

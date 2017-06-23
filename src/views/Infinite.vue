@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <page current>
     <ui-cells title="你好" v-infinite="[loadMore, complete]">
       <ui-cell v-for="(item, index) in list">
         swiper {{index}}
       </ui-cell>
     </ui-cells>
-  </div>
+  </page>
 </template>
 <script>
   import Page from '../components/page'
@@ -22,7 +22,7 @@
     },
     data(){
       return{
-        list: new Array(18),
+        list: new Array(8),
         count: 0,
         complete: false
       }

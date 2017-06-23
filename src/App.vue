@@ -9,19 +9,19 @@
 
 <script>
   import UiStyle from './style'
-  import Index from './pages/Index.vue'
-  import UiCell from './pages/Cell.vue'
-  import UiForm from './pages/Form.vue'
-  import UiButton from './pages/Button.vue'
-  import SearchBar from './pages/SearchBar.vue'
-  import Toast from './pages/Toast.vue'
-  import UiDialog from './pages/Dialog.vue'
-  import ActionSheet from './pages/ActionSheet.vue'
-  import Picker from './pages/Picker.vue'
-  import Tab from './pages/Tab.vue'
-  import Swiper from './pages/Swiper.vue'
-  import Infinite from './pages/Infinite.vue'
-  import Calendar from './pages/Calendar.vue'
+  import Index from './views/Index.vue'
+  import UiCell from './views/Cell.vue'
+  import UiForm from './views/Form.vue'
+  import UiButton from './views/Button.vue'
+  import SearchBar from './views/SearchBar.vue'
+  import Toast from './views/Toast.vue'
+  import UiDialog from './views/Dialog.vue'
+  import ActionSheet from './views/ActionSheet.vue'
+  import Picker from './views/Picker.vue'
+  import Tab from './views/Tab.vue'
+  import Swiper from './views/Swiper.vue'
+  import Infinite from './views/Infinite.vue'
+  import Calendar from './views/Calendar.vue'
 
 
   export default {

@@ -1,5 +1,6 @@
 <template>
-  <div :class="['page',{'page-current': current}]">
+  <div :class="['page', current && 'page-current']"
+  :style="{minHeight: winHeight + 'px'}">
     <slot></slot>
   </div>
 </template>
@@ -12,7 +13,15 @@ export default {
     current: {
       type: Boolean,
       default: false
-    },
+    }
+  },
+  data(){
+    return {
+      winHeight: document.documentElement.clientHeight
+    }
+  },
+  created(){
+    console.log(this.winHeight);
   }
 }
 </script>
