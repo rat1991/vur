@@ -8,7 +8,9 @@
 .ui-swiper{
   height: 100%;
   overflow: hidden;
-  transition: all 0.3s ease;
+  &__wrapper{
+    height: 100%;
+  }
   &__item{
     position: relative;
     float: left;

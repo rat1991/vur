@@ -1,6 +1,6 @@
 <template>
     <div class="ui-search" id="searchBar">
-        <form class="ui-search__form" action>
+        <form class="ui-search__form" action @submit.prevent="submit">
             <div class="ui-search__box">
                 <i class="icon-search"></i>
                 <input type="search"
@@ -61,6 +61,9 @@ export default {
         cancel() {
             this.currentVal = '';
             this.isFocus = false;
+        },
+        submit(event){
+            this.$emit('submit',this.currentVal);
         }
     }
 }

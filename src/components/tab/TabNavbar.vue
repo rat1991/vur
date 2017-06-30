@@ -1,8 +1,8 @@
 <template>
-  <div class="ui-tab">
+  <div class="ui-tab" ref="tab">
     <div 
-    v-for="(item, index) in navbar"
-    :class="['ui-tab__navbar', current === index && 'ui-tab__navbar-active']" 
+    v-for="(item, index) in navbar" :key="index"
+    :class="[current !== index ? 'ui-tab__navbar' : 'ui-tab__navbar-active']" 
     :data-index="index"
      @click="onSwitch(index)">
       {{item}}
@@ -35,14 +35,19 @@ export default {
       current(newVal){
         this.$emit('input', newVal);
         //滑块滑动
-        let navNum = this.navbar.length;
-        this.$refs.slider.style.left = (100 / navNum * newVal) + '%';
-        this.$refs.slider.style.right = 100 / navNum * (navNum - 1 - newVal) + '%';
+        this.onSlider(newVal);
       }
     },
     methods: {
       onSwitch(index){
         this.current = index
+      },
+      onSlider(curVal){
+        let navNum = this.navbar.length,
+            tabWidth = this.$refs.tab.offsetWidth,
+            offset = tabWidth / navNum * curVal;
+        this.$refs.slider.style.width =  `${tabWidth / navNum}px`;
+        this.$refs.slider.style.transform = `translate3d(${offset}px, 0, 0)`
       }
     }
 }

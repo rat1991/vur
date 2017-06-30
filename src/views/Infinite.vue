@@ -1,7 +1,7 @@
 <template>
   <page current>
     <ui-cells title="你好" v-infinite="[loadMore, complete]">
-      <ui-cell v-for="(item, index) in list">
+      <ui-cell v-for="(item, index) in list" :key="index">
         swiper {{index}}
       </ui-cell>
     </ui-cells>
@@ -22,7 +22,7 @@
     },
     data(){
       return{
-        list: new Array(14),
+        list: new Array(18),
         count: 0,
         complete: false
       }
@@ -34,9 +34,11 @@
           for (let i = 1; i <= 10; i++) {
             this.list.push(last + i);
           }
+          console.log('000');
           this.count += 1;
           this.complete = this.count > 2 && true;
         }, 1200);
+        
       }
     }
   }

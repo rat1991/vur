@@ -7,11 +7,11 @@
         <ui-cell>{{text}}</ui-cell>
     </ui-cells>
     <ui-cells title="多项选择">
-      <ui-checkbox v-for="item in checkList" v-model="checkItem" :options="item" :checked="checkItem"></ui-checkbox>
+      <ui-checkbox v-for="item in checkList" :key="item.value" v-model="checkItem" :options="item" :checked="checkItem"></ui-checkbox>
       <ui-cell>{{checkItem}}</ui-cell>
     </ui-cells>
     <ui-cells title="单项选择">
-      <ui-radio v-for="(item, index) in checkList" v-model="checkRadio" :options="item"></ui-radio>
+      <ui-radio v-for="(item, index) in checkList" :key="item.value" v-model="checkRadio" :options="item"></ui-radio>
       <ui-cell>{{checkRadio}}</ui-cell>
     </ui-cells>
     <ui-cells title="多行文本">

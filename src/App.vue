@@ -1,7 +1,7 @@
 
 <template>
   <div class="container">
-    <transition name="slideIn">
+    <transition :name="transitionView">
       <router-view></router-view>
     </transition>
   </div>
@@ -22,6 +22,8 @@
   import Swiper from './views/Swiper.vue'
   import Infinite from './views/Infinite.vue'
   import Calendar from './views/Calendar.vue'
+  import Lazyload from './views/Lazyload.vue'
+  import Keypad from './views/Keypad.vue'
 
 
   export default {
@@ -40,7 +42,32 @@
       Tab,
       Swiper,
       Infinite,
-      Calendar
+      Calendar,
+      Lazyload,
+      Keypad
     },
+    data(){
+      return {
+        transitionView: 'slideOut'
+      }
+    },
+    created(){
+    },
+    watch: {
+      '$route' (to, from) {
+        let excVoid = function(arr){
+          let arrLength = arr.length;
+          arr.forEach((item,index)=>{
+            if(item === ''){
+              arrLength--
+            }
+          })
+          return arrLength;
+        }
+        const toDepth = excVoid(to.path.split('/'))
+        const fromDepth = excVoid(from.path.split('/'))
+        this.transitionView = toDepth > fromDepth ? 'slideIn' : 'slideOut'
+      }
+    }
   };
 </script>

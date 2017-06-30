@@ -33,6 +33,8 @@
           {name:'轮播',to:'/swiper'},
           {name:'滚动加载',to:'/infinite'},
           {name:'日历',to:'/calendar'},
+          {name:'延时加载',to:'/lazyload'},
+          {name:'数字键盘',to:'/keypad'}
         ]
       }
     },

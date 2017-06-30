@@ -1,6 +1,6 @@
 <template>
   <page current>
-      <ui-search v-model="searchVal"></ui-search>
+      <ui-search v-model="searchVal" @submit="onSubmit"></ui-search>
 
       <p>{{searchVal}}</p>
       <ui-footer :link="footlink">Copyright © 2008-2016 weui.io</ui-footer>
@@ -27,6 +27,11 @@
         Page,
         UiFooter,
         UiSearch,
+    },
+    methods: {
+      onSubmit(val){
+        alert('点击提交了:' + val)
+      }
     }
   }
 </script>

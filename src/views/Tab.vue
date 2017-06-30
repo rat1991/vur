@@ -1,7 +1,7 @@
 <template>
   <page current>
     <ui-tab-navbar :navbar="navbar" v-model="active"></ui-tab-navbar>
-    <ui-tab-content :navbar="navbar" v-model="active" :swiper="true">
+    <ui-tab-content :navbar="navbar" v-model="active" :swiper="false">
       <span slot="0">tabcontent01</span>
       <span slot="1">tabcontent02</span>
       <span slot="2">tabcontent03</span>

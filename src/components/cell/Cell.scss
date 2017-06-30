@@ -20,7 +20,7 @@ $cellElGap: torem(20px);
         margin-top: $gap-20;
     }
     &.title {
-        margin-top: torem(72px);
+        margin: torem(72px) 0 0 0;
         &:before {
             content: attr(data-title);
             position: absolute;

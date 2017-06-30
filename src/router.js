@@ -58,6 +58,14 @@ const routes = [{
     path: '/calendar',
     name: '日历',
     component: App.components.Calendar
+}, {
+    path: '/lazyload',
+    name: '图片懒加载',
+    component: App.components.Lazyload
+}, {
+    path: '/keypad',
+    name: '数字键盘',
+    component: App.components.Keypad
 }]
 
 // router实例

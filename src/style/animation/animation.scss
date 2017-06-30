@@ -4,6 +4,7 @@
   right: 0;
   bottom: 0;
   left: 0;
+  box-shadow: -2px 0 6px rgba($black,.08);
 }
 .fade-enter-active {
   transition: opacity .1s ease
@@ -58,6 +59,7 @@
     transform: translate3d(-20%, 0, 0);
   }
   &-enter-active{
+    @extend %pageLayout;
     transition: transform .4s ease;
     z-index: 1;
   }
@@ -68,6 +70,7 @@
     transform: translate3d(0, 0, 0);
   }
   &-leave-active{
+    @extend %pageLayout;
     transition: transform .4s ease;
     z-index: 2;
   }

@@ -6,32 +6,35 @@ export default {
     let Options = Object.assign({},options)
     let scroller = Options.scroller || window,
         distance = Options.distance || 20,
-        clientHeight, scrollHeight, scrollTop
+        clientHeight,elHeight, scrollHeight, scrollTop
     let Loading = true
     let loadEvent = function (){}
     const VM = vue.extend(UiInfinite)
+    function getElRealHelght(elm){
+      let marginArr = window.getComputedStyle(elm).margin.split('px');
+      return  elm.offsetHeight + parseFloat(marginArr[0]) + parseFloat(marginArr[2])
+    };
     vue.directive('infinite', {
       bind (el, binding, vnode, oldVnode) {
-        console.log(binding);
       },
       inserted(el, binding, vnode, oldVnode){
         $vm = new VM().$mount()
-        el.parentNode.insertBefore($vm.$el, el.nextSibling)
         clientHeight = document.documentElement.clientHeight
-        scrollHeight = document.body.scrollHeight
-        console.log('scrollHeight:'+ clientHeight, scrollHeight);
-        console.log('el:'+ el.offsetHeight);
+        elHeight = getElRealHelght(el)
+        if(clientHeight < elHeight){
+          el.parentNode.insertBefore($vm.$el, el.nextSibling)
+        }
         loadEvent = function (){
-          let scrollTop = this.document.body.scrollTop
+          scrollHeight = document.body.scrollHeight
+          scrollTop = this.document.body.scrollTop
           let offset = scrollHeight - (clientHeight + scrollTop)
           let handle = function(){}
-          console.log('scrollTop:'+ offset);
           if(typeof binding.value === 'function'){
             handle = binding.value
           }else if(binding.value instanceof Array && typeof binding.value[0] === 'function'){
             handle = binding.value[0]
           }else{
-            console.log('v-infinite value is not function')
+            console.error('v-infinite value is not function')
             return false
           }
           if(Loading && offset <= distance){
@@ -44,7 +47,7 @@ export default {
       update(el, binding, vnode, oldVnode){
         scrollHeight = document.documentElement.scrollHeight
         Loading = true
-        console.log('update');
+        //console.log('update');
         if(binding.value instanceof Array && binding.value[1] === true){
           $vm.loading = false
           Loading = false
@@ -52,7 +55,7 @@ export default {
         }
       },
       componentUpdated(){
-        console.log('componentUpdated');
+        //console.log('componentUpdated');
       }
 
     })

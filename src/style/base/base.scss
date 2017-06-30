@@ -23,7 +23,7 @@
 .page{
   display: none;
   background-color: $bgBody;
-  overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
 .page-current{

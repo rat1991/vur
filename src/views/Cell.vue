@@ -9,6 +9,10 @@
       <ui-cell access>
       没链接带箭头
       </ui-cell>
+      <ui-cell link="/">
+      链接
+      <span slot="ft">跳转路由</span>
+      </ui-cell>
       <ui-cell link="//www.baidu.com">
       链接
       <span slot="ft">链接到百度</span>
@@ -16,7 +20,7 @@
     </ui-cells>
     <ui-cells>
       <ui-cell>
-      列表不带标题
+      <span slot="hd">列表不带标题</span>
       <span slot="desc">另一行</span>
       </ui-cell>
     </ui-cells>

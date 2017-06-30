@@ -1,0 +1,70 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// KEYPAD VARIABLES
+// ------------------------------------------->
+$keypadHeight: torem(400px);
+// KEYPAD COMPONENT
+// ============================================>
+.ui-keypad{
+  background-color: $white;
+  &__inner{
+    display: flex;
+    height: $keypadHeight;
+    @extend %borderTop;
+  }
+  &__panel{
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__key{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 3);
+    font-size: $text-26;
+    font-weight: 500;
+    @extend %borderRight;
+    &:after{
+      border-width: 0 1px 1px 0;
+    }
+    &:active{
+      background-color: $bgActive;
+    }
+    &.retract{
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAwAgMAAADcJZSMAAAAAG5wVGOkIJ/OAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJUExURQAAADMzMzMzM2gEVjUAAAACdFJOUwCAmytOGAAAAFVJREFUKM9jWIUGGDAEFjCgAC5aCTCtQEByBajiMCQzyRaggju0GrSgUdCg1UCmAH1ijpAA4TRGPcC4atUSVJGsVRNQBaRWOaAKsK1EN2QJurEBUBoA8gl/ItCMn0wAAAAASUVORK5CYII=);
+      background-size: torem(52px) auto;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+  &__handle{
+    display: flex;
+    flex-direction: column;
+    width: torem(200px);
+    >.backspace, >.confirm{
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: torem(40px);
+      @extend %borderBottom;
+      &:active{
+        background-color: $bgActive;
+      }
+    }
+    >.backspace{
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAAmBAMAAAB5SKVIAAAAAG5wVGOkIJ/OAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAVUExURQAAADMzMzMzMzMzMzMzMzMzMzMzM7btS7sAAAAGdFJOUwDeFbtHf4ktxZoAAADISURBVDjLjZPBDoMgDIYb9AGmB89jT7BlieclewEPi3eSre//CAOBSlX+2IsJH5+00BKlaEcuw00koYln10wa/lAR5s0Xkb6kY/6J9NqgxtUkarkmkeGaRMQ1KaMjKSKRHrFM0wkSaeiXj3UZrSfZ5XZM3MHqpLgYNwRUphdWkxRQmV5YTpJHuibrbknyaFY1maHLD8XEd1Wo5Z5OIPBDkAZIHpUMLgpd76qN20fZP+XzTAOgtgHNhloUNDYaBzBEaPTAwB6M+R+/MEsdwzAGeQAAAABJRU5ErkJggg==);
+      background-size: torem(52px) auto;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    >.confirm{
+      color: $white;
+      background-color: $primary;
+      &:active{
+        background-color: darken($primary, 6%);
+      }
+    }
+  }
+}

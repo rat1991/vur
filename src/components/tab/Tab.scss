@@ -18,6 +18,7 @@ $tabNavbarHeight:   torem(88px);
     line-height: $tabNavbarHeight;
     text-align: center;
     &-active{
+      @extend .ui-tab__navbar;
       color: $primary;
     }
   }
@@ -25,10 +26,9 @@ $tabNavbarHeight:   torem(88px);
     position: absolute;
     bottom: 0;
     left: 0;
-    // right: 75%;
-    height: 100%;
+    width: 25%;
     border-bottom: 2px solid $primary;
-    transition: right .2s cubic-bezier(0.35, 0, 0.25, 1) 0.09s, left .2s cubic-bezier(0.35, 0, 0.25, 1);
+    transition: all .3s cubic-bezier(0.35, 0, 0.25, 1);
   }
   &__content{
     min-height: calc(100% - #{$tabNavbarHeight});

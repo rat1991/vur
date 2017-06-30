@@ -19,9 +19,6 @@ export default {
     return {
       winHeight: document.documentElement.clientHeight
     }
-  },
-  created(){
-    console.log(this.winHeight);
   }
 }
 </script>
