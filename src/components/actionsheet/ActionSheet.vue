@@ -1,16 +1,14 @@
 <template>
   <div>
-      <transition name="fade">
-        <ui-mask v-if="state" @click.native="onMaskClose"></ui-mask>
-      </transition>
+      <ui-mask v-if="state" @click.native="onMaskClose"></ui-mask>
       <transition name="slideUp" v-on:after-leave="afterLeave">
-        <div :class="['ui-actionsheet']" @touchmove.prevent v-if="state">
+        <div :class="['ui-actionsheet']" @touchmove.prevent v-show="state">
           <div class="ui-actionsheet__title" v-if="title || subtitle">
             <h4>{{title}}</h4>
             <small>{{subtitle}}</small>
           </div>
           <div class="ui-actionsheet__menu">
-            <div :class="['ui-actionsheet__cell', item.className]" v-for="item in menus" @click="onMenu(item.onClick)">
+            <div :class="['ui-actionsheet__cell', item.className]" v-for="item in menus" :key="item" @click="onMenu(item.onClick)">
               {{item.text}}
             </div>
           </div>

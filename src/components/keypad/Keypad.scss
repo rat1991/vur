@@ -6,10 +6,15 @@ $keypadHeight: torem(400px);
 // KEYPAD COMPONENT
 // ============================================>
 .ui-keypad{
-  background-color: $white;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: $lv3;
   &__inner{
     display: flex;
     height: $keypadHeight;
+    background-color: $white;
     @extend %borderTop;
   }
   &__panel{
@@ -29,6 +34,7 @@ $keypadHeight: torem(400px);
       border-width: 0 1px 1px 0;
     }
     &:active{
+      font-size: $text-24;
       background-color: $bgActive;
     }
     &.retract{
@@ -48,7 +54,6 @@ $keypadHeight: torem(400px);
       align-items: center;
       justify-content: center;
       font-size: torem(40px);
-      @extend %borderBottom;
       &:active{
         background-color: $bgActive;
       }

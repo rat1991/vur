@@ -12,90 +12,86 @@ $cellElGap: torem(20px);
 // CELL COMPONENT
 // ============================================>
 .ui-cells {
-    position: relative;
-    line-height: 0;
-    background-color: #fff;
-    @extend %borderVertical;
-    &+& {
-        margin-top: $gap-20;
+  position: relative;
+  line-height: 0;
+  background-color: #fff;
+  @extend %borderVertical;
+  &+& {
+    margin-top: $gap-20;
+  }
+  &__title {
+    padding: torem(28px) $gapSides torem(10px) $gapSides;
+    font-size: $text-14;
+    line-height: 1;
+    color: $grayLight;
+    &_fix {
+      position: -webkit-sticky;
+      position: fixed;
+      background-color: $bgBody;
+      @extend %borderBottom;
     }
-    &.title {
-        margin: torem(72px) 0 0 0;
-        &:before {
-            content: attr(data-title);
-            position: absolute;
-            top: torem(-72px);
-            left: 0;
-            display: block;
-            width: 100%;
-            height: torem(72px);
-            padding: 0 $gapSides;
-            font-size: $text-14;
-            color: $grayLight;
-            line-height: 3;
-        }
-    }
+  }
 }
 
 .ui-cell {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    min-height: $cellHeight;
-    padding: $cellGapV $cellGapH;
-    font-size: $cellFontSize;
-    line-height: $cellLineHeight;
-    overflow: hidden;
-    &:not(:first-child) {
-        @extend %borderTop;
-        &:after {
-            left: $gapSides;
-        }
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: $cellHeight;
+  padding: $cellGapV $cellGapH;
+  font-size: $cellFontSize;
+  line-height: $cellLineHeight;
+  overflow: hidden;
+  &:not(:first-child) {
+    @extend %borderTop;
+    &:after {
+      left: $gapSides;
     }
-    &_access {
-        &:before {
-            content: '';
-            order: 5;
-            margin-left: torem(10px);
-            @include setArrow();
-        }
-        &:active {
-            background-color: $cellActiveBg;
-        }
+  }
+  &_access {
+    &:before {
+      content: '';
+      order: 5;
+      margin-left: torem(10px);
+      @include setArrow();
     }
-    &_switch{
-        padding: calc(#{$cellGapV} - 4px) $cellGapH;
-        line-height: 0;
+    &:active {
+      background-color: $cellActiveBg;
     }
-    &_select{
-        padding: 0;
-        &:before {
-            content: '';
-            position: absolute;
-            top: calc(50% - #{torem(7px)});
-            right: $gapSides;
-            margin-left: torem(10px);
-            @include setArrow();
-        }
-        >.ui-cell__hd{
-            padding-left: $gapSides;
-            margin-right: -($gapSides - $cellElGap);
-        }
+  }
+  &_switch {
+    padding: calc(#{$cellGapV} - 4px) $cellGapH;
+    line-height: 0;
+  }
+  &_select {
+    padding: 0;
+    &:before {
+      content: '';
+      position: absolute;
+      top: calc(50% - #{torem(7px)});
+      right: $gapSides;
+      margin-left: torem(10px);
+      @include setArrow();
     }
-    &__hd {
-        margin-right: $cellElGap;
+    >.ui-cell__hd {
+      padding-left: $gapSides;
+      margin-right: -($gapSides - $cellElGap);
     }
-    &__bd {
-        flex: 1;
-    }
-    &__ft {
-        margin-left: $cellElGap;
-        color: $grayLight;
-        text-align: right;
-    }
-    &__desc {
-        width: 100%;
-        margin-top: $gap-10;
-    }
+  }
+  &__hd {
+    margin-right: $cellElGap;
+  }
+  &__bd {
+    flex: 1;
+  }
+  &__ft {
+    margin-left: $cellElGap;
+    color: $grayLight;
+    text-align: right;
+  }
+  &__desc {
+    width: 100%;
+    margin-top: $gap-10;
+  }
 }

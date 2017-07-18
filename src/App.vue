@@ -24,6 +24,7 @@
   import Calendar from './views/Calendar.vue'
   import Lazyload from './views/Lazyload.vue'
   import Keypad from './views/Keypad.vue'
+  import ScrollFix from './views/ScrollFix.vue'
 
 
   export default {
@@ -44,7 +45,8 @@
       Infinite,
       Calendar,
       Lazyload,
-      Keypad
+      Keypad,
+      ScrollFix
     },
     data(){
       return {

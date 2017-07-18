@@ -1,5 +1,6 @@
 <template>
   <page current>
+  <p>配置差不多就是这样子，我这样打包出来以后无论怎么调配置，css里面的图片引用路径都是background: url("/img/XXX.png") no-repeat;这样就会在根目录下面找img文件夹，但是我不想这样，能不能使他打包出来成这样=> background: url("../img/XXX.png") no-repeat;就是可以自定义css里面url的引用路径（前面多2个点）配置差不多就是这样子，我这样打包出来以后无论怎么调配置，css里面的图片引用路径都是background: url("/img/XXX.png") no-repeat;这样就会在根目录下面找img文件夹，但是我不想这样，能不能使他打包出来成这样=> background: url("../img/XXX.png") no-repeat;就是可以自定义css里面url的引用路径（前面多2个点）配置差不多就是这样子，我这样打包出来以后无论怎么调配置，css里面的图片引用路径都是background: url("/img/XXX.png") no-repeat;这样就会在根目录下面找img文件夹，但是我不想这样，能不能使他打包出来成这样=> background: url("../img/XXX.png") no-repeat;就是可以自定义css里面url的引用路径（前面多2个点）配置差不多就是这样子，我这样打包出来以后无论怎么调配置，css里面的图片引用路径都是background: url("/img/XXX.png") no-repeat;这样就会在根目录下面找img文件夹，但是我不想这样，能不能使他打包出来成这样=> background: url("../img/XXX.png") no-repeat;就是可以自定义css里面url的引用路径（前面多2个点）配置差不多就是这样子，我这样打包出来以后无论怎么调配置，css里面的图片引用路径都是background: url("/img/XXX.png") no-repeat;这样就会在根目录下面找img文件夹，但是我不想这样，能不能使他打包出来成这样=> background: url("../img/XXX.png") no-repeat;就是可以自定义css里面url的引用路径（前面多2个点）</p>
     <img class="img-responsive" v-for="(item, index) in list" :key="index" v-lazy="item">
   </page>
 </template>

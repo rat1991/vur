@@ -66,6 +66,10 @@ const routes = [{
     path: '/keypad',
     name: '数字键盘',
     component: App.components.Keypad
+}, {
+    path: '/scrollfix',
+    name: 'ScrollFix',
+    component: App.components.ScrollFix
 }]
 
 // router实例

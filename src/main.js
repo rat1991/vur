@@ -11,6 +11,7 @@ import Dialog from './plugins/dialog'
 import ActionSheet from './plugins/actionsheet'
 import Infinite from './plugins/infinite'
 import Lazyload from './plugins/lazyload'
+import TopFix from './plugins/topfix'
 
 Vue.use(Toast);
 Vue.use(Dialog);
@@ -22,6 +23,7 @@ Vue.use(Lazyload,{
     threshold: 0,
     effectFadeIn: true
 });
+Vue.use(TopFix);
 
 
 

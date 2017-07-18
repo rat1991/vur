@@ -1,7 +1,7 @@
 <template>
   <page current>
-    <ui-input v-model="keyValue" readonly></ui-input>
-    <ui-keypad v-model="keyValue"></ui-keypad>
+    <ui-input v-model="keyValue" type="text" readonly @click.native="showPad = true"></ui-input>
+    <ui-keypad v-model="keyValue" :show.sync="showPad" @onConfirm="onCon"></ui-keypad>
   </page>
 </template>
 <script>
@@ -17,8 +17,14 @@
     },
     data(){
       return {
-        keyValue: ''
+        keyValue: '',
+        showPad: true
       }   
+    },
+    methods:{
+      onCon(val){
+        console.log('提交'+ val);
+      }
     }
   }
 </script>

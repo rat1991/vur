@@ -1,7 +1,7 @@
 <template>
   <page current>
   <ui-grids :col="4">
-    <ui-grid slot="grid" v-for="item in menu" :to="item.to">
+    <ui-grid slot="grid" v-for="item in menu" :key="item" :to="item.to">
       <i slot="icon" class="icon icon-circle-act"></i>
       <span slot="text">{{item.name}}</span>
     </ui-grid>
@@ -34,7 +34,8 @@
           {name:'滚动加载',to:'/infinite'},
           {name:'日历',to:'/calendar'},
           {name:'延时加载',to:'/lazyload'},
-          {name:'数字键盘',to:'/keypad'}
+          {name:'数字键盘',to:'/keypad'},
+          {name:'ScrollFix',to:'/scrollfix'}
         ]
       }
     },

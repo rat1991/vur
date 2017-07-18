@@ -1,5 +1,5 @@
 <template>
-  <div :class="['ui-infinite', loading === false && 'ui-infinite-complete']" v-show="state">
+  <div :class="['ui-infinite', !loading && 'ui-infinite-complete']" v-show="state">
     <ui-loading size="24px" v-if="loading"></ui-loading>
     <span class="ui-infinite__tips">{{loading ? tips : completeTips}}</span>
   </div>

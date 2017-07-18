@@ -1,6 +1,7 @@
 <template>
-  <div :class="[transparent ? 'ui-mask_transparent' : 'ui-mask']" @touchmove.prevent>
-  </div>
+  <transition name="fade">
+    <div :class="[transparent ? 'ui-mask_transparent' : 'ui-mask']" @touchmove.prevent></div>
+  </transition>
 </template>
 
 <style lang="sass">
@@ -16,7 +17,11 @@ export default {
         type: Boolean,
         default: false
       },
-      transparent: Boolean
+      transparent: Boolean,
+      animation: {
+        type:String,
+        default: 'fade'
+      }
     },
     methods: {
     }

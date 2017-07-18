@@ -15,6 +15,7 @@
             :placeholder="placeholder"
             :readonly="readonly"
             :pattern="pattern"
+            @focus="onFocus"
             @input="onInput">
         </div>
         <div class="ui-cell__ft" v-if="clear && inputVal">
@@ -75,13 +76,16 @@ export default {
         }
     },
     methods:{
-        onInput: function(event){
+        onInput(event){
             this.inputVal = event.target.value;
             this.$emit('input', this.inputVal)
         },
-        onClear: function(event){
+        onClear(event){
             this.inputVal = '';
             this.$emit('input', this.inputVal)
+        },
+        onFocus(event){
+            if(this.readonly) {event.target.blur()}
         }
     }
 };
