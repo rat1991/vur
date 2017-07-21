@@ -3,9 +3,16 @@ import $ from 'balajs'
 /* 判断系统 */
 function _device(ua){
     let device = this.device = {},
+        wechat = ua.match(/(MicroMessenger);?[\s\/]+([\d.]+)?/),
         android = ua.match(/(Android);?[\s\/]+([\d.]+)?/),
         ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
         iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
+    // Wechat
+    if(wechat){
+      device.os = 'wechat';
+      device.osVersion = wechat[2];
+      device.wechat = true;
+    }
     // Android
     if (android) {
         device.os = 'android';

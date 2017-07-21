@@ -4,6 +4,7 @@
         <a href="javascript:void(0);" 
            class="ui-footer__link" 
            v-for="(title, url) in link"
+           :key="title"
            @click="onClick(url)">
             {{title}}
         </a>

@@ -25,6 +25,8 @@
   import Lazyload from './views/Lazyload.vue'
   import Keypad from './views/Keypad.vue'
   import ScrollFix from './views/ScrollFix.vue'
+  import Feedback from './views/Feedback.vue'
+  import Msg from './views/Msg.vue'
 
 
   export default {
@@ -46,7 +48,9 @@
       Calendar,
       Lazyload,
       Keypad,
-      ScrollFix
+      ScrollFix,
+      Feedback,
+      Msg
     },
     data(){
       return {
@@ -57,6 +61,7 @@
     },
     watch: {
       '$route' (to, from) {
+        console.log(to);
         let excVoid = function(arr){
           let arrLength = arr.length;
           arr.forEach((item,index)=>{

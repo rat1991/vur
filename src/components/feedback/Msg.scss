@@ -1,0 +1,42 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// MSG VARIABLES
+// ------------------------------------------->
+
+// MSG COMPONENT
+// ============================================>
+.ui-msg{
+  margin-top: torem(72px);
+  text-align: center;
+  &__icon{
+    margin-bottom: torem(60px);
+    >.icon{
+      font-size: torem(188px);
+      &[class*="success"]{
+        color: $success;
+      }
+      &[class*="error"]{
+        color: $danger;
+      }
+      &[class*="warn"]{
+        color: $warn;
+      }
+    }
+  }
+  &__content{
+    margin-bottom: torem(50px);
+    padding: 0 $gapSides;
+  }
+  &__title{
+    margin-bottom: $gap-10;
+    font-size: $text-20;
+  }
+  &__desc{
+    font-size: $text-14;
+    color: $grayLight;
+  }
+  &__opr{
+    margin-bottom: torem(50px);
+    padding: 0 $gapSides;
+  }
+}

@@ -1,6 +1,6 @@
 <template>
   <page current>
-    <ui-cells title="你好" v-infinite="{callback: loadMore, loaded: complete}">
+    <ui-cells title="你好" v-infinite="asyncLoad">
       <ui-cell v-for="(item, index) in list" :key="index">
         swiper {{index}}
       </ui-cell>
@@ -29,8 +29,23 @@
     },
     created(){
       console.log(process);
+      this.asyncLoad();
     },
     methods: {
+      asyncLoad(){
+        var _self = this;
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            let last = this.list[this.list.length - 1];
+            for (let i = 1; i <= 10; i++) {
+              this.list.push(last + i);
+            }
+            this.count += 1;
+            this.complete = this.count > 2 && true;
+            resolve(this.complete)
+          }, 1200)
+        })
+      },
       loadMore() {
         setTimeout(() => {
           let last = this.list[this.list.length - 1];

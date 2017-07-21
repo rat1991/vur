@@ -68,8 +68,16 @@ const routes = [{
     component: App.components.Keypad
 }, {
     path: '/scrollfix',
-    name: 'ScrollFix',
+    name: '滚动固定',
     component: App.components.ScrollFix
+}, {
+    path: '/feedback',
+    name: '反馈页面',
+    component: App.components.Feedback
+}, {
+    path: '/feedback/:id',
+    name: '反馈页面',
+    component: App.components.Msg
 }]
 
 // router实例

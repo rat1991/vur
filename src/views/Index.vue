@@ -35,7 +35,8 @@
           {name:'日历',to:'/calendar'},
           {name:'延时加载',to:'/lazyload'},
           {name:'数字键盘',to:'/keypad'},
-          {name:'ScrollFix',to:'/scrollfix'}
+          {name:'滚动固定',to:'/scrollfix'},
+          {name:'反馈页面',to:'/feedback'}
         ]
       }
     },
