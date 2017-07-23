@@ -1,9 +1,9 @@
 <template>
   <div>
-      <transition name="fade">
-        <ui-mask v-if="state"></ui-mask>
-      </transition>
-      <transition name="fade" @after-leave="destroyVm">
+    <transition name="fade">
+      <ui-mask v-if="state"></ui-mask>
+    </transition>
+    <transition name="fade" @after-leave="destroyVm">
       <div :class="['ui-dialog']" @touchmove.prevent v-if="state">
         <div class="ui-dialog__hd">
           <strong class="text-18">{{title}}</strong>
@@ -20,69 +20,70 @@
           <a href="javascript:;" class="ui-dialog__btn text-primary" @click="onConfirm">
             {{confirmText}}
           </a>
+          <slot name="opr"></slot>
         </div>
       </div>
-      </transition>
+    </transition>
   </div>
 </template>
 <script>
 import UiMask from '../mask'
 export default {
-    name: "ui-confirm",
-    components:{
-        UiMask
+  name: "ui-confirm",
+  components: {
+    UiMask
+  },
+  props: {
+    value: {
+      type: Boolean,
+      default: false
     },
-    props: {
-        title: {
-          type: String,
-          default: "提示"
-        },
-        text: String,
-        type: {
-          type: String,
-          default: "confirm"
-        },
-        value: {
-          type: Boolean,
-          default: false
-        },
-        cancelText: {
-          type: String,
-          default: "取消"
-        },
-        confirmText: {
-          type: String,
-          default: "确认"
-        }
+    type: {
+      type: String,
+      default: "confirm" //confirm, alert
     },
-    data () {
-      return {
-        state: false
-      }
+    title: {
+      type: String,
+      default: "提示"
     },
-    created () {
-      if (this.value) {
-        this.state = true
-      }
+    text: String,
+    cancelText: {
+      type: String,
+      default: "取消"
     },
-    watch: {
-      state(newVal){
-        this.$emit('input', newVal)
-      },
-      value(newVal){
-        this.state = newVal;
-      }
-    },
-    methods: {
-      onConfirm () {
-        this.state = false
-        this.$emit('on-confirm')
-      },
-      onCancel () {
-        this.state = false
-        this.$emit('on-cancel')
-      },
-      destroyVm(){}
+    confirmText: {
+      type: String,
+      default: "确认"
     }
+  },
+  data() {
+    return {
+      state: false
+    }
+  },
+  created() {
+    if (this.value) {
+      this.state = true
+    }
+  },
+  watch: {
+    state(newVal) {
+      this.$emit('input', newVal)
+    },
+    value(newVal) {
+      this.state = newVal;
+    }
+  },
+  methods: {
+    onConfirm() {
+      this.state = false
+      this.$emit('on-confirm')
+    },
+    onCancel() {
+      this.state = false
+      this.$emit('on-cancel')
+    },
+    destroyVm() {}
+  }
 }
 </script>

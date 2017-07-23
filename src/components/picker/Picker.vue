@@ -8,7 +8,7 @@
     <div class="ui-picker__indicator" ref="indicator"></div>
     <div class="ui-picker__divider" v-if="divider">{{divider}}</div>
     <ul class="ui-picker__content" ref="list">
-      <li class="ui-picker__item" v-for="item in pickerData" :data-value="item.value || item" ref="item">{{item.name || item}}</li>
+      <li class="ui-picker__item" v-for="(item, index) in pickerData" :key="index" :data-value="item.value || item" ref="item">{{item.name || item}}</li>
     </ul>
   </div>
 </template>
@@ -16,7 +16,6 @@
 <script>
 // style="transform: translate3d(0px, 102px, 0px); transition: all 0.3s;"
 import Transform from 'css3transform'
-import $ from '../../libs/util.js'
 export default {
   name: "ui-picker",
   props: {

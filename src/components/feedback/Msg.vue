@@ -12,7 +12,7 @@
                 <slot name="opr"></slot>
             </div>
         </div>
-        <ui-footer>vus</ui-footer>
+        <ui-footer :link="footerLink">{{footerText}}</ui-footer>
     </page>
 </template>
 
@@ -35,6 +35,8 @@ export default {
             type: String,
             default: '提示文字'
         },
+        footerLink: Object,
+        footerText: String
     },
     data() {
         return {

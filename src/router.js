@@ -76,7 +76,7 @@ const routes = [{
     component: App.components.Feedback
 }, {
     path: '/feedback/:id',
-    name: '反馈页面',
+    name: '反馈页面子',
     component: App.components.Msg
 }]
 

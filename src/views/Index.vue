@@ -1,7 +1,7 @@
 <template>
   <page current>
   <ui-grids :col="4">
-    <ui-grid slot="grid" v-for="item in menu" :key="item" :to="item.to">
+    <ui-grid slot="grid" v-for="item in menu" :key="item.name" :to="item.to">
       <i slot="icon" class="icon icon-circle-act"></i>
       <span slot="text">{{item.name}}</span>
     </ui-grid>

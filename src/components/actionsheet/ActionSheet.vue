@@ -8,7 +8,7 @@
             <small>{{subtitle}}</small>
           </div>
           <div class="ui-actionsheet__menu">
-            <div :class="['ui-actionsheet__cell', item.className]" v-for="item in menus" :key="item" @click="onMenu(item.onClick)">
+            <div :class="['ui-actionsheet__cell', item.className]" v-for="item in menus" :key="item.text" @click="onMenu(item.onClick)">
               {{item.text}}
             </div>
           </div>

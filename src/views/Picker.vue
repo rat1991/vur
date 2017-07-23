@@ -1,22 +1,26 @@
 <template>
   <page current>
     <ui-cells class="mt-10">
-     <ui-popup-picker label="Picker" :data="pickDate" v-model="selected" @change="onChange" placeholder="请选择"></ui-popup-picker>
-     <ui-cell>{{selected}}</ui-cell>
-     <ui-datetime-picker label="Datetime Picker" placeholder="请选择时间" max="2019-12-31" v-model="selectedDatetime"></ui-datetime-picker>
-     <ui-cell>{{selectedDatetime}}</ui-cell>
-     <ui-city-picker label="City Picker" v-model="selectedCity"></ui-city-picker>
-     <ui-cell>{{selectedCity}}</ui-cell>
+      <picker-popup label="Picker" :data="pickDate" v-model="selected" @change="onChange" placeholder="请选择"></picker-popup>
+      <ui-cell>{{selected}}</ui-cell>
     </ui-cells>
   </page>
 </template>
 
 <script>
+// <ui-cells class="mt-10">
+//      <ui-popup-picker label="Picker" :data="pickDate" v-model="selected" @change="onChange" placeholder="请选择"></ui-popup-picker>
+//      <ui-cell>{{selected}}</ui-cell>
+//      <ui-datetime-picker label="Datetime Picker" placeholder="请选择时间" max="2019-12-31" v-model="selectedDatetime"></ui-datetime-picker>
+//      <ui-cell>{{selectedDatetime}}</ui-cell>
+//      <ui-city-picker label="City Picker" v-model="selectedCity"></ui-city-picker>
+//      <ui-cell>{{selectedCity}}</ui-cell>
+//     </ui-cells>
   import Page from '../components/page'
   import {UiCells, UiCell} from '../components/cell'
   import {UiInput} from '../components/form'
   import {UiButton} from '../components/buttons'
-  import {UiPopupPicker, UiCityPicker,UiDatetimePicker} from '../components/picker'
+  import {Picker, PickerPopup, PickerCity, PickerDatetime} from '../components/picker'
 //<ui-popup-picker label="Picker" :data="pickDate" v-model="selected" @change="onChange" placeholder="请选择"></ui-popup-picker>
     //  <ui-city-picker label="City Picker" v-model="selectedCity"></ui-city-picker>
     //  <ui-datetime-picker label="Datetime Picker" placeholder="请选择时间" v-model="selectedDatetime"></ui-datetime-picker>
@@ -25,13 +29,10 @@
     name: 'picker',
     components: {
       Page,
-      UiCells,
-      UiCell,
+      UiCells, UiCell,
       UiInput,
       UiButton,
-      UiPopupPicker,
-      UiCityPicker,
-      UiDatetimePicker
+      Picker, PickerPopup, PickerCity, PickerDatetime
     },
     data () {
       return {

@@ -1,9 +1,9 @@
 <template>
-  <div :class="['ui-footer',{'ui-footer_fixed-bottom':isFix}]">
+  <div :class="['ui-footer',{'ui-footer_fixed':isFix}]">
     <p class="ui-footer__links">
         <a href="javascript:void(0);" 
            class="ui-footer__link" 
-           v-for="(title, url) in link"
+           v-for="(url, title) in link"
            :key="title"
            @click="onClick(url)">
             {{title}}
@@ -35,12 +35,14 @@ export default {
         }
     },
     mounted() {
-        var elPage = document.getElementsByClassName("page-current")[0];
-        var elFooter = this.$el;
-        if(elPage.scrollHeight > elPage.offsetHeight){
-            this.isFix = false
-        };
-        if(this.isFix) elPage.style.paddingBottom = elFooter.offsetHeight + 'px';
+        let clientHeight = document.documentElement.clientHeight;
+        let prevElOffset = this.$el.previousElementSibling.getBoundingClientRect();
+        this.isFix = prevElOffset.bottom > clientHeight ? false : true;
+        if(this.isFix){
+            let elHeight = this.$el.offsetHeight;
+            let fillerTpl = `<div style="height: ${elHeight}px; visibility: hidden">ui-footer filler</div>`;
+            this.$el.insertAdjacentHTML('afterend', fillerTpl);
+        }
         
     },
     methods: {

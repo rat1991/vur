@@ -1,12 +1,14 @@
 <script>
-import UiPopupPicker from './PopupPicker'
-import UiCityPicker from './CityPicker'
-import UiDatetimePicker from './DatetimePicker'
+import Picker from './Picker'
+import PickerPopup from './PopupPicker'
+import PickerCity from './CityPicker'
+import PickerDatetime from './DatetimePicker'
 
 export default {
-  UiPopupPicker,
-  UiCityPicker,
-  UiDatetimePicker
+  Picker,
+  PickerPopup,
+  PickerCity,
+  PickerDatetime
 }
 </script>
 

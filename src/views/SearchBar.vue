@@ -17,9 +17,9 @@
       return {
           searchVal: '',
           footlink: {
-              "//www.baidu.com": "百度",
-              "//www.qq.com": "QQ",
-              "/form": "淘宝"
+              "百度": "//www.baidu.com",
+              "QQ": "//www.qq.com",
+              "表单页面":"/form"
           }
       }   
     },

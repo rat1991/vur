@@ -82,7 +82,6 @@ export default {
       //console.log('end',event);
     },
     onInput(event){
-      console.log(event.key);
       if(this.count === this.max && event.key !== 'Backspace') alert("超出可输入范围！");
       this.$emit('input', event.target.value)
     },

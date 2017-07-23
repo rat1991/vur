@@ -61,7 +61,6 @@
     },
     watch: {
       '$route' (to, from) {
-        console.log(to);
         let excVoid = function(arr){
           let arrLength = arr.length;
           arr.forEach((item,index)=>{
