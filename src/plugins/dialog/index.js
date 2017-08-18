@@ -7,7 +7,6 @@ export default {
     //定义DIAKOG 函数
     function Dialog (opt, type){
       $vm = new VM().$mount()
-      $vm.$el.setAttribute('data-plugins', type)
       this.wrapper = document.querySelector('.container')
       this.wrapper.appendChild($vm.$el)
       //destroy watcher

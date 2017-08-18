@@ -1,12 +1,13 @@
 <template>
   <div :class="['page', current && 'page-current']"
-  :style="{minHeight: winHeight + 'px'}">
+  :style="{minHeight: `${clientHeight}px`}">
     <slot></slot>
   </div>
 </template>
-
+<style lang="sass">
+  @import "./Page";
+</style>
 <script>
-
 export default {
   name: 'Page',
   props: {
@@ -15,9 +16,9 @@ export default {
       default: false
     }
   },
-  data(){
-    return {
-      winHeight: document.documentElement.clientHeight
+  computed:{
+    clientHeight(){
+      return document.documentElement.clientHeight
     }
   }
 }

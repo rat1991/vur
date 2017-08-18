@@ -1,6 +1,8 @@
 <template>
   <transition name="fade">
-    <div :class="[transparent ? 'ui-mask_transparent' : 'ui-mask']" @touchmove.prevent></div>
+    <div :class="[transparent ? 'ui-mask_transparent' : 'ui-mask']" v-if="show"
+     @touchmove.prevent
+     @click="onMask"></div>
   </transition>
 </template>
 
@@ -15,7 +17,7 @@ export default {
     props: {
       show: {
         type: Boolean,
-        default: false
+        default: true
       },
       transparent: Boolean,
       animation: {
@@ -24,6 +26,7 @@ export default {
       }
     },
     methods: {
+      onMask(){}
     }
 }
 </script>

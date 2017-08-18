@@ -20,7 +20,7 @@ $cellElGap: torem(20px);
     margin-top: $gap-20;
   }
   &__title {
-    padding: torem(28px) $gapSides torem(10px) $gapSides;
+    padding: torem(28px) $gapSides torem(12px) $gapSides;
     font-size: $text-14;
     line-height: 1;
     color: $grayLight;
@@ -28,6 +28,7 @@ $cellElGap: torem(20px);
       position: -webkit-sticky;
       position: fixed;
       background-color: $bgBody;
+      z-index: $lv1;
       @extend %borderBottom;
     }
   }
@@ -62,7 +63,9 @@ $cellElGap: torem(20px);
   }
   &_switch {
     padding: calc(#{$cellGapV} - 4px) $cellGapH;
-    line-height: 0;
+    >.ui-cell__ft{
+      line-height: 0;
+    }
   }
   &_select {
     padding: 0;

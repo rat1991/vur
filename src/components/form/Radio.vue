@@ -1,17 +1,17 @@
 <template>
-  <label :class="['ui-cell','ui-check-label', {'ui-check-label_disabled': options.disabled}]" :for="id">
+  <label :class="['ui-cell','ui-check-label', disabled && 'ui-check-label_disabled']" :for="id">
     <div class="ui-cell__bd">
-      {{options.label||options.value}}<slot></slot>
+      {{label||value}}<slot></slot>
     </div>
     <div class="ui-cell__ft">
       <input 
         type="radio" 
         class="ui-check"
         :id="id"
-        :name="name || options.name"
-        :disabled="options.disabled"
-        :value="options.value"
-        @change="onChange">
+        :name="name"
+        :disabled="disabled"
+        :value="value"
+        v-model="checkedDate">
       <span class="ui-radio"></span>
     </div>
   </label>
@@ -21,32 +21,35 @@
 
 export default {
   name: "ui-radio",
+  model: {
+    prop: 'checked',
+    event: 'change'
+  },
   props:{
-    id: [String,Number],
+    id: [String, Number],
     name: {
       type: String,
       default: "radio"
     },
+    label: {
+      type: String,
+      default: "单选项"
+    },
+    value: String,
     disabled: Boolean,
-    options:{
-      type: Object,
-      default: function(){
-        return {
-          label: '单选项',
-          value: 'option',
-          disabled: false
-        }
-      }
-    }
+    checked: String
   },
   data(){
     return {
-      checked: false
+      checkedDate: ''
     }
   },
-  methods:{
-    onChange: function(event){
-      this.$emit('input',event.target.value)
+  watch: {
+    checked(newVal){
+      this.checkedDate = newVal
+    },
+    checkedDate(newVal){
+      this.$emit('change',newVal)
     }
   }
 };

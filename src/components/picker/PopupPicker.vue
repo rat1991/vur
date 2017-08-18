@@ -6,7 +6,7 @@
       <p :class="['text-' + textAlign, 'text-light']" v-else>{{placeholder}}</p>
     </ui-cell>
     <transition name="fade">
-      <ui-mask v-show="state" @click.native="onMask"></ui-mask>
+      <ui-mask :show="state" @click.native="onMask"></ui-mask>
     </transition>
     <div :class="['ui-picker', state ? 'ui-picker--active' : '']" @touchmove.prevent>
       <div class="ui-picker__hd">
@@ -14,7 +14,7 @@
         <a href="javascript:;" class="ui-picker__action" @click="onConfirm">确认</a>
       </div>
       <div class="ui-picker__bd">
-        <ui-picker v-for="(list, i) in data" :picker-data="list" :key="i" :columns="i" v-model="selected[i]"></ui-picker>
+        <ui-picker v-for="(list, i) in data" :picker-data="list" :key="i" v-model="selected[i]" @change="onChange"></ui-picker>
       </div>
     </div>
   </div>
@@ -98,6 +98,9 @@ export default {
           }
         })
       }
+    },
+    onChange(val){
+      console.log(val);
     },
     onShowPicker(){
       this.state = true

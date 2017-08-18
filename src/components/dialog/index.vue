@@ -6,7 +6,6 @@ export default {
   UiDialog
 }
 </script>
-
 <style lang="sass">
-  @import "./Dialog.scss";
+  @import "./Dialog.scss"
 </style>

@@ -174,7 +174,18 @@ $currentSize: torem(60px);
       }
     }
     &.today{
-      border-bottom: 1px solid $primary;
+      position: relative;
+      font-weight: 500;
+      &:after{
+        content: '';
+        position: absolute;
+        left: calc(50% - 3px);
+        bottom: 0;
+        width: 6px;
+        height: 6px;
+        background-color: $primary;
+        border-radius: 50%;
+      }
     }
     &-current{
       @extend .ui-calendar__day;

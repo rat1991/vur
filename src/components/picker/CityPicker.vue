@@ -2,8 +2,8 @@
   <div class="ui-cell-picker">
     <ui-cell access  @click.native="onShowPicker">
       <span slot="hd">{{label}}</span>
-      <p :class="['text-' + textAlign]" v-if="showVal">{{showVal.join(' ')}}</p>
-      <p :class="['text-' + textAlign, 'text-light']" v-else="showVal">{{placeholder}}</p>
+      <p :class="['text-' + textAlign]" v-if="value">{{value.join(' ')}}</p>
+      <p :class="['text-' + textAlign, 'text-light']" v-else>{{placeholder}}</p>
     </ui-cell>
     <transition name="fade">
       <ui-mask v-show="state" @click.native="onMask"></ui-mask>
@@ -14,15 +14,16 @@
         <a href="javascript:;" class="ui-picker__action" @click="onConfirm">确认</a>
       </div>
       <div class="ui-picker__bd">
-        <ui-picker :pickerData="levelOne" v-model="selected[0]" :columns="0"></ui-picker>
-        <ui-picker :pickerData="levelTwo" v-model="selected[1]" :columns="1"></ui-picker>
-        <ui-picker :pickerData="levelThree" v-model="selected[2]" :columns="2"></ui-picker>
+        <ui-picker :pickerData="levelOne" v-model="selectedOne"></ui-picker>
+        <ui-picker :pickerData="levelTwo" v-model="selectedTwo"></ui-picker>
+        <ui-picker :pickerData="levelThree" v-model="selectedThree"></ui-picker>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 import UiMask from '../mask'
 import {UiCell} from '../cell'
 import UiPicker from './Picker'
@@ -35,14 +36,9 @@ export default {
     UiPicker
   },
   props: {
-    model:[String],  //PCA:省市区
     value: {
        type: [Array],
        default: ['北京','北京市','东城区']
-    },
-    level: {
-       type: [Number],
-       default: 3
     },
     label: [String],
     placeholder: [String],
@@ -56,27 +52,31 @@ export default {
       levelOne: CityData,
       levelTwo: [],
       levelThree: [],
+      selectedOne: {},
+      selectedTwo: {},
+      selectedThree: {},
       selected: [],
       state: false,
     }
   },
   computed: {
-    showVal(){
-      let showArry = []
-      this.selected.forEach((cur)=>{
-        showArry.push(cur.name)
-      })
-      return showArry
-    }
   },
   watch: {
-    selected(newVal){
-      this.levelTwo = newVal[0].sub
-      this.levelThree = newVal[1].sub
-      this.$emit('change', newVal)
+    value(newVal){
+      console.log('value')
     },
-    showVal(newVal){
-      this.$emit('input', newVal)
+    selectedOne(newVal){
+      this.levelTwo = newVal.sub ? newVal.sub : []
+    },
+    selectedTwo(newVal){
+      this.levelThree = newVal.sub ? newVal.sub : []
+    },
+    selectedThree(newVal){
+      let dataArr = [this.selectedOne, this.selectedTwo, newVal];
+      let output = dataArr.map(curVal=>{
+        return curVal.name
+      });
+      this.$emit('input',output);
     }
   },
   created(){
@@ -87,26 +87,26 @@ export default {
       this.state = true
     },
     setModelVal(n){
-      let modelVal = this.value
+     let modelVal = this.value.length !== 0 ? this.value : ['北京','北京市','东城区'];
       switch(n){
         case 0:
         this.levelOne.forEach((cur)=>{
           if(modelVal[0] === cur.name){
-            this.selected[0] = cur
+            this.selectedOne = cur
             this.levelTwo = cur.sub
           }
         });
         case 1:
         this.levelTwo.forEach((cur)=>{
           if(modelVal[1] === cur.name){
-            this.selected[1] = cur
+            this.selectedTwo = cur
             this.levelThree = cur.sub
           }
         });
         case 2:
         this.levelThree.forEach((cur)=>{
           if(modelVal[2] === cur.name){
-            this.selected[2] = cur
+            this.selectedThree = cur
           }
         })
       }

@@ -4,9 +4,9 @@
         {{label}}
     </div>
     <div class="ui-cell__bd">
-      <select :class="['ui-select', value ?  '':'text-light']" :name="name" :value="selectVal" @change="onChange">
-          <option value="placeholder" disabled v-if="!!placeholder">{{placeholder}}</option>
-          <option v-for="option in options" v-bind:value="option.value">
+      <select :class="['ui-select', !value && 'text-light']" :name="name" v-model="selectedDate">
+          <option value="placeholder" disabled selected v-if="!value && placeholder">{{placeholder}}</option>
+          <option v-for="option in options" :key="option.value" :value="option.value">
             {{ option.text }}
           </option>
       </select>
@@ -19,33 +19,34 @@
 export default {
   name: "ui-select",
   props: {
-    name: String,
     label: String,
+    name: String,
     placeholder: {
       type: String
     },
     value: {
       type: String,
-      default: "placeholder"
+      default: "请选择"
     },
     options: {
       type: Array,
       required: true
     }
   },
-  computed: {
-    selectVal(){
-        if (this.value === '' && this.placeholder) {
-            return 'placeholder'
-        }else{
-          return this.value
-        }
+  data(){
+    return {
+      selectedDate: this.placeholder ? 'placeholder' : ''
     }
   },
-  methods:{
-    onChange: function(event){
-      this.$emit('input',event.target.value)
-      console.log(event.target.value);
+  created(){
+    console.log(this.selectedDate);
+  },
+  watch: {
+    value(newVal){
+      this.selectedDate = newVal
+    },
+    selectedDate(newVal){
+      this.$emit('input', newVal)
     }
   }
 }

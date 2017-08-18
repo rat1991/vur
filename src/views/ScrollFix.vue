@@ -28,7 +28,7 @@
         list: ['内容01','内容02','内容03','内容04','内容05','内容06','内容07'],
         options: {
           className: 'ui-cells__title_fix',
-          onTop(el){
+          onFix(el){
             console.log('top',el)
           }
         }

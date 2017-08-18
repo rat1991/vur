@@ -1,0 +1,29 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// AVATAR VARIABLES
+// ------------------------------------------->
+$avatarSizeXs: torem(30px);
+$avatarSizeSm: torem(60px);
+$avatarSizeMd: torem(90px);
+$avatarSizeLg: torem(120px);
+// AVATAR COMPONENT
+// ============================================>
+.ui-avatar{
+  display: block;
+  width: $avatarSizeMd;
+  height:$avatarSizeMd;
+  background-size: 100%;
+  background-position: center;
+  &_xs{
+    width: $avatarSizeXs;
+    height: $avatarSizeXs;
+  }
+  &_sm{
+    width: $avatarSizeSm;
+    height: $avatarSizeSm;
+  }
+  &_lg{
+    width: $avatarSizeLg;
+    height: $avatarSizeLg;
+  }
+}

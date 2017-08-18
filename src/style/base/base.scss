@@ -21,20 +21,3 @@
 .container-fluid {
   margin: 0 auto;
 }
-.page{
-  display: none;
-  background-color: $bgBody;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-}
-.page-current{
-  display: block;
-  min-height: 100%;
-  z-index: $lv1;
-}
-.page-gap-top {
-	padding-top: torem(98px);
-}
-.page-gap-bottom {
-	padding-bottom: torem(98px);
-}

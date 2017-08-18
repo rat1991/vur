@@ -27,8 +27,8 @@
   </page>
 </template>
 <script>
-  import Page from '../components/page'
-  import {UiCells, UiCell} from '../components/cell'
+import Page from '../components/page'
+import {UiCells, UiCell} from '../components/cell'
   
   export default {
     name: 'cell',
@@ -36,6 +36,9 @@
       Page,
       UiCells,
       UiCell
+    },
+    created(){
+      console.log(new Date('09:30'));
     }
   }
 </script>

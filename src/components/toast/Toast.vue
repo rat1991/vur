@@ -1,24 +1,22 @@
 <template>
-  <div>
-      <ui-mask transparent v-if="state"></ui-mask>
-      <transition name="fade" @after-leave="destroyVm">
-      <div :class="['ui-toast', {'ui-toast_text': this.type === 'text'}]" v-if="state">
-        <i :class="['ui-toast__icon', toastIcon]" v-if="this.type !== 'loading'"></i>
-        <ui-loading class="ui-toast__icon" v-if="this.type === 'loading'"></ui-loading>
-        <p class="ui-toast__text">{{type !== 'loading' ? text : loadingText}}<slot></slot></p>
-      </div>
-      </transition>
-  </div>
+  <transition name="fade" @after-leave="destroyVm">
+    <div :class="['ui-toast', {'ui-toast_text': this.type === 'text'}]" v-if="state">
+      <i :class="['ui-toast__icon', toastIcon]" v-if="this.type !== 'loading'"></i>
+      <ui-loading class="ui-toast__icon" v-if="this.type === 'loading'"></ui-loading>
+      <p class="ui-toast__text">{{type !== 'loading' ? text : loadingText}}<slot></slot></p>
+    </div>
+  </transition>
 </template>
 
 <script>
+import Vue from 'vue'
 import UiMask from '../mask'
 import {UiLoading} from '../loading'
 export default {
     name: "ui-toast",
     components:{
-        UiMask,
-        UiLoading
+      UiMask,
+      UiLoading
     },
     props: {
         value: {
@@ -47,9 +45,20 @@ export default {
         }
     },
     created () {
-      if (this.value) {
-        this.state = true
-      }
+      //定义mask组件
+      const VM_Mask = Vue.extend(UiMask);
+      this.$mask = new VM_Mask().$mount()
+      this.$mask.show = false
+      this.$mask.transparent = true
+      this.$nextTick(()=>{
+        //向Dom插入mask组件
+        this.$el.parentNode.insertBefore(this.$mask.$el, this.$el);
+      })
+      //默认值
+      this.state = this.value
+    },
+    mounted(){
+      //this.$el.parentNode.insertBefore($mask.$el, this.$el);
     },
     destroyed(){
       console.log('toast 实例销毁');
@@ -67,13 +76,18 @@ export default {
     watch: {
       state(newVal){
         this.$emit('input', newVal)
-        newVal ? this.$emit('on-show') : this.$emit('on-hide')
-        if (newVal && this.type !== 'loading') {
-          //延时消息
-          clearTimeout(this.timeout)
-          this.timeout = setTimeout(() => {
-            this.state = false
-          }, this.duration)
+        this.$mask.show = newVal
+        if(newVal){
+          this.$emit('on-show')
+          //定义toast消失事件
+          if(this.type !== 'loading'){
+            clearTimeout(this.timeout)
+            this.timeout = setTimeout(() => {
+              this.state = false
+            }, this.duration)
+          }
+        }else{
+          this.$emit('on-hide')
         }
       },
       value(newVal){

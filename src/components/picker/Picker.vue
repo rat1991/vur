@@ -12,103 +12,89 @@
     </ul>
   </div>
 </template>
-
+<style lang="sass" type="text/css">
+  @import './Picker';
+</style>
 <script>
-// style="transform: translate3d(0px, 102px, 0px); transition: all 0.3s;"
-import Transform from 'css3transform'
 export default {
   name: "ui-picker",
   props: {
     pickerData: [Array],
-    columns: [Number],
     divider: [String],
     value: [Object, String]
   },
   data () {
     return {
-      isTransition:true,
+      //滚动事件项目
       startY:null,
       startTime:null,
-      currentY:0,
-      //滚动后的index值 
+      //当前选中项index
       index:null,
-      //pickerData类型
-      dataType: false,
+      currentY:0,
       //选中的值
-      selectedName: undefined,
-      selectedValue: undefined,
-      selectedSub:undefined
+      selected: undefined
     }
   },
   computed: {
-    selected(){
-      if(this.dataType){
-        return this.selectedSub ? {name:this.selectedName, value:this.selectedValue, sub:this.selectedSub} : {name:this.selectedName, value:this.selectedValue}
+    dataType(){
+      return typeof this.pickerData[0] === 'object' && true
+    },
+    layer(){
+      let groupHeight = this.$refs.group.offsetHeight;
+      let itemHeight = this.$refs.indicator.offsetHeight;
+      return groupHeight / itemHeight
+    },
+    reLayer(){
+      if(this.layer % 2 === 1){
+        return ((this.layer - 1) / 2)
       }else{
-        return this.selectedValue
+        console.error('layer 必须大于5')
       }
     }
   },
   watch: {
-    index(i){
-      this.currentY = this.itemH * (3 - i)
-      this.$refs.list.translateY = this.currentY
-      this.selectedValue = this.dataType ? this.pickerData[i].value : this.pickerData[i]
-      this.selectedName = this.dataType ? this.pickerData[i].name : undefined
-      this.selectedSub = this.dataType ? this.pickerData[i].sub : undefined
+    pickerData(newVal){
+      if(this.index + 1 > newVal.length){
+        this.index = 0
+      }
+    },
+    index(newVal){
+      this.currentY = this.itemH * (this.reLayer - newVal)
+      this.setTranslateY(this.$refs.list, this.currentY)
+      this.selected = this.pickerData[newVal]
+      this.$emit('change', newVal)
     },
     value(newVal){
       this.selected = newVal
     },
     selected(newVal){
       this.$emit('input', newVal)
-      this.$emit('change', newVal, this.columns)
-    }
-  },
-  created(){
-    if(typeof this.pickerData[0] === 'object'){
-      this.dataType = true
     }
   },
   mounted(){
-    Transform(this.$refs.list)
     this.itemH = this.$refs.indicator.offsetHeight
-    if(!this.value){
-      this.setDefaultVal()
-    }else{
-      this.setModelVal()
-    }
+    this.setDefaultVal()
   },
   beforeUpdate(){
-    if(!this.pickerData[this.index]){
-      this.index = 0
-    }else{
-      this.selectedValue = this.dataType ? this.pickerData[this.index].value : this.pickerData[this.index]
-      this.selectedName = this.dataType ? this.pickerData[this.index].name : undefined
-      this.selectedSub = this.dataType ? this.pickerData[this.index].sub : undefined
-    }
+    this.selected = this.pickerData[this.index]
   },
   methods: {
-    setDefaultVal () {
-      let list = this.$refs.list
-      let item = this.$refs.item || []
-      let groupH = this.$refs.group.offsetHeight
-      let rows = groupH / this.itemH
-      let ratioY = (rows % 2 === 1) && (rows - 1) / 2
-      this.index = (item.length < rows) ? 0 : ratioY
+    setTranslateY(el, val){
+      el.style.transform = `translate3d(0, ${val}px, 0)`
     },
-    setModelVal(){
-      let modelVal = this.dataType ? this.value.value : this.value
-      this.pickerData.forEach((cur, index)=>{
-        let curVal = this.dataType ? cur.value : cur
-        if(modelVal === curVal){
-          this.index = index
-        }
-      })
+    setDefaultVal () {
+      if(this.value){
+        let modelVal = this.value.value || this.value
+        this.pickerData.forEach((curVal, index)=>{
+          let value = curVal.value || curVal
+          this.index = modelVal === value ?  index : this.index
+        })
+      }else{
+        this.index = this.pickerData.length < this.layer ? 0 : this.reLayer
+      }
     },
     onTouchStart(event){
       event = event.changedTouches[0]
-      this.isTransition = false
       this.startY = event.pageY
       this.startTime = new Date().getTime()
     },
@@ -116,19 +102,20 @@ export default {
       event = event.changedTouches[0]
       let length = this.$refs.item.length || 0
       let offset = this.currentY + event.pageY - this.startY
-      if (offset > this.itemH * 3) {
-        offset = this.itemH * 3 + this.itemH / 2
+      if (offset > this.itemH * this.reLayer) {
+        offset = this.itemH * this.reLayer + this.itemH / 2
+        this.$refs.list.style.transition = 'all 1s ease-out'
+      }else if(offset < -this.itemH * (length-this.reLayer-1)){
+        offset = -this.itemH * (length-this.reLayer-1) - this.itemH / 2
+        this.$refs.list.style.transition = 'all 1s ease-out'
+      }else{
+        this.$refs.list.style.transition = 'none'
       }
-      if (offset < -this.itemH * (length-4)) {
-        offset = -this.itemH * (length-4) - this.itemH / 2
-      }
-      this.$refs.list.style.transition = 'none'
-      this.$refs.list.translateY = offset
+      this.setTranslateY(this.$refs.list, offset)
     },
     onTouchEnd(event){
-      let length = this.$refs.item.length
       event = event.changedTouches[0]
-      this.isTransition = true
+      let length = this.$refs.item.length
       let endTime = new Date().getTime()
       let time = endTime - this.startTime
       time = time > 200 ? 10000 : time
@@ -137,18 +124,18 @@ export default {
       let offset = this.currentY + distant + 238 * (distant/time)
 
       offset = Math.round(offset/this.itemH) * this.itemH
-      if (offset > this.itemH * 3) {
-        offset = this.itemH * 3
+      if (offset > this.itemH * this.reLayer) {
+        offset = this.itemH * this.reLayer
       }
-      if (offset < -this.itemH*(length-4)) {
-        offset = -this.itemH*(length-4);
+      if (offset < -this.itemH * (length-this.reLayer-1)) {
+        offset = -this.itemH * (length-this.reLayer-1)
       }
       this.currentY=offset
+      this.index = Math.abs(offset / this.itemH - this.reLayer)
       //be compatible with the low vision android
       this.$refs.list.style.transition = 'all .2s ease-out'
-      this.$refs.list.translateY = offset
-      let index = offset / this.itemH - 3
-      this.index = Math.abs(index)
+      this.setTranslateY(this.$refs.list, offset)
+      
     }
   }
 }

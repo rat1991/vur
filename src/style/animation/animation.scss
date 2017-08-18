@@ -29,7 +29,20 @@
     transform: translate(0, 0%)
   }
 }
-
+.slideDown{
+  &-enter-active{
+    transition: transform .3s ease
+  }
+  &-leave-active{
+    transition: transform .3s ease
+  }
+  &-enter, &-leave-to{
+    transform: translate(0, -100%)
+  }
+  &-enter-to, &-leave{
+    transform: translate(0, 0%)
+  }
+}
 .slideIn {
   &-enter{
     transform: translate3d(100%, 0, 0);

@@ -10,7 +10,7 @@
 </template>
 <script>
   import Page from '../components/page'
-  import {UiGrids,UiGrid} from '../components/grids'
+  import {UiGrids, UiGrid} from '../components/grids'
   export default {
     name: 'index',
     components: {
@@ -23,6 +23,7 @@
         menu: [
           {name:'cell',to:'/cell'},
           {name:'表单控件',to:'/form'},
+          {name:'表单验证',to:'/formValidation'},
           {name:'按钮',to:'/button'},
           {name:'搜索框',to:'/search'},
           {name:'Toast',to:'/toast'},

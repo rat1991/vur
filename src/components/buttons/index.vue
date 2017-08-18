@@ -5,7 +5,6 @@ export default {
   UiButton
 }
 </script>
-
 <style lang="sass">
   @import "./button";
 </style>

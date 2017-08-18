@@ -1,133 +1,134 @@
-// class TopFix{
-//   constructor(options){
-//     this.container = options && options.container || window
-//     this.distance = options && options.distance || 0
-//     this.rankArr = []
-//     this.curArr = []
-//   }
-//   getFixDate(el){
-//     let curScrollTop = options && options.container && options.container.scrollTop || document.body.scrollTop;
-//     let offsetTop = el.getBoundingClientRect().top;
-//     let fixObj = {
-//       dom:el,
-//       width: el.offsetWidth,
-//       height: el.offsetHeight,
-//       offset: offsetTop + curScrollTop
-//     };
-//     rankArr.push(fixObj)
-//   }
-//   inPosition(){
-//     let scrollTop = options && options.container && options.container.scrollTop || document.body.scrollTop;
-//     rankArr.forEach((cur,index)=>{
-//       let nearTop = cur.offset + distance - scrollTop;
-//       if(nearTop <= 0 && curArr.indexOf(index) === -1){
-//         curArr.unshift(index);
-//         cur.dom.classList.add('fix-t');
-//         cur.dom.style.width = `${cur.width}px`
-//         cur.dom.nextElementSibling.style.height = `${cur.height}px`
-//       }else if(nearTop >0 && curArr.indexOf(index) !== -1){
-//         curArr.shift(index);
-//         cur.dom.classList.remove('fix-t');
-//         cur.dom.nextElementSibling.style.height = '0px'
-//       }
-      
-//       if(curArr.length && curArr[0] === index - 1){
-//         let current = rankArr[curArr[0]];
-//         let daff = nearTop - current.height;
-//         if(daff <= 0 && nearTop >= 0){
-//           current.dom.style.transform = `translate3d(0,${daff}px,0)`;
-//         }else{
-//           current.dom.style.transform = `translate3d(0,0,0)`;
-//         }
-//         if(curArr.length > 1){
-//           curArr.forEach((val,index)=>{
-//             if(index > 0){
-//               rankArr[val].dom.style.transform = `translate3d(0,-${rankArr[curArr[1]].height}px,0)`;
-//             }
-//           })
-//         }
-//       }
-//     })
-//   }
-//   onScroll(){
-//     container.addEventListener('scroll', this.inPosition, false);
-//   }
-// }
-
-export default {
-  install (vue, options = {}){
-    //let param = Object.assign({},options);
-    let container = options.container || window;
-    let distance = options.distance || 0;
-    let rankArr = [];
-    let curArr = [];
-    function onScroll(){
-      let scrollTop = container === window ? document.body.scrollTop : container.scrollTop;
-      rankArr.forEach((cur,index)=>{
-        let nearTop = cur.offset - distance - scrollTop;
-        if(nearTop <= 0 && curArr.indexOf(index) === -1){
-          curArr.unshift(index);
-          if(cur.className) cur.dom.classList.add(cur.className);
-          cur.dom.classList.add('fix-t');
-          cur.dom.style.top = `${distance}px`
-          cur.dom.style.width = `${cur.width}px`
-          cur.dom.nextElementSibling.style.height = `${cur.height}px`
-          if(cur.onTop) cur.onTop(cur.dom)
-        }else if(nearTop >0 && curArr.indexOf(index) !== -1){
-          curArr.shift(index);
-          cur.dom.classList.remove('fix-t');
-          if(cur.className) cur.dom.classList.remove(cur.className);
-          cur.dom.style.top = ''
-          cur.dom.style.width = ''
-          cur.dom.nextElementSibling.style.height = '0px'
+import $ from '@/libs/utils'
+  /**
+   * 滚动固定函数
+   * @param options {Object} 参数默认
+   * @param options.container {Object} 滚动对象
+   * @param options.distance {Number} 距离滚动对象的间隔
+   * @param options.className {String} 固定时的样式
+   * @returns {null}
+   */
+class ScrollFix {
+  constructor(options = {}){
+    this.scroller = options.container || window
+    this.distance = options.distance || 0
+    this.className = options.className || 'fix-t'
+    this.bindEl = []
+    this.fixEl = []
+  }
+  /**
+   * 获取固定元素的信息对象，并推入到this.bindEl数组
+   * @param el {Object} 固定的DOM元素
+   * @param value {Object} vue指令的binding对象的value
+   * @returns {null}
+   */
+  getBindEl(el, value){
+    let scrollTop = this.scroller === window ? document.body.scrollTop : this.scroller.scrollTop;
+    let bindObj = {};
+    bindObj.el = el
+    bindObj.offset = el.getBoundingClientRect().top + scrollTop
+    bindObj.className = value.className
+    bindObj.distance = value.distance
+    bindObj.onFix = value.onFix
+    //添加fix元素信息对象
+    this.bindEl.push(bindObj)
+    //绑定事件
+    this.scroller.addEventListener('scroll', this.onScroll.bind(this), false);
+  }
+  removeBind(){
+    //清空绑定元素数组
+    this.bindEl = []
+    //解绑事件
+    this.scroller.removeEventListener('scroll', this.onScroll.bind(this), false);
+  }
+  onFix(cur, index){
+    let className = cur.className || this.className,
+        distance = cur.distance || this.distance;
+    let elWidth = cur.el.offsetWidth,
+        elHeight = cur.el.offsetHeight;
+    //定义onfix 信息对象    
+    let infoObj = {};
+    infoObj.index = index
+    infoObj.el = cur.el
+    infoObj.width = elWidth
+    infoObj.height = elHeight
+    this.fixEl.unshift(infoObj)
+    cur.el.insertAdjacentHTML('afterend', `<div style="height:${elHeight}px"></div>`);
+    cur.el.classList.add(className);
+    cur.el.style.width = `${elWidth}px`
+    cur.el.style.top = `${distance}px`
+  }
+  unFix(cur){
+    let className = cur.className || this.className;
+    this.fixEl.shift()
+    cur.el.nextElementSibling.remove()
+    cur.el.classList.remove(className)
+    cur.el.style.width = ''
+    cur.el.style.top = ''
+  }
+  isFixEl(index){
+    let vote = this.fixEl.some((cur)=>{
+      return cur.index === index
+    });
+    return vote
+  }
+  onScroll(){
+    let scrollTop = this.scroller === window ? document.body.scrollTop : this.scroller.scrollTop;
+    this.bindEl.forEach((cur, index)=>{
+      let curEl = cur.el,
+          distance = cur.distance || this.distance
+      let nearTop = cur.offset - distance - scrollTop;
+      if(nearTop <= 0 && !this.isFixEl(index)){
+        this.onFix(cur, index)
+        cur.onFix && cur.onFix(curEl)
+      }else if(nearTop > 0 && this.isFixEl(index)){
+        this.unFix(cur)
+      }
+      //
+      if(this.fixEl.length > 0 && this.fixEl[0].index === index - 1){
+        let curFixEl = this.fixEl[0].el;
+        let fixElHeight = this.fixEl[0].height;
+        if(nearTop <= fixElHeight){
+          $.debounce(()=>{
+            let daff = nearTop - fixElHeight;
+            curFixEl.style.transform =`translate3d(0, ${daff}px, 0)`
+          }, 20)()
+        }else{
+          curFixEl.style.transform = ''
         }
-        
-        if(curArr.length && curArr[0] === index - 1){
-          let current = rankArr[curArr[0]];
-          let daff = nearTop - current.height;
-          if(daff <= 0 && nearTop >= 0){
-            current.dom.style.transform = `translate3d(0,${daff}px,0)`;
-          }else{
-            current.dom.style.transform = '';
-          }
-          if(curArr.length > 1){
-            curArr.forEach((val,index)=>{
+        if(this.fixEl.length > 1){
+          $.debounce(()=>{
+            this.fixEl.forEach((cur, index)=>{
               if(index > 0){
-                rankArr[val].dom.style.transform = `translate3d(0,-${rankArr[curArr[1]].height}px,0)`;
+                cur.el.style.transform = `translate3d(0,-${cur.height}px,0)`;
               }
             })
-          }
+          }, 1000)()
+          
         }
-      })
-    }
-    container.addEventListener('scroll', onScroll, false);
+      }
+    })
+  }
+}
+export default {
+  install (vue, options = {}){
+    //创建scrollFix实例
+    const scrollFix = new ScrollFix(options);
 
     vue.directive('topfix', {
       bind (el, binding, vnode, oldVnode) {
-        
+        console.log('bind');
       },
       inserted(el, binding, vnode, oldVnode){
-        let scrollTop = options.container ? options.container.scrollTop : document.body.scrollTop;
-        let _className, _onTop, _distance;
-        el.insertAdjacentHTML('afterend', `<div style="height:0px"></div>`);
-        let fixObj = {
-          dom:el,
-          width: el.offsetWidth,
-          height: el.offsetHeight,
-          offset: el.getBoundingClientRect().top + scrollTop,
-        };
-        if(typeof binding.value === 'object'){
-          fixObj['className'] = binding.value.className && binding.value.className
-          fixObj['distance'] = binding.value.distance && binding.value.distance
-          fixObj['onTop'] = typeof binding.value.onTop === 'function' ? binding.value.onTop : undefined
-        }
-        rankArr.push(fixObj)
+        scrollFix.getBindEl(el, binding.value)
       },
       update(el, binding, vnode, oldVnode){
         console.log('update');
       },
       componentUpdated(){
         console.log('componentUpdated');
+      },
+      unbind(){
+        scrollFix.removeBind()
       }
     })
   }

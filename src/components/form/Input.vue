@@ -3,18 +3,21 @@
         <div class="ui-cell__hd" v-if="label">
           {{label}}<slot></slot>
         </div>
-        <div class="ui-cell__bd">
+        <div class="ui-cell__bd" style="line-height: 1">
           <input
             :autocomplete="autocomplete"
             :autocapitalize="autocapitalize"
             :autocorrect="autocorrect"
             :spellcheck="spellcheck"
-            :class="['ui-input', textAlign ? 'text-' + textAlign : '']"
+            :class="['ui-input', textAlign && 'text-' + textAlign]"
             :type="type"
             :value="inputVal"
             :placeholder="placeholder"
+            :required="required"
             :readonly="readonly"
             :pattern="pattern"
+            :minlength="min"
+            :maxlength="max"
             @focus="onFocus"
             @input="onInput">
         </div>
@@ -26,6 +29,7 @@
 
 
 <script>
+
 export default {
     name: "ui-input",
     props: {
@@ -33,6 +37,8 @@ export default {
         name: String,
         value: String,
         textAlign: String,
+        min: [Number, String],
+        max: [Number, String],
         type: {
           type: String,
           default: "text"
@@ -45,6 +51,7 @@ export default {
           type: Boolean,
           default: false
         },
+        required: Boolean,
         readonly: {
           type: Boolean,
           default: false
@@ -76,6 +83,9 @@ export default {
         }
     },
     methods:{
+        validator(val){
+            
+        },
         onInput(event){
             this.inputVal = event.target.value;
             this.$emit('input', this.inputVal)

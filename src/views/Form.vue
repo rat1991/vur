@@ -7,11 +7,20 @@
         <ui-cell>{{text}}</ui-cell>
     </ui-cells>
     <ui-cells title="多项选择">
-      <ui-checkbox v-for="item in checkList" :key="item.value" v-model="checkItem" :options="item" :checked="checkItem"></ui-checkbox>
+      <ui-checkbox v-for="item in checkList" :key="item.value"
+      :label="item.label"
+      :value="item.value"
+      :checked="item.checked"
+      :disabled="item.disabled"
+       v-model="checkItem"></ui-checkbox>
       <ui-cell>{{checkItem}}</ui-cell>
     </ui-cells>
     <ui-cells title="单项选择">
-      <ui-radio v-for="(item, index) in checkList" :key="item.value" v-model="checkRadio" :options="item"></ui-radio>
+      <ui-radio v-for="(item, index) in checkList" :key="item.value"
+      :label="item.label"
+      :value="item.value"
+      :disabled="item.disabled"
+       v-model="checkRadio"></ui-radio>
       <ui-cell>{{checkRadio}}</ui-cell>
     </ui-cells>
     <ui-cells title="多行文本">
@@ -61,7 +70,7 @@
         text: 'input同步数据',
         textarea: '',
         checkItem: [],
-        checkRadio: [],
+        checkRadio: '',
         switchItem: '',
         selectItem: [
           { text: 'One', value: 'A' },
@@ -76,26 +85,20 @@
         {
           label: '选项01',
           value: 'checked01',
-          checked: 0,
+          checked: false,
           disabled: true
         },{
           label: '选项02',
           value: 'checked02',
-          checked: 0,
+          checked: false,
           disabled: false
         },{
           label: '选项03',
           value: 'checked03',
-          checked: 1,
+          checked: true,
           disabled: false
         }
       ];
-      let self = this;
-      this.checkList.map(function(cur,i){
-        if(cur.checked === 1){
-          self.checkItem.push(cur.value);
-        }
-      });
       this.switchDate = {
         label: '开关',
         value: false,

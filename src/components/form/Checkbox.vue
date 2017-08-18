@@ -1,17 +1,17 @@
 <template>
-  <label :class="['ui-cell','ui-check-label', {'ui-check-label_disabled': options.disabled}]" @change="onChange">
+  <label :class="['ui-cell','ui-check-label', disabled && 'ui-check-label_disabled']">
     <div class="ui-cell__hd">
       <input 
         type="checkbox"
         class="ui-check"
-        :name="name || options.name"
-        :value="options.value"
-        :disabled="options.disabled"
-        v-model="currentVal">
+        :name="name"
+        :value="value"
+        :disabled="disabled"
+        v-model="checkedDate">
       <span class="ui-checkbox"></span>
     </div>
     <div class="ui-cell__bd">
-      {{options.label||options.value}}<slot></slot>
+      {{label||value}}<slot></slot>
     </div>
   </label>
 </template>
@@ -20,44 +20,39 @@
 
 export default {
   name: "ui-checkbox",
+  model: {
+    prop: 'checkedList',
+    event: 'change'
+  },
   props:{
+    label: {
+      type: String,
+      default: '选项'
+    },
+    value: String,
     name: {
       type: String,
-      default: "checkbox"
+      default: 'checkbox'
     },
-    options:{
-      type: Object,
-      default: function(){
-        return {
-          label: '选项',
-          value: 'option',
-          disabled: false
-        }
-      }
-    },
-    checked: {
-      type: Array,
-      default: function(){
-        return []
-      }
-    }
+    checked: Boolean,
+    disabled: Boolean,
+    checkedList: Array
   },
   data () {
     return {
-      currentVal: []
+      checkedDate: []
     }
   },
   created() {
-    this.currentVal = this.checked;
+    this.checkedDate = this.checkedList;
+    this.checked && this.checkedDate.push(this.value)
   },
   watch:{
-    checked(newVal) {
-      this.currentVal = newVal;
-    }
-  },
-  methods:{
-    onChange: function(event){
-      this.$emit('input',this.currentVal)
+    checkedList(newVal){
+      this.checkedDate = newVal
+    },
+    checkedDate(newVal){
+      this.$emit('change',newVal)
     }
   }
 };

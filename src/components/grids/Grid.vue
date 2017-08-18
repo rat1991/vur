@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-  import {go} from '../../libs/util_url.js';
+  import $ from '../../libs/utils.js';
   export default {
     name: 'ui-grids',
     props:{
@@ -13,7 +13,7 @@
     },
     methods: {
       onClick () {
-        go(this.to, this.$router)
+        $.url(this.to, this.$router)
       }
     }
   }

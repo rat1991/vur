@@ -9,7 +9,6 @@ export default {
   UiCell
 }
 </script>
-
 <style lang="sass">
   @import "./Cell";
 </style>

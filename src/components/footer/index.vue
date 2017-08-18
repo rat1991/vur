@@ -20,7 +20,7 @@
 </style>
 
 <script>
-import {go} from '../../libs/util_url.js';
+import $ from '../../libs/utils.js';
     
 export default {
     name: 'ui-footer',
@@ -47,7 +47,7 @@ export default {
     },
     methods: {
         onClick (url) {
-            go(url, this.$router)
+            $.url(url, this.$router)
         }
     }
 }

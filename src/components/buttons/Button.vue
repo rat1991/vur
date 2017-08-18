@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import {go} from '../../libs/util_url.js';
+import $ from '../../libs/utils.js';
 
 export default {
     name: "ui-button",
@@ -51,7 +51,7 @@ export default {
     methods: {
       onLink () {
         this.$emit('click');
-        go(this.link, this.$router);
+        $.url(this.link, this.$router);
       }
     }
 }

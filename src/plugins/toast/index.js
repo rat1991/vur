@@ -4,10 +4,10 @@ export default {
   install (vue, options){
     let $vm, unwatch
     const VM = vue.extend(UiToast)
+    
     //定义TOAST 函数
     function Toast(opt, type){
       $vm = new VM().$mount()
-      $vm.$el.setAttribute('data-plugins', type)
       this.options = Object.assign({}, options, opt)
       this.wrapper = document.querySelector(this.options.container || '.container')
       this.type    = type

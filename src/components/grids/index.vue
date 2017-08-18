@@ -7,7 +7,6 @@ export default {
   UiGrid
 }
 </script>
-
-<style lang="sass">
-  @import "./Grids";
+<style lang="sass" type="text/css">
+  @import "./Grids.scss";
 </style>

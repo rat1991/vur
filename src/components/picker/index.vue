@@ -1,18 +1,14 @@
 <script>
-import Picker from './Picker'
+import UiPicker from './Picker'
 import PickerPopup from './PopupPicker'
 import PickerCity from './CityPicker'
 import PickerDatetime from './DatetimePicker'
 
 export default {
-  Picker,
+  UiPicker,
   PickerPopup,
   PickerCity,
   PickerDatetime
 }
 </script>
-
-<style lang="sass">
-  @import './Picker';
-</style>
 

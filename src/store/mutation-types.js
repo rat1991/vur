@@ -1,7 +1,17 @@
-// 增加总时间或者减少总时间
-export const ADD_TOTAL_TIME = 'ADD_TOTAL_TIME';
-export const DEC_TOTAL_TIME = 'DEC_TOTAL_TIME';
+// 微信授权验证
+// ===================================================>
+// 更新同步本地状态
+export const UPDATE_SYNC_LOCAL = 'UPDATE_SYNC_LOCAL';
+export const DESTROY_SYNC_LOCAL = 'DESTROY_SYNC_LOCAL';
 
-// 新增和删除一条计划
-export const SAVE_PLAN = 'SAVE_PLAN';
-export const DELETE_PLAN = 'DELETE_PLAN';
+// 同步本地ACCESS TOKEN
+export const SYNC_LOCAL_TOKEN = 'SYNC_LOCAL_TOKEN';
+
+// 更新线上ACCESS TOKEN
+export const UPDATE_ONLINE_TOKEN = 'UPDATE_ONLINE_TOKEN';
+
+// 注销ACCESS TOKEN
+export const DESTROY_ACCESS_TOKEN = 'DESTROY_ACCESS_TOKEN';
+
+// 获取微信用户信息
+export const UPDATE_USERINFO = 'UPDATE_USERINFO';

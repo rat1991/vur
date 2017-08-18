@@ -243,10 +243,10 @@ text
 }
 //text ellipsis
 .text-1row {
-  @include ellipsisLn(1);
+  @include ellipsis(1);
 }
 .text-2row {
-  @include ellipsisLn(2);
+  @include ellipsis(2);
 }
 //text select
 .text-select{

@@ -9,7 +9,7 @@
         </div>
       </section>
       <section class="ui-calendar__toolbarRight">
-        <div :class="['ui-calendar__switchMonth',switchMonthState && 'open']" @click="switchMonthState ? switchMonthState=false : switchMonthState=true">
+        <div :class="['ui-calendar__switchMonth',switchMonthState && 'open']" @click="switchMonthState=!switchMonthState">
          <span>{{monthsText[curMonth - 1]}}</span><i class="arrow icon-next"></i>
         </div>
         <div class="ui-calendar__todayDisplay" @click="onToday">
@@ -19,24 +19,25 @@
     </div>
     <div class="ui-calendar__bd">
       <ul class="ui-calendar__monthslist" v-show="switchMonthState">
-        <li v-for="(item, index) in monthsText"
+        <li v-for="(item, index) in monthsText" :key="index"
         :class="[index + 1 === curMonth && 'current' ]"
         @click="updateMonthList(index)">{{item}}</li>
       </ul>
       <div class="ui-calendar__weekslist">
-        <span v-for="item in weeksText">{{item}}</span>
+        <span v-for="(item, index) in weeksText" :key="index">{{item}}</span>
       </div>
-      <div class="ui-calendar__inner" ref="swiperWrap">
+      <div class="ui-calendar__inner" ref="swiperContainer">
         <section 
-        v-for="month in curData"
+        v-for="(month, index) in curData" :key="index"
         class="ui-calendar__months"
-        :data-month="month.name">
-          <ul class="ui-calendar__weeks" v-for="week in month.value">
-            <li v-for="day in week" 
+        :data-month="month.name"
+        ref="swiperList">
+          <ul class="ui-calendar__weeks" v-for="(week, index) in month.value" :key="index">
+            <li v-for="day in week" :key="formatStr(day.value)"
             :class="[
-              formatStr(day.value) !== formatStr(curValue) ? 'ui-calendar__day' : 'ui-calendar__day-current',
+              formatStr(day.value) !== formatStr(selected) ? 'ui-calendar__day' : 'ui-calendar__day-current',
               formatStr(day.value) ===  formatStr(todayValue) && 'today',
-              day.value[1] !== month.name[1] && 'exclude',
+              day.value[1] !== formatArr(month.name)[1] && 'exclude',
               day.disable && 'disabled'
               ]" 
               @click.stop="updateCurDay(day)">
@@ -51,7 +52,7 @@
 
 <script>
 import Moment from 'moment'
-import Swiper from '../swiper/swiper.js'
+import CalendarSwiper from './calendar'
 export default {
     name: "ui-calendar",
     props: {
@@ -80,10 +81,10 @@ export default {
     data(){
       return {
         todayValue: this.formatArr(Moment().format('YYYY-MM-DD')),
-        curValue: [],
         curYear: undefined,
         curMonth: undefined,
         curDay: undefined,
+        selected: [],
         switchMonthState: false
       }
     },
@@ -102,28 +103,38 @@ export default {
       },
       curData(){
         let dataArr = [];
-        let curMonthData = {name:[this.curYear,this.curMonth], value:this.getMonthData(this.curYear,this.curMonth)},
-            prevMonthData = {name:this.prevValue, value:this.getMonthData(this.prevValue[0],this.prevValue[1])},
-            nextMonthData = {name:this.nextValue, value:this.getMonthData(this.nextValue[0],this.nextValue[1])};
+        let curMonthData = this.getMonthData(this.curYear,this.curMonth),
+            prevMonthData = this.getMonthData(this.prevValue[0],this.prevValue[1]),
+            nextMonthData = this.getMonthData(this.nextValue[0],this.nextValue[1]);
         dataArr.push(prevMonthData,curMonthData,nextMonthData)
         return dataArr
       }
     },
     created(){
-      //this.curValue = this.value ? this.formatArr(this.value) : this.todayValue
+      //this.selected = this.value ? this.formatArr(this.value) : this.todayValue
       this.curYear = this.value ? this.formatArr(this.value)[0] : this.todayValue[0]
       this.curMonth = this.value ? this.formatArr(this.value)[1] : this.todayValue[1]
       this.curDay = this.value ? this.formatArr(this.value)[2] : this.todayValue[2]
       console.log(this.curData);
     },
     mounted(){
-      this.calendarSwiper();
+      let _self = this;
+      //定义滑动事件
+      this.calendarSwiper = new CalendarSwiper({
+        container: this.$refs.swiperContainer,
+        swiperList: this.$refs.swiperList,
+        beforeSwiper(d){
+          d === 'prev' ? _self.curMonth-- : _self.curMonth++;
+          return _self.$nextTick()
+        }
+      });
+      //this.getMMDD(2017, 8)
     },
     watch: {
       value(newVal){
         console.log(newVal)
       },
-      curValue(newVal){
+      selected(newVal){
         let putVal = this.formatStr(newVal)
         this.$emit('input', putVal)
       },
@@ -139,157 +150,43 @@ export default {
     },
     methods: {
       formatArr(date){
-        let arr = [];
-        date.split('-').forEach((cVal)=>{
-          arr.push(parseInt(cVal))
+        return date.split('-').map((cVal)=>{
+          return parseInt(cVal)
         })
-        return arr
       },
       formatStr(date){
-        let strArr = [];
-        date.forEach((cVal)=>{
-          cVal = cVal < 10 ? '0'+ cVal : cVal
-          strArr.push(cVal)
+        let strArr = date.map((cVal)=>{
+          return cVal < 10 ? '0'+ cVal : cVal
         })
         return strArr.join('-');
       },
       getMonthData(year, month){
-        let daysNum = Moment(year +'-'+ month, ["YYYY-MM","YYYY-M"]).daysInMonth();
-        let startDay = Moment(year +'-'+ month +'-01', ["YYYY-MM-DD","YYYY-M-D"]).weekday();
-        let endDay = Moment(year +'-'+ month +'-'+ daysNum, ["YYYY-MM-DD","YYYY-M-D"]).weekday();
-        let nextWeekDay = (i = 0)=>{
-          let _day = Moment(year +'-'+ month,["YYYY-MM","YYYY-M"]).weekday(7*i).format('YYYY-MM-DD')
-          return this.formatArr(_day)
-        };
-        let maxDate = this.max ? this.formatArr(this.max) : []
-        let minDate = this.min ? this.formatArr(this.min) : []
-        let monthData = [];
-        let _count = 0;
-        let _istart=1, _iend=1;
-        
-        do{
-          let _weekArr = [null,null,null,null,null,null,null];
-          let _startMonth = nextWeekDay(_count)[1],
-              _startDay = nextWeekDay(_count)[2];
-          _weekArr.forEach(function(cVal,index){
-            let _dayObj = {value:[], disable:false};
-            if(_startMonth !== month && daysNum - _startDay < 7){
-              _dayObj.value = index >= startDay ? [year, month, _istart++] : [year, month - 1, _startDay++]
-            }else if(_startMonth === month && daysNum - _startDay < 7){
-              _dayObj.value = daysNum >= _startDay ? [year, month, _startDay++] : [year, month + 1, _iend++]
-            }else{
-              _dayObj.value = [year, month, _startDay++]
-            }
-
+        let date = Moment(`${year}-${month}`, ["YYYY-MM","YYYY-M"]),
+            dateTotal = date.daysInMonth(),
+            maxDate = this.max && this.max.replace(/\-/g,''),
+            minDate = this.min && this.min.replace(/\-/g,'');
+        let _monthData = {};
+        _monthData.name = `${year}-${month}`;
+        _monthData.value = [];
+        for(let i=0; i < 6; i ++){
+          let weekArr = [{},{},{},{},{},{},{}];
+          weekArr.forEach((cur,index)=>{
+            let weekDate = date.weekday(index).format('YYYY-MM-DD');
+            cur.value = this.formatArr(weekDate);
+            cur.disable = false
             //根据maxDate，minDate判断禁用范围
-            if(_dayObj.value[0] > maxDate[0] || _dayObj.value[0] < minDate[0]){
-              _dayObj.disable = true
-            }else if(_dayObj.value[1] > maxDate[1] || _dayObj.value[1] < minDate[1]){
-              _dayObj.disable = true
-            }else if(_dayObj.value[1] === maxDate[1] && _dayObj.value[2] >= maxDate[2]){
-              _dayObj.disable = true
-            }else if(_dayObj.value[1] === minDate[1] && _dayObj.value[2] <= minDate[2]){
-              _dayObj.disable = true
-            }
-            //添加的周数组中
-            _weekArr[index] = _dayObj
-          });
-          //切换到下周日期
-          _count++
-          monthData.push(_weekArr)
-        }while (nextWeekDay(_count)[1] == month);
-        //返回数据
-        return monthData
-      },
-      calendarSwiper(forward){
-        let _self = this;
-        let swiperWrap = this.$refs.swiperWrap;
-        let swiperList =  swiperWrap.querySelectorAll('.ui-calendar__months');
-        let swiperCurrent = swiperList[1],
-            swiperPrev = swiperList[0],
-            swiperNext = swiperList[2];
-        let swiperWrapWidth =  swiperWrap.offsetWidth;
-        let setTranslate = (el, per)=>{
-          el.style.transform = 'translate3d(' + per + '%, 0, 0)'
-        };
-        let getTranslate = (el)=>{
-           let matrix = window.getComputedStyle(el, null).transform;
-           let formatPer = matrix.split(',')[4] / swiperWrapWidth * 100
-           return formatPer ? formatPer : 0
-        };
-        function go(v){
-          let _wrapTranslate = getTranslate(swiperCurrent) * -1,
-              _curTranslate = getTranslate(swiperCurrent),
-              _prevTranslate = getTranslate(swiperPrev),
-              _nextTranslate = getTranslate(swiperNext);
-          
-          if(v === 'prev'){
-            setTranslate(swiperWrap, _wrapTranslate+=100)
-            setTranslate(swiperCurrent, _curTranslate-=100)
-            setTranslate(swiperPrev, _prevTranslate-=100)
-            setTranslate(swiperNext, _nextTranslate-=100)
-          }else if(v === 'next'){
-            setTranslate(swiperWrap, _wrapTranslate-=100)
-            setTranslate(swiperCurrent, _curTranslate+=100)
-            setTranslate(swiperPrev, _prevTranslate+=100)
-            setTranslate(swiperNext, _nextTranslate+=100)
-          }
-        };
-        if(forward === 'prev'){
-          go('prev')
-          return
-        }else if(forward === 'next'){
-          go('next')
-          return
-        }
-        setTranslate(swiperWrap,'0')
-        setTranslate(swiperCurrent,'0')
-        setTranslate(swiperPrev,'-100')
-        setTranslate(swiperNext,'100')
-        let _start={}, _move={}, _end={};
-        let _startTime, _endTime;
-        let _wrapTranslate;
-        //SWIPER start
-        swiperWrap.addEventListener('touchstart', function (e) {
-            _wrapTranslate = getTranslate(swiperCurrent) * -1
-            _startTime = new Date().getTime()
-            _start.x = e.changedTouches[0].pageX;
-            _start.y = e.changedTouches[0].pageY;
-            //e.preventDefault();
-        }, false);
-        //SWIPER move
-        swiperWrap.addEventListener('touchmove', function (e) {
-            _move.x = e.changedTouches[0].pageX;
-            _move.y = e.changedTouches[0].pageY;
-            let distance = _move.x - _start.x
-            let distancePer = (distance / swiperWrapWidth * 100) + _wrapTranslate;
-            setTranslate(swiperWrap, distancePer)
-            swiperWrap.style.transition = 'none'
-            e.preventDefault();
-        }, false);
-        //SWIPER end
-        swiperWrap.addEventListener('touchend', function (e) {
-            _endTime = new Date().getTime()
-            _end.x = e.changedTouches[0].pageX;
-            _end.y = e.changedTouches[0].pageY;
-            let interval = _endTime - _startTime;
-            let distance = _end.x - _start.x;
-            let distancePer = distance / swiperWrapWidth * 100;
-
-            if(Math.abs(distancePer) > 50 || Math.abs(distance) > 10 && interval < 120){
-              if(distancePer > 0){
-                go('prev')
-                _self.curMonth--
-              }else{
-                go('next')
-                _self.curMonth++
+            if(maxDate || minDate){
+              let toInteger = weekDate.replace(/\-/g,'');
+              if(toInteger > maxDate || toInteger < minDate){
+                cur.disable = true
               }
-            }else{
-              setTranslate(swiperWrap,_wrapTranslate)
             }
-            swiperWrap.style.transition = 'all 300ms ease'
-            //e.preventDefault();
-        }, false);
+            //moment递增每周
+            if(index === 6) date.weekday(index + 1);
+          })
+          _monthData.value.push(weekArr)
+        }
+        return _monthData;
       },
       updateMonthList(index){
         this.curMonth = index + 1
@@ -298,28 +195,21 @@ export default {
       updateCurDay(dayObj){
         if(dayObj.disable) return;
         let value = dayObj.value;
-
-        if(value[1] === this.curMonth){
-          this.curDay = value[2]
-        }else{
-          if(this.curMonth > value[1]){
-            this.calendarSwiper('next')
-            this.curMonth = value[1]
-          }else{
-            this.calendarSwiper('prev')
-            this.curMonth = value[1]
-          }
-          this.curDay = value[2]
+        if(value[0] < this.curYear || value[1] < this.curMonth){
+          this.calendarSwiper.prev()
+        }else if(value[0] > this.curYear || value[1] > this.curMonth){
+          this.calendarSwiper.next()
         }
-        this.curValue = [this.curYear, this.curMonth, this.curDay]
+        this.curYear = value[0]
+        this.curMonth = value[1]
+        this.curDay = value[2]
+        this.selected = value
       },
       onToday(){
-
         if(this.curYear > this.todayValue[0] || this.curMonth > this.todayValue[1]){
-          this.calendarSwiper('prev')
-          //console.log('prev',this.curYear,this.curMonth);
+          this.calendarSwiper.prev()
         }else if(this.curYear < this.todayValue[0] || this.curMonth < this.todayValue[1]){
-          this.calendarSwiper('next')
+          this.calendarSwiper.next()
         }
         this.curYear = this.todayValue[0];
         this.curMonth = this.todayValue[1];

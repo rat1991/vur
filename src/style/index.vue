@@ -9,6 +9,8 @@
 
   // reuse
   @import "base/reuse";
+  // lib-rem
+  @import "base/lib-rem";
   // font-icon
   @import "icon/style.css";
 </style>

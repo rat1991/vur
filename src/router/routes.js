@@ -1,11 +1,5 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-
-import App from './App.vue'
-
-Vue.use(VueRouter);
-
-// router构造配置
+import App from '../App'
+// router页面
 const routes = [{
     path: '/',
     name: '首页',
@@ -18,6 +12,10 @@ const routes = [{
     path: '/form',
     name: '表单控件',
     component: App.components.UiForm
+}, {
+    path: '/formValidation',
+    name: '表单验证',
+    component: App.components.FormValidation
 }, {
     path: '/button',
     name: '按钮组件',
@@ -80,12 +78,4 @@ const routes = [{
     component: App.components.Msg
 }]
 
-// router实例
-const router = new VueRouter({
-    mode: 'history',
-    routes: routes
-});
-router.afterEach((to, from, next) => {
-    document.title = to.name
-})
-export default router
+export default routes;

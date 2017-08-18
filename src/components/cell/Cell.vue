@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import {go} from '../../libs/util_url.js';
+  import $ from '../../libs/utils.js';
   
   export default {
     name: 'ui-cell',
@@ -42,7 +42,7 @@
     },
     methods: {
       onClick () {
-        go(this.link, this.$router)
+        $.url(this.link, this.$router)
       }
     }
   }

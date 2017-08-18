@@ -1,0 +1,32 @@
+@charset "UTF-8";
+@import "../../style/compass";
+// TOPTIPS VARIABLES
+// ------------------------------------------->
+$toptipsHeight: torem(68px);
+// TOPTIPS COMPONENT
+// ============================================>
+.ui-toptips{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: $toptipsHeight;
+  padding: 0 $gapSides;
+  text-align: center;
+  font-size: $text-14;
+  color: #fff;
+  line-height: $toptipsHeight;
+  background-color: $bgNav;
+  &_success{
+    color: $success;
+    background-color: rgba(#A7DCA7, .9);
+  }
+  &_warn{
+    color: $warn;
+    background-color: rgba(#FFE69B, .9);
+  }
+  &_error{
+    color: $danger;
+    background-color: rgba(#DDA8A7, .9);
+  }
+}
