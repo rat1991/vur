@@ -1,102 +1,71 @@
-// 使用 NodeJS 自带的文件路径插件
 var path = require('path')
-// 引入 config/index.js
-var config = require('../config')
-// 引入一些小工具
 var utils = require('./utils')
-// 拼接我们的工作区路径为一个绝对路径
-var projectRoot = path.resolve(__dirname, '../')
+var config = require('../config')
+var vueLoaderConfig = require('./vue-loader.conf')
 
-// 将 NodeJS 环境作为我们的编译环境
-var env = process.env.NODE_ENV
-// check env & config/index.js to decide weither to enable CSS Sourcemaps for the
-// various preprocessor loaders added to vue-loader at the end of this file
-// 是否在 dev 环境下开启 cssSourceMap ，在 config/index.js 中可配置
-var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap)
-// 是否在 production 环境下开启 cssSourceMap ，在 config/index.js 中可配置
-var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap)
-// 最终是否使用 cssSourceMap
-var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
 
 module.exports = {
   entry: {
-    // 编译文件入口
     app: './src/main.js'
   },
   output: {
-    // 编译输出的根路径
     path: config.build.assetsRoot,
-    // 正式发布环境下编译输出的发布路径
-    publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
-    // 编译输出的文件名
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: process.env.NODE_ENV === 'production'
+      ? config.build.assetsPublicPath
+      : config.dev.assetsPublicPath
   },
   resolve: {
-    // 自动补全的扩展名
-    extensions: ['', '.js', '.vue'],
-    // 不进行自动补全或处理的文件或者文件夹
-    fallback: [path.join(__dirname, '../node_modules')],
+    extensions: ['.js', '.vue', '.json'],
     alias: {
-      // 默认路径代理，例如 import Vue from 'vue'，会自动到 'vue/dist/vue.common.js'中寻找
-      'vue$': 'vue/dist/vue.common.js',
-      'src': path.resolve(__dirname, '../src'),
-      'assets': path.resolve(__dirname, '../src/assets'),
-      'components': path.resolve(__dirname, '../src/components')
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': resolve('src')
     }
   },
-  resolveLoader: {
-    fallback: [path.join(__dirname, '../node_modules')]
-  },
   module: {
-    preLoaders: [
-      // 预处理的文件及使用的 loader
-    ],
-    loaders: [
-      // 需要处理的文件及使用的 loader
+    rules: [
       {
         test: /\.vue$/,
-        loader: 'vue'
+        loader: 'vue-loader',
+        options: vueLoaderConfig
       },
       {
         test: /\.js$/,
-        loader: 'babel',
-        include: projectRoot,
-        exclude: /node_modules/
+        loader: 'babel-loader',
+        include: [resolve('src'), resolve('test')]
       },
-      { 
-        test: /\.scss$/,
-        loader: 'style!css!sass?sourceMap',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.json$/,
-        loader: 'json'
-      },
+//      { 
+//        test: /\.(css|scss)$/,
+//        loader: 'style!css!sass',
+//        exclude: /node_modules/
+//      },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url',
-        query: {
+        loader: 'url-loader',
+        options: {
           limit: 10000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },
       {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('media/[name].[hash:7].[ext]')
+        }
+      },
+      {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url',
-        query: {
+        loader: 'url-loader',
+        options: {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }
-    ]
-  },
-  vue: {
-    // .vue 文件配置 loader 及工具 (autoprefixer)
-    loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),
-    postcss: [
-      require('autoprefixer')({
-        browsers: ['last 3 iOS versions','last 4 Android versions','last 4 ChromeAndroid versions']
-      })
     ]
   }
 }

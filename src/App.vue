@@ -1,4 +1,3 @@
-
 <template>
   <div class="container">
     <transition :name="transitionView">
@@ -6,12 +5,12 @@
     </transition>
   </div>
 </template>
-
 <script>
   import UiStyle from './style'
   import Index from './views/Index.vue'
   import UiCell from './views/Cell.vue'
   import UiForm from './views/Form.vue'
+  import FormValidation from './views/FormValidation.vue'
   import UiButton from './views/Button.vue'
   import SearchBar from './views/SearchBar.vue'
   import Toast from './views/Toast.vue'
@@ -28,7 +27,6 @@
   import Feedback from './views/Feedback.vue'
   import Msg from './views/Msg.vue'
 
-
   export default {
     name: 'app',
     components: {
@@ -36,6 +34,7 @@
       UiStyle,
       UiCell,
       UiForm,
+      FormValidation,
       UiButton,
       SearchBar,
       Toast,
@@ -60,19 +59,18 @@
     created(){
     },
     watch: {
+      // 定义路由切换动画
       '$route' (to, from) {
-        let excVoid = function(arr){
-          let arrLength = arr.length;
-          arr.forEach((item,index)=>{
-            if(item === ''){
-              arrLength--
-            }
+        function excVoid(path){
+          let depth = path.length;
+          path.forEach((item, index)=>{
+            if(!item) depth--;
           })
-          return arrLength;
+          return depth;
         }
         const toDepth = excVoid(to.path.split('/'))
         const fromDepth = excVoid(from.path.split('/'))
-        this.transitionView = toDepth > fromDepth ? 'slideIn' : 'slideOut'
+        this.transitionView = toDepth >= fromDepth ? 'slideIn' : 'slideOut'
       }
     }
   };
