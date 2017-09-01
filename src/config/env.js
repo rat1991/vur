@@ -1,4 +1,4 @@
-let env = {
+const env = {
   SERVER_ROOT: '',
   LOCAL_ROOT: '',
   CLIENT_ID: '',
@@ -7,10 +7,11 @@ let env = {
 
 if (process.env.NODE_ENV === 'development') {
   // 开发环境
-  env.SERVER_ROOT = '' // 开发服务器地址
+  env.SERVER_ROOT = 'http://dgzrui.jios.org:8100/hengliang'
   env.LOCAL_ROOT = '/'
-  env.CLIENT_ID = ''
-  env.CLIENT_SECRET = ''
+  env.API_PATH = '/api/client/app-client/v1.0'
+  env.CLIENT_ID = 'weixin'
+  env.CLIENT_SECRET = '123456'
 
 } else if(process.env.NODE_ENV === 'production'){
   // 生产环境

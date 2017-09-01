@@ -1,9 +1,9 @@
 <template>
   <transition name="slideUp" v-on:after-leave="afterLeave">
     <div :class="['ui-actionsheet']" @touchmove.prevent v-show="state">
-      <div class="ui-actionsheet__title" v-if="title || subtitle">
+      <div class="ui-actionsheet__title" v-if="title || text">
         <h4>{{title}}</h4>
-        <small>{{subtitle}}</small>
+        <small>{{text}}</small>
       </div>
       <div class="ui-actionsheet__menu">
         <div :class="['ui-actionsheet__cell', item.className]" v-for="item in menus" :key="item.text" @click="onMenu(item.onClick)">
@@ -25,7 +25,7 @@ export default {
     name: "ui-actionsheet",
     props: {
       title: String,
-      subtitle: String,
+      text: String,
       menus: {
         type: Array,
         default: ()=>{
@@ -55,7 +55,7 @@ export default {
     },
     data () {
       return {
-        state: false
+        state: this.value
       }
     },
     created () {
@@ -63,14 +63,15 @@ export default {
       const VM_Mask = Vue.extend(UiMask);
       this.$mask = new VM_Mask().$mount()
       this.$mask.show = false
-      this.$mask.onMask = this.onMaskClose
+      this.$mask.onMask = this.onMask
       this.$nextTick(()=>{
         //向Dom插入mask组件
         this.$el.parentNode.insertBefore(this.$mask.$el, this.$el);
       })
-      if (this.value) {
-        this.state = true
-      }
+    },
+    beforeDestroy(){
+      this.$mask.$destroy()
+      this.$el.parentNode.removeChild(this.$mask.$el)
     },
     watch: {
       state(newVal){
@@ -82,18 +83,16 @@ export default {
       }
     },
     methods: {
-      onMaskClose(){
+      onMask(){
         if(this.maskClose){
           this.state = false
         }
-        this.onMask()
-      },
-      onMask(){
-        this.$emit('on-mask')
       },
       onMenu(event){
         this.state = false
-        event()
+        this.$once("after-leave",function(){
+          event()
+        })
       },
       afterLeave(){
         this.$emit('after-leave')

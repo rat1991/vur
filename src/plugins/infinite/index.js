@@ -1,72 +1,91 @@
 import {UiInfinite} from '../../components/infinite'
+import $ from '../../libs/utils'
 
 class Infinite {
   constructor(options ={}){
     this.container = options.container || window
     this.distance = options.distance || 20
-    this.event = options.event
     this.handle = options.handle
-    this.clientHeight = options.clientHeight
+    this.complete = options.complete
+    this.clientHeight = document.documentElement.clientHeight
     this.scrollTop = undefined
     this.scrollHeight = undefined
     this.loading = true
-    this.scrollEvet = this.onScroll.bind(this)
+    this.scrollEvet = $.debounce(this.isInFoot, 100).bind(this)
     this.init()
   }
   init(){
     this.container.addEventListener('scroll', this.scrollEvet, false);
   }
-  onScroll(){
-    let _self = this;
-    _self.scrollTop = _self.container === window ? document.body.scrollTop : _self.container.scrollTop
-    _self.scrollHeight = document.documentElement.scrollHeight
-    let offset = _self.scrollHeight - (_self.clientHeight + _self.scrollTop);
-    if(_self.loading && offset < _self.distance && typeof _self.event === 'function'){
-      _self.loading = false
-      _self.event().then((complete)=>{
-        _self.onComplete(complete)
+  isInFoot(){
+    this.scrollTop = this.container === window ? document.body.scrollTop : this.container.scrollTop
+    this.scrollHeight = document.documentElement.scrollHeight
+    let offset = this.scrollHeight - (this.clientHeight + this.scrollTop);
+    if(this.loading && offset < this.distance && typeof this.handle === 'function'){
+      this.loading = false
+      this.handle().then((state)=>{
+        this.setComplete(state)
       })
     }
   }
-  onComplete(state){
+  setComplete(state){
     this.loading = state ? false : true
-    if(state && typeof this.handle === 'function'){
-      this.handle();
-      this.container.removeEventListener('scroll', this.scrollEvet, false);
+    if(state){
+      this.complete && this.complete();
+      this.unbind();
     }
+  }
+  unbind(){
+    this.container.removeEventListener('scroll', this.scrollEvet, false);
   }
 }
 export default {
   install (vue, options){
-    let $vm;
     const VM = vue.extend(UiInfinite);
-    let clientHeight = document.documentElement.clientHeight;
+    let infinites = [];
     vue.directive('infinite', {
       bind (el, binding, vnode, oldVnode) {
-        $vm = new VM().$mount();
-        vue.nextTick(function () {
-          let elPosition = el.getBoundingClientRect().bottom;
-          el.parentNode.insertBefore($vm.$el, el.nextSibling)
-          $vm.state = elPosition > clientHeight ? true : false
-        })
+        let infinite;
+        let $vm = new VM().$mount();
+        let isload = binding.arg === 'load';
+        let param = {}; //container, distance, handle, complete
         if(typeof binding.value === 'function'){
-          new Infinite({
-            clientHeight: clientHeight,
-            event: binding.value,
-            handle(){
-              $vm.loading = false
-            }
-          })
+          param['handle'] = binding.value
+          param['complete'] = function(){
+            $vm.loading = false
+          }
+        }else if(binding.value.constructor === Object){
+          param = binding.value
+          param['complete'] = function(){
+            $vm.loading = false
+            binding.value.complete && binding.value.complete()
+          }
         }
-      },
-      inserted(el, binding, vnode, oldVnode){
-        //console.log('inserted');
+        vue.nextTick(()=>{
+          el.parentNode.insertBefore($vm.$el, el.nextSibling)
+          param.handle().then(complete =>{
+            if(complete === null){
+              $vm.state = !complete;
+              return
+            }else if(complete) {
+              $vm.loading = false
+              return
+            };
+            infinite= new Infinite(param)
+            infinites.push(infinite)
+          })
+        })
       },
       update(el, binding, vnode, oldVnode){
-        //console.log('update:');
+        //将Infinite组件绑定到DOM
+        console.log('update')
       },
-      componentUpdated(){
-        //console.log('componentUpdated');
+      unbind(){
+        //解绑时清除验证实例 并 移除提示组件
+        if(infinites.length > 0){
+          infinites[0].unbind()
+          infinites.shift()
+        }
       }
 
     })

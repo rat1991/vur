@@ -1,8 +1,8 @@
 <template>
   <div class="ui-tab" ref="tab">
-    <div 
+    <div
     v-for="(item, index) in navbar" :key="index"
-    :class="[current !== index ? 'ui-tab__navbar' : 'ui-tab__navbar-active']" 
+    :class="[current !== index ? 'ui-tab__navbar' : 'ui-tab__navbar-active']"
     :data-index="index"
      @click="onSwitch(index)">
       {{item}}
@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-    name: "ui-tab",
+    name: "ui-tab-navbar",
     props: {
       navbar: Array,
       value: {

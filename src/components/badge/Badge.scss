@@ -1,0 +1,47 @@
+@charset "UTF-8";
+@import "../../style/common";
+// TOPTIPS VARIABLES
+// ------------------------------------------->
+$toptipsHeight: torem(68px);
+// TOPTIPS COMPONENT
+// ============================================>
+.ui-badge{
+  display: inline-block;
+  padding: 0 6px;
+  height: torem(48px);
+  line-height: torem(48px);
+  text-align: center;
+  font-size: $text-14;
+  color: $white;
+  white-space: nowrap;
+  vertical-align: text-bottom;
+  background-color: $grayLight;
+  border-radius: torem(24px);
+  &_sm{
+    height: torem(36px);
+    line-height: torem(36px);
+    font-size: $text-12;
+    font-weight: bold;
+    vertical-align: middle;
+  }
+  &_success{
+    background-color: $success;
+  }
+  &_warn{
+    background-color: $warn;
+  }
+  &_error{
+    background-color: $danger;
+  }
+  &_fillet{
+    border-radius: torem(10px);
+  }
+  &_dot{
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    vertical-align: text-top;
+    background-color: $danger;
+  }
+
+}

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import "../../style/compass";
+@import "../../style/common";
 // CELL VARIABLES
 // ------------------------------------------->
 $cellHeight: torem(88px);
@@ -20,16 +20,28 @@ $cellElGap: torem(20px);
     margin-top: $gap-20;
   }
   &__title {
-    padding: torem(28px) $gapSides torem(12px) $gapSides;
+    display: flex;
+    margin: 2px 0;
     font-size: $text-14;
     line-height: 1;
-    color: $grayLight;
+    color: #888888;
+    font-weight: 400;
     &_fix {
       position: -webkit-sticky;
       position: fixed;
       background-color: $bgBody;
       z-index: $lv1;
       @extend %borderBottom;
+    }
+    >.content{
+      flex: 1;
+      padding: torem(28px) $gapSides torem(12px) $gapSides;
+    }
+    >.link{
+      padding: torem(28px) $gapSides torem(12px) $gapSides;
+      font-weight: 500;
+      text-align: right;
+      color: $link;
     }
   }
 }
@@ -48,6 +60,39 @@ $cellElGap: torem(20px);
     @extend %borderTop;
     &:after {
       left: $gapSides;
+    }
+  }
+  &_dropdown{
+    padding: 0;
+    >.ui-cell__bd{
+      >.ui-cell:first-child{
+        &:before {
+          content: '';
+          order: 5;
+          margin-left: torem(20px);
+          margin-right: torem(10px);
+          @include setArrow('bottom');
+          transition: all .2s ease;
+        }
+        &:active {
+          background-color: $cellActiveBg;
+        }
+      }
+    }
+    &.open{
+      >.ui-cell__bd{
+        >.ui-cell:first-child{
+          &:before {
+            transform: rotate(-135deg);
+          }
+        }
+      }
+    }
+    &__content{
+      transition: all .3s ease-out;
+      >.ui-cell{
+        @extend %borderTop;
+      }
     }
   }
   &_access {
@@ -84,6 +129,10 @@ $cellElGap: torem(20px);
   }
   &__hd {
     margin-right: $cellElGap;
+    >.icon{
+      vertical-align: middle;
+      line-height: 1;
+    }
   }
   &__bd {
     flex: 1;
@@ -96,5 +145,31 @@ $cellElGap: torem(20px);
   &__desc {
     width: 100%;
     margin-top: $gap-10;
+  }
+  &__icon{
+    margin-right: $cellElGap;
+    color: $primary;
+    $iconLg: torem(108px);
+    $iconMd: torem(88px);
+    $iconSm: torem(68px);
+    $iconXs: torem(48px);
+    >.icon{
+      font-size: $iconMd;
+      line-height: $iconMd;
+      color: inherit;
+      vertical-align: middle;
+      &.lg{
+        font-size: $iconLg;
+        line-height: $iconLg;
+      }
+      &.sm{
+        font-size: $iconSm;
+        line-height: $iconSm;
+      }
+      &.xs{
+        font-size: $iconXs;
+        line-height: $iconXs;
+      }
+    }
   }
 }

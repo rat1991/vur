@@ -1,8 +1,11 @@
 <template>
   <section class="ui-cell">
+    <div class="ui-cell__hd mb-5">
+      {{label}}
+    </div>
     <div style="position: relative; width: 100%;">
     <textarea 
-      :class="[autoheight ? 'ui-textarea_autoheight' : 'ui-textarea']"
+      :class="[autoheight ? 'ui-textarea_autoheight' : 'ui-textarea', textClass]"
       :name="name"
       :autocomplete="autocomplete"
       :autocapitalize="autocapitalize"
@@ -12,6 +15,7 @@
       :placeholder="placeholder"
       :rows="rows"
       :value="value"
+      :required="required"
       ref="textarea"
       @compositionstart="cpstStart"
       @compositionend="cpstEnd"
@@ -31,7 +35,9 @@ export default {
       type: Number,
       default: 3
     },
+    textClass: String,
     value: String,
+    label: String,
     max: Number,
     name: String,
     placeholder: {
@@ -40,6 +46,7 @@ export default {
     },
     autoheight: Boolean,
     maxheight: String,
+    required: Boolean,
     // https://github.com/yisibl/blog/issues/3
     autocomplete: {
       type: String,

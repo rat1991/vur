@@ -62,10 +62,13 @@ export default class Validator {
     })
   }
   getInput(el){
-    if(el.tagName !== 'INPUT'){
+    if(el.tagName !== 'INPUT' || el.tagName !== 'TEXTAREA'){
       let isInput = el.getElementsByTagName('input');
+      let isTextarea = el.getElementsByTagName('textarea');
       if(isInput.length > 0){
         return isInput[0]
+      }else if(isTextarea.length > 0){
+        return isTextarea[0]
       }else{
         console.error('The v-validation element must be input or contains input')
       }
@@ -111,6 +114,12 @@ export default class Validator {
           return isEmail(val)
         },
         invalidMsg: '请输入有效的邮箱'
+      },
+      chinese: {
+        rule: (val)=>{
+          return isChinese(val)
+        },
+        invalidMsg: '请输入中文'
       },
       chineseName: {
         rule: (val)=>{

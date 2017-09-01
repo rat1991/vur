@@ -26,9 +26,9 @@ class ScrollFix {
     let bindObj = {};
     bindObj.el = el
     bindObj.offset = el.getBoundingClientRect().top + scrollTop
-    bindObj.className = value.className
-    bindObj.distance = value.distance
-    bindObj.onFix = value.onFix
+    bindObj.className = value && value.className || this.className
+    bindObj.distance = value && value.distance || this.distance
+    bindObj.onFix = value && value.onFix || undefined
     //添加fix元素信息对象
     this.bindEl.push(bindObj)
     //绑定事件
@@ -45,7 +45,7 @@ class ScrollFix {
         distance = cur.distance || this.distance;
     let elWidth = cur.el.offsetWidth,
         elHeight = cur.el.offsetHeight;
-    //定义onfix 信息对象    
+    //定义onfix 信息对象
     let infoObj = {};
     infoObj.index = index
     infoObj.el = cur.el
@@ -103,7 +103,7 @@ class ScrollFix {
               }
             })
           }, 1000)()
-          
+
         }
       }
     })
@@ -116,16 +116,16 @@ export default {
 
     vue.directive('topfix', {
       bind (el, binding, vnode, oldVnode) {
-        console.log('bind');
+        // console.log('bind');
       },
       inserted(el, binding, vnode, oldVnode){
         scrollFix.getBindEl(el, binding.value)
       },
       update(el, binding, vnode, oldVnode){
-        console.log('update');
+        //console.log('update');
       },
       componentUpdated(){
-        console.log('componentUpdated');
+        // console.log('componentUpdated');
       },
       unbind(){
         scrollFix.removeBind()

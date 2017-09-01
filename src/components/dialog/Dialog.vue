@@ -10,10 +10,10 @@
         <slot></slot>
       </div>
       <div class="ui-dialog__ft">
-        <a href="javascript:;" class="ui-dialog__btn" v-if="type !== 'alert'" @click="onCancel">
+        <a href="javascript:;" :class="['ui-dialog__btn',cancelClass]" v-if="type !== 'alert'" @click="onCancel">
           {{cancelText}}
         </a>
-        <a href="javascript:;" class="ui-dialog__btn text-primary" @click="onConfirm">
+        <a href="javascript:;" :class="['ui-dialog__btn', 'text-primary',confirmClass]" @click="onConfirm">
           {{confirmText}}
         </a>
         <slot name="opr"></slot>
@@ -44,10 +44,12 @@ export default {
       type: String,
       default: "取消"
     },
+    cancelClass: String,
     confirmText: {
       type: String,
       default: "确认"
-    }
+    },
+    confirmClass: String
   },
   data() {
     return {

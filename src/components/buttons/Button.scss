@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import "../../style/compass";
+@import "../../style/common";
 // BUTTON VARIABLES
 // ------------------------------------------->
 $btnHeight:        torem(92px);
@@ -133,6 +133,6 @@ $btnDefaultBg:       #fff;
     }
 }
 .ui-btn-area{
-    margin-top: torem(40px);
+    margin: torem(60px) 0;
     padding: 0 $gapSides;
 }

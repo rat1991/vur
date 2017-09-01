@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import "../../style/compass";
+@import "../../style/common";
 // ACTIONSHEET VARIABLES
 // ------------------------------------------->
 $actionsheetBg: #EFEFF4;
@@ -14,6 +14,7 @@ $actionsheetActionGap: torem(12px);
   width: 100%;
   background-color: $actionsheetBg;
   backface-visibility: hidden;
+  opacity: .9;
   z-index: $lv4;
   &__title{
     padding: $actionsheetCellGap $gapSides;

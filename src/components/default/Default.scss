@@ -1,0 +1,35 @@
+@charset "UTF-8";
+@import "../../style/common";
+// DEFAULT VARIABLES
+// ------------------------------------------->
+// DEFAULT COMPONENT
+// ============================================>
+.ui-default{
+  padding: $gap-40 $gapSides * 2;
+  text-align: center;
+  &__icon{
+    padding-bottom: $gap-15;
+    font-size: torem(160px);
+    line-height: 1;
+    color: $grayLightest;
+  }
+  &__content{
+    >h4{
+      padding-bottom: $gap-15;
+    }
+    >p{
+      color: $grayLight;
+    }
+  }
+  &__links{
+    padding-top: $gap-40;
+    >a{
+      display: inline-block;
+      &:not(:first-child){
+        margin-left: 4px;
+        padding-left: 8px;
+        @extend %borderLeft;
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@
             :autocapitalize="autocapitalize"
             :autocorrect="autocorrect"
             :spellcheck="spellcheck"
-            :class="['ui-input', textAlign && 'text-' + textAlign]"
+            :class="['ui-input',textClass, textAlign && 'text-' + textAlign]"
             :type="type"
             :value="inputVal"
             :placeholder="placeholder"
@@ -37,6 +37,7 @@ export default {
         name: String,
         value: String,
         textAlign: String,
+        textClass: String,
         min: [Number, String],
         max: [Number, String],
         type: {

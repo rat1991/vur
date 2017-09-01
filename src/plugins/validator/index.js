@@ -42,7 +42,6 @@ export default {
     let validList = [];
     vue.directive('validator', {
       bind (el, binding, vnode, oldVnode) {
-        console.log(binding)
         onceEvent = true;
         document.body.appendChild($vm.$el);
         let param = typeof binding.value === 'function' && binding.value() || binding.value || {};
@@ -106,7 +105,7 @@ export default {
             //清除验证后的样式
             cur.input.style.color = cur.value == '' && '';
           })
-          result ? resolve() : reject(invalidData)
+          result ? resolve($vm) : reject(invalidData)
         })
       }
     }else{

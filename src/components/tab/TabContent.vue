@@ -1,10 +1,7 @@
 <template>
   <div :class="['ui-tab__content', swiper && 'swiper']">
-    <div class="ui-tab__swiper" v-if="swiper">
-      <div>0222</div>
-    </div>
-    <section 
-    :class="['ui-tab__item', current === index && 'ui-tab__item-active']" 
+    <section
+    :class="['ui-tab__item', current === index && 'ui-tab__item-active']"
     v-for="(item, index) in navbar" :key="index">
       <slot :name="index"></slot>
     </section>
@@ -13,7 +10,7 @@
 <script>
 import Swiper from '../swiper/swiper.js'
 export default {
-    name: "ui-tab",
+    name: "ui-tab-content",
     props: {
       navbar: Array,
       value: {

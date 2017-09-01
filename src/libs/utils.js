@@ -15,14 +15,21 @@ Object.assign($, {
    */
   local: storage.local,
   /**
+   * 设置localStorage缓存
+   * @return {Object} 获取或设置localStorage的对象方法
+   */
+  session: storage.session,
+  /**
    * debounce 函数去抖
    * @param fn {Function}
    * @param delay {number}
    * @returns {function()}
    */
-  debounce: function (fn, delay) {
+  debounce: (fn, delay = 500)=> {
       let timer;
-      return () => {
+      return function() {
+          let context = this;
+          let args = arguments;
           clearTimeout(timer)
           timer = setTimeout(() => {
               fn.apply(this, arguments)
@@ -35,19 +42,21 @@ Object.assign($, {
    * @param delay {number}
    * @returns {function()}
    */
-  throttle: function(fn, delay){
+  throttle: function(fn, delay = 500){
     let timer, last;
     return () => {
       let now = +new Date();
-      if(last && now < last + delay){
+      let context = this;
+      let args = arguments;
+      if(last && now - last < delay){
         clearTimeout(timer)
         timer = setTimeout(() => {
+            fn.apply(context, args)
             last = now
-            fn.apply(this, arguments)
         }, delay)
       }else{
+        fn.apply(context, args)
         last = now
-        fn.apply(this, arguments)
       }
     }
   },

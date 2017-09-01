@@ -39,8 +39,10 @@ body {
     background-image: none;
     overflow: visible;
     text-rendering: optimizeLegibility;
-    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
     -webkit-font-smoothing: subpixel-antialiased;
+    user-select: none;
 }
 
 article,

@@ -186,7 +186,7 @@ text
 //text size[10...40]
 @for $i from 0 through 20 {
   $text-size: 10 + ($i * 2);
-  
+
   .text-#{$text-size} {
     font-size: $text-size + px !important;
   }
@@ -199,7 +199,7 @@ text
   color: $secondary !important;
 }
 .text-default{
-  color: $grayDark !important;
+  color: $colorText !important;
 }
 .text-gray{
   color: $gray !important;
@@ -294,18 +294,18 @@ layout
 ---------------------------------*/
 //上下固定
 %fixBase{
-  position: -webkit-sticky;
-  position: fixed;
-  left: 0;
-  z-index: $lv2;
+  position: -webkit-sticky !important;
+  position: fixed !important;
+  left: 0 !important;
+  z-index: $lv2 !important;
 }
 .fix-t{
   @extend %fixBase;
-  top: 0;
+  top: 0 !important;
 }
 .fix-b{
   @extend %fixBase;
-  bottom: 0;
+  bottom: 0 !important;
 }
 //上下浮动
 %floatBase{

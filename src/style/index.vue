@@ -1,5 +1,5 @@
 <style lang="sass">
-  @import "./compass";
+  @import "./common";
   // Reset and base
   @import "base/reset";
   @import "base/base";
