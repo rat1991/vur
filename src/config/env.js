@@ -7,7 +7,7 @@ const env = {
 
 if (process.env.NODE_ENV === 'development') {
   // 开发环境
-  env.SERVER_ROOT = 'http://dgzrui.jios.org:8100/hengliang'
+  env.SERVER_ROOT = ''
   env.LOCAL_ROOT = '/'
   env.API_PATH = '/api/client/app-client/v1.0'
   env.CLIENT_ID = 'weixin'

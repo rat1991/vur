@@ -1,8 +1,8 @@
 // 微信授权验证
 import * as types from '../mutation-types'
 import $ from '@/libs/utils'
-import axios from '@/config/http'
-let $http = axios.create();
+import $http from '@/config/http'
+import * as apis from '@/config/http-apis'
 
 // ============================================>
 const state= {
@@ -19,8 +19,8 @@ const state= {
 const actions = {
   getAccessToken({commit, state, dispatch}, payload){
     let url;
-    if(payload.state === 'base') url = '/weixin/accessToken/base';
-    if(payload.state === 'userinfo') url = '/weixin/accessToken/userinfo';
+    if(payload.state === 'base') url = apis.WEIXIN_TOKEN;
+    if(payload.state === 'userinfo') url = apis.WEIXIN_USERINFO;
     return new Promise((resolve, reject) => {
       $http.post(url, {
         client_id: process.env.CLIENT_ID,
@@ -32,6 +32,8 @@ const actions = {
           commit('UPDATE_ONLINE_TOKEN', res.data)
           resolve(res.data)
           dispatch('updateUserinfo')
+          //获取职员信息
+          dispatch('getEmployee')
         }
         reject(res.data)
       })
@@ -45,11 +47,13 @@ const actions = {
     };
     Object.assign(rawObj, payload);
     return new Promise((resolve, reject) => {
-      $http.post('/oauth/client/accessToken', rawObj).then(res =>{
+      $http.post(apis.WEIXIN_TOKEN_UPDATE, rawObj).then(res =>{
         if(res.data.errcode === 0){
           commit('UPDATE_ONLINE_TOKEN', res.data)
           resolve(res.data)
           dispatch('updateUserinfo')
+          //获取职员信息
+          dispatch('getEmployee')
         }
         reject(res.data)
       }).catch(error =>{

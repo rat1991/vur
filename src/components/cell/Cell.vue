@@ -2,6 +2,7 @@
   <section
    :class="['ui-cell', {'ui-cell_access': access || to}, dropdown && 'ui-cell_dropdown', dropdownState && 'open']"
    @click="onClick">
+    <slot></slot>
     <div :class="['ui-cell__icon', iconSize]" v-if="icon">
       <i :class="['icon', icon, iconClass]"></i>
     </div>
@@ -38,7 +39,6 @@
         </section>
       </div>
     </div>
-    <slot></slot>
   </section>
 </template>
 

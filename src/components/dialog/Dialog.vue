@@ -1,14 +1,14 @@
 <template>
-  <transition name="fade" @after-leave="destroyVm">
+  <transition name="fade">
     <div :class="['ui-dialog']" @touchmove.prevent v-if="state">
       <div class="ui-dialog__hd">
         <strong class="text-18">{{title}}</strong>
         <slot name="title"></slot>
       </div>
-      <div class="ui-dialog__bd">
+      <div class="ui-dialog__bd" v-if="text">
         {{text}}
-        <slot></slot>
       </div>
+      <slot></slot>
       <div class="ui-dialog__ft">
         <a href="javascript:;" :class="['ui-dialog__btn',cancelClass]" v-if="type !== 'alert'" @click="onCancel">
           {{cancelText}}
@@ -53,20 +53,18 @@ export default {
   },
   data() {
     return {
-      state: false
+      state: this.value
     }
   },
   created() {
     //定义mask组件
     const VM_Mask = Vue.extend(UiMask);
     this.$mask = new VM_Mask().$mount();
-    this.$mask.show = false
+    this.$mask.show = this.state
     this.$nextTick(()=>{
       //向Dom插入mask组件
       this.$el.parentNode.insertBefore(this.$mask.$el, this.$el);
     })
-    //state默认值
-    this.state = this.value
   },
   watch: {
     state(newVal) {
@@ -78,15 +76,16 @@ export default {
     }
   },
   methods: {
+    next(){
+      this.state = false;
+    },
     onConfirm() {
-      this.state = false
-      this.$emit('on-confirm')
+      this.$emit('on-confirm', this, this.next)
     },
     onCancel() {
       this.state = false
       this.$emit('on-cancel')
-    },
-    destroyVm() {}
+    }
   }
 }
 </script>

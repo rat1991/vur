@@ -1,10 +1,10 @@
 <template>
   <section class="ui-cell">
-    <div class="ui-cell__hd mb-5">
+    <div class="ui-cell__hd mb-5" v-if="label">
       {{label}}
     </div>
     <div style="position: relative; width: 100%;">
-    <textarea 
+    <textarea
       :class="[autoheight ? 'ui-textarea_autoheight' : 'ui-textarea', textClass]"
       :name="name"
       :autocomplete="autocomplete"

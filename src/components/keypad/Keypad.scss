@@ -6,11 +6,20 @@ $keypadHeight: torem(400px);
 // KEYPAD COMPONENT
 // ============================================>
 .ui-keypad{
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
-  z-index: $lv3;
+  z-index: $lv4;
+  &__title{
+    padding: torem(10px) $gapSides;
+    text-align: center;
+    background-color: $white;
+    &_error{
+      color: $white;
+      background-color: rgba($danger, .92);
+    }
+  }
   &__inner{
     display: flex;
     height: $keypadHeight;

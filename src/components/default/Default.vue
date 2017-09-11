@@ -4,11 +4,11 @@
       <i :class="['icon',icon]"></i>
     </div>
     <div class="ui-default__content">
-      <h4>{{title}}</h4>
-      <p>{{text}}</p>
+      <h4 v-if="title">{{title}}</h4>
+      <p v-if="text">{{text}}</p>
     </div>
-    <div class="ui-default__links">
-      <a v-for="(item, index) in links" :key="index" @click="onLink(item.to)">{{item.text}}</a>
+    <div class="ui-default__links" v-if="links">
+      <a v-for="(item, index) in links" :key="index" @click="onLink(item.to)">{{item.label}}</a>
     </div>
   </div>
 </template>

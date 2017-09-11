@@ -24,6 +24,11 @@ export default {
       this.alignHd();
     })
   },
+  watch: {
+    link(newVal){
+      this.$title.link = newVal
+    }
+  },
   methods: {
     addTitle(){
       if(!this.title || this.$el.previousElementSibling && this.$el.previousElementSibling.classList.contains('ui-cells__title')) return;

@@ -31,7 +31,16 @@ exports.cssLoaders = function (options) {
         })
       })
     }
-
+    //为scss文件自动注入公共资源 需要sass-resources-loader模块
+    
+    /*if(loader === 'sass'){
+      loaders.push({
+        loader: 'sass-resources-loader',
+        options: {
+          resources: options.resources
+        }
+      })  
+    }*/
     // Extract CSS when that option is specified
     // (which is the case during production build)
     if (options.extract) {
@@ -43,7 +52,7 @@ exports.cssLoaders = function (options) {
       return ['vue-style-loader'].concat(loaders)
     }
   }
-
+  
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {
     css: generateLoaders(),

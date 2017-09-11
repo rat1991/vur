@@ -65,7 +65,7 @@ export default {
           el.parentNode.insertBefore($vm.$el, el.nextSibling)
           param.handle().then(complete =>{
             if(complete === null){
-              $vm.state = !complete;
+              $vm.state = false;
               return
             }else if(complete) {
               $vm.loading = false
@@ -78,7 +78,7 @@ export default {
       },
       update(el, binding, vnode, oldVnode){
         //将Infinite组件绑定到DOM
-        console.log('update')
+        //console.log('update')
       },
       unbind(){
         //解绑时清除验证实例 并 移除提示组件

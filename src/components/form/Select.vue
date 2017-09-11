@@ -4,10 +4,14 @@
         {{label}}
     </div>
     <div class="ui-cell__bd">
-      <select :class="['ui-select', !value && 'text-light',textClass]" :name="name" :multiple="multiple" v-model="selectedDate">
+      <select :class="['ui-select', !value && 'text-light', textClass]"
+      :name="name"
+      :multiple="multiple"
+      @change="onChange"
+      v-model="selectedDate">
           <option disabled selected value="" v-if="!value && placeholder">{{placeholder}}</option>
           <option v-for="(option, index) in options" :key="index" :value="typeof option === 'string' ? option : option.value">
-            {{typeof option === 'string' ? option : option.text}}
+            {{typeof option === 'string' ? option : option.label}}
           </option>
       </select>
     </div>
@@ -26,7 +30,7 @@ export default {
       type: String
     },
     value: {
-      type: String,
+      type: [String, Number],
       default: "请选择"
     },
     multiple: Boolean,
@@ -48,6 +52,12 @@ export default {
     },
     selectedDate(newVal){
       this.$emit('input', newVal)
+    }
+  },
+  methods: {
+    onChange(){
+      this.$emit('change', this.selectedDate)
+      console.log('select change')
     }
   }
 }

@@ -1,4 +1,5 @@
 import App from '../App'
+import $ from '../libs/utils'
 // router页面
 const routes = [{
     path: '/',
@@ -76,6 +77,6 @@ const routes = [{
     path: '/feedback/:id',
     name: '反馈页面子',
     component: App.components.Msg
-}]
+}];
 
 export default routes;

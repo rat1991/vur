@@ -42,6 +42,14 @@ $cellElGap: torem(20px);
       font-weight: 500;
       text-align: right;
       color: $link;
+      &::after {
+        position: relative;
+        top: -1px;
+        content: '';
+        margin-left: $gap-5;
+        @include setArrow();
+        border-color: $link;
+      }
     }
   }
 }
@@ -96,10 +104,12 @@ $cellElGap: torem(20px);
     }
   }
   &_access {
+    padding-right: torem(48px);
     &:before {
       content: '';
-      order: 5;
-      margin-left: torem(10px);
+      position: absolute;
+      top: calc(50% - 4px);
+      right: $gapSides;
       @include setArrow();
     }
     &:active {
@@ -136,6 +146,7 @@ $cellElGap: torem(20px);
   }
   &__bd {
     flex: 1;
+    width: 50%;
   }
   &__ft {
     margin-left: $cellElGap;

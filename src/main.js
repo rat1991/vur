@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import router from './router'
 import store from './store'
-import axios from './config/http'
+import http from './config/http'
 import App from './App'
 //移动端测试
 // import vConsole from 'vconsole'
@@ -35,9 +35,8 @@ Vue.use(Wechat, {
 
 //Vue默认配置
 Vue.config.productionTip = false;
-Vue.prototype.$http = axios.create({
-    timeout: 2500
-});
+//定义$http
+Object.defineProperty(Vue.prototype, "$http", { value: http });
 
 //实例 Vue
 var app = new Vue({

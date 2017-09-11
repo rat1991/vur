@@ -62,13 +62,15 @@ export default class Validator {
     })
   }
   getInput(el){
-    if(el.tagName !== 'INPUT' || el.tagName !== 'TEXTAREA'){
-      let isInput = el.getElementsByTagName('input');
-      let isTextarea = el.getElementsByTagName('textarea');
+    if(el.tagName !== 'INPUT' || el.tagName !== 'TEXTAREA' || el.tagName !== 'SELECT'){
+      let tagType = ['input', 'textarea', 'select'];
+      let isInput;
+      for(let type of tagType){
+        isInput = el.getElementsByTagName(type);
+        if(isInput.length > 0) break;
+      }
       if(isInput.length > 0){
         return isInput[0]
-      }else if(isTextarea.length > 0){
-        return isTextarea[0]
       }else{
         console.error('The v-validation element must be input or contains input')
       }
@@ -145,7 +147,7 @@ export default class Validator {
         return {result:false, input: this.input, value:value, msg:tipMsg}
         break
       }
-      
+
     }
   }
   removeClass(el,classArr){

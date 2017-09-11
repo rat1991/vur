@@ -4,7 +4,7 @@
 // ------------------------------------------->
 $dialogWidth: torem(600px);
 $dialogSideGap: torem(40px);
-$dialogRadius: torem(8px);
+$dialogRadius: torem(10px);
 // DIALOG COMPONENT
 // ============================================>
 .ui-dialog{
@@ -15,7 +15,7 @@ $dialogRadius: torem(8px);
   max-width: $dialogWidth;
   text-align: center;
   background-color: $white;
-  border-radius: torem(6px);
+  border-radius: $dialogRadius;
   transform: translate(-50%,-50%);
   overflow: hidden;
   z-index: $lv4;

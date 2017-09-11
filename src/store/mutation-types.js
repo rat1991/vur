@@ -15,3 +15,11 @@ export const DESTROY_ACCESS_TOKEN = 'DESTROY_ACCESS_TOKEN';
 
 // 获取微信用户信息
 export const UPDATE_USERINFO = 'UPDATE_USERINFO';
+
+// 获取职员信息
+export const GET_EMPLOYEE = 'GET_EMPLOYEE';
+
+// 业务
+// ===================================================>
+// 获取字段类型
+export const GET_FIELDTYPE = 'GET_FIELDTYPE';

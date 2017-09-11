@@ -1,5 +1,5 @@
 <template>
-  <div class="ui-grids">
+  <div :class="['ui-grids', type]">
       <slot name="grid"></slot>
   </div>
 </template>
@@ -11,6 +11,7 @@
         type: Number,
         default: 1
       },
+      type: String //col, row
     },
     mounted(){
       this.$slots.grid.forEach((item)=>{

@@ -1,15 +1,14 @@
 <template>
   <section class="ui-cell ui-cell_switch">
       <div class="ui-cell__bd">
-          {{label}} <slot>{{currentVal}}</slot>
+          {{label}}
       </div>
       <div class="ui-cell__ft">
-          <input 
-          type= "checkbox" 
+          <input
+          type= "checkbox"
           class= "ui-switch"
-          v-model= "currentVal"
-          :value= "value"
-          :checked= "value"
+          v-model="currentVal"
+          :name="name"
           :disabled= "disabled">
       </div>
   </section>
@@ -20,23 +19,31 @@
    name: "ui-switch",
    props: {
         label: String,
-        disabled: Boolean,
+        name: String,
         value: {
-            type: Boolean,
+            type: [Boolean, Number],
             default: false
         },
+        disabled: Boolean,
     },
     data () {
       return {
-        currentVal: false
+        currentVal: this.value ? true : false
       }
     },
-    created() {
-        this.currentVal = this.value;
+    created(){
     },
     watch:{
+        value(newVal){
+            this.currentVal = newVal
+        },
         currentVal(newVal) {
-            this.$emit('input', this.currentVal)
+            if(typeof this.value === 'number'){
+                let outVal = newVal ? 1 : 0;
+                this.$emit('input', outVal)
+            }else{
+                this.$emit('input', newVal)
+            }
         }
     }
  }

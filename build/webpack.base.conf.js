@@ -16,7 +16,7 @@ module.exports = {
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+      : 'http://192.168.199.31:8080/'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -62,7 +62,7 @@ module.exports = {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 30000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }

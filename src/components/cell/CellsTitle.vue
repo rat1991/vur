@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import $ from '@/libs/utils'
+
 export default {
   name: 'ui-cells-title',
   props: {

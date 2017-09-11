@@ -1,5 +1,5 @@
 <template>
-  <div class="ui-grids__item" @click="onClick">
+  <div :class="['ui-grids__item']" @click="onClick">
       <slot name="icon"></slot>
       <slot name="text"></slot>
   </div>

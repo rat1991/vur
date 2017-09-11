@@ -1,17 +1,43 @@
 import * as types from './mutation-types'
-import axios from '@/config/http'
+import http from '@/config/http'
 // ============================================>
 export default {
   updateUserinfo({commit, state}){
-    if(state.userinfo.userId) return;
     return new Promise((resolve, reject) => {
-      axios.get(`/api/client/v1.0/get/info?access_token=${state.wxauth.access_token}`).then(res =>{
+      http.apiGet('USER_INFO').then(res =>{
         if (res.data.errcode === 0) {
-          localStorage.userInfo = JSON.stringify(res.data.user)
           commit('UPDATE_USERINFO', res.data.user)
           resolve()
         }else{
           console.warn(res)
+          reject()
+        }
+      })
+    })
+  },
+  getEmployee({commit, state}){
+    return new Promise((resolve, reject) => {
+      http.apiGet('EMPLOYEE_INFO').then(res =>{
+        if (res.data.errcode === 0) {
+          commit('GET_EMPLOYEE', res.data.employee)
+          console.log('获取职员信息')
+          resolve()
+        }else{
+          console.warn(res + '获取职员信息')
+          reject()
+        }
+      })
+    })
+  },
+  getFieldType({commit, state}){
+    return new Promise((resolve, reject) => {
+      http.get('/api/open/v1.0/resource/get/dictionary').then(res =>{
+        if (res.data.errcode === 0) {
+          commit('GET_FIELDTYPE', res.data.list)
+          console.log('获取字典信息')
+          resolve()
+        }else{
+          console.warn(res + '获取字典信息')
           reject()
         }
       })

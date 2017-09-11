@@ -161,58 +161,74 @@ $switchHeight: 30px;
     }
 }
 
-// FORM_COUNT COMPONENT
+// FORM_UPLOAD COMPONENT
 // ==========================
-.ui-count {
-    display: flex;
-    align-items: center;
-    line-height: torem(48px);
-    border-radius: torem(8px);
-    overflow: hidden;
-    >button {
+.ui-upload{
+    $iconSize: torem(80px);
+    &__files{
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: torem(22px);
+        width: 100%;
+        >li:not(:nth-child(4n)){
+            margin: 0 torem(20px) torem(20px) 0;
+        }
+        @media only screen and (min-width: 480px){
+            >li{
+                margin: 0 torem(20px) torem(20px) 0;
+            }
+        }
+    }
+    &__file{
         position: relative;
-        width: torem(48px);
-        height: torem(48px);
-        padding: 0;
-        text-align: center;
-        color: $secondary;
-        background-color: $primary;
-        border: none;
-        &:after {
-            display: inline-block;
-            vertical-align: middle;
-            font-weight: 700;
-            font-size: torem(48px);
-            line-height: 0;
-            pointer-events: none;
+        width: $iconSize * 2;
+        height: $iconSize * 2;
+        background-size: cover;
+        background-position: center;
+        @extend %border;
+        >progress{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 4px;
+            border: none;
+            background-color: rgba($black,.2);
+            z-index: 2;
+            &::-webkit-progress-bar{
+              background-color: rgba($black,.2);
+            }
+            &::-webkit-progress-value{
+              background-color: $primary;
+            }
         }
-        &:active {
-            background-color: darken($primary, 20%);
-            ;
-        }
-        &:disabled {
+    }
+    &__loader{
+        position: relative;
+        width: $iconSize * 2;
+        height: $iconSize * 2;
+        @extend %border;
+        &:before{
+            @extend %fontIcon;
+            content: "\C660";
+            position: absolute;
+            left: calc(50% - #{$iconSize / 2});
+            top: calc(50% - #{$iconSize / 2});
+            font-size: $iconSize;
             color: $grayLighter;
-            background-color: #f3f0f7;
         }
-    }
-    >.decrease {
-        &:after {
-            content: '﹣';
+        &:active{
+            &:after{
+                background-color: $bgActive;
+            }
         }
-    }
-    >.increase {
-        &:after {
-            content: '﹢';
+        >input[type="file"]{
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 1;
         }
-    }
-    >input {
-        width: torem(60px);
-        height: torem(48px);
-        padding: 0 $gap-5;
-        text-align: center;
-        font-weight: 700;
-        color: $gray;
-        background-color: #fbf9fe;
-        border: 0;
     }
 }

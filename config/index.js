@@ -25,6 +25,8 @@ module.exports = {
     env: require('./dev.env'),
     port: 8080,
     autoOpenBrowser: true,
+    //sass公共资源路径
+    sassResouce: path.resolve(__dirname, '../src/style/common.scss'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {},

@@ -5,6 +5,7 @@ import UiCheckbox from './Checkbox'
 import UiSelect from './Select'
 import UiTextarea from './Textarea'
 import UiSwitch from './Switch'
+import UiUpload from './Upload'
 
 export default {
   UiInput,
@@ -12,7 +13,8 @@ export default {
   UiCheckbox,
   UiSelect,
   UiTextarea,
-  UiSwitch
+  UiSwitch,
+  UiUpload
 }
 </script>
 

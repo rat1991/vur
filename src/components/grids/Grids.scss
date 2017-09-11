@@ -12,16 +12,33 @@
   align-items: center;
   width: 100%;
   background-color: $white;
+  @extend %borderTop;
   overflow: hidden;
   &__item{
-    padding: torem(22px) 0;
+    padding: torem(22px) $gapSides;
     text-align: center;
     @extend %borderBottom;
+    & + &:after{
+      border-width: 0 0 1px 1px;
+    }
     >.icon{
       display: block;
       margin-bottom: torem(10px);
       font-size: torem(80px);
       color: $grayLightest;
+    }
+  }
+  &.col{
+    .ui-grids__item{
+      display: flex;
+      align-items: center;
+      >.icon{
+        margin: 0 torem(20px) 0 0;
+      }
+      >.text{
+        flex: 1;
+        text-align: left;
+      }
     }
   }
 }

@@ -17,6 +17,7 @@ $toptipsHeight: torem(68px);
   color: #fff;
   line-height: $toptipsHeight;
   background-color: $bgNav;
+  z-index: $lv4;
   &_success{
     color: $success;
     background-color: rgba(#A7DCA7, .9);
@@ -26,7 +27,7 @@ $toptipsHeight: torem(68px);
     background-color: rgba(#FFE69B, .9);
   }
   &_error{
-    color: $danger;
-    background-color: rgba(#DDA8A7, .9);
+    color: $white;
+    background-color: rgba($danger, .9);
   }
 }

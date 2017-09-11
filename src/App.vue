@@ -5,8 +5,14 @@
     </transition>
   </div>
 </template>
+
 <script>
+  import utils from '@/libs/utils'
+  //路由过渡
+  import routerTransition from './router/routes-transition'
+  //公共样式
   import UiStyle from './style'
+  //组件页面
   import Index from './views/Index.vue'
   import UiCell from './views/Cell.vue'
   import UiForm from './views/Form.vue'
@@ -30,8 +36,8 @@
   export default {
     name: 'app',
     components: {
-      Index,
       UiStyle,
+      Index,
       UiCell,
       UiForm,
       FormValidation,
@@ -53,24 +59,18 @@
     },
     data(){
       return {
-        transitionView: 'slideOut'
+        transitionView: ''
       }
     },
     created(){
+
     },
     watch: {
-      // 定义路由切换动画
       '$route' (to, from) {
-        function excVoid(path){
-          let depth = path.length;
-          path.forEach((item, index)=>{
-            if(!item) depth--;
-          })
-          return depth;
-        }
-        const toDepth = excVoid(to.path.split('/'))
-        const fromDepth = excVoid(from.path.split('/'))
-        this.transitionView = toDepth >= fromDepth ? 'slideIn' : 'slideOut'
+        this.transitionView = routerTransition(to, from, {
+          enter: 'slideIn',
+          leave: 'slideOut'
+        })
       }
     }
   };
