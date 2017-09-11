@@ -1,6 +1,6 @@
-# vue-test
+# vue-vur
 
-> A Vue.js project
+> 根据公司项目 个人定制的一套vue组件库和开发环境
 
 ## Build Setup
 
