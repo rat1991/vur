@@ -44,7 +44,7 @@ Object.assign($, {
    */
   throttle: function(fn, delay = 500){
     let timer, last;
-    return () => {
+    return function() {
       let now = +new Date();
       let context = this;
       let args = arguments;

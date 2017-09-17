@@ -12,12 +12,10 @@ class ScrollFix {
     this.scroller = options.container || window
     this.distance = options.distance || 0
     this.className = options.className || 'fix-t'
-    this.counter = 0
     this.bindEl = []
     this.fixEl = []
     //绑定事件
-    this.scrollEvent = $.debounce(this.onScroll, 10)
-    this.scroller.addEventListener('scroll', this.scrollEvent.bind(this), false);
+    this.scroller.addEventListener('scroll', this.onScroll.bind(this), false);
   }
   /**
    * 获取固定元素的信息对象，并推入到this.bindEl数组
@@ -29,9 +27,7 @@ class ScrollFix {
     let scrollTop = this.scroller === window ? document.body.scrollTop : this.scroller.scrollTop;
     let bindObj = {
       el: el,
-      index: this.counter++,
-      width: el.offsetWidth,
-      height: el.offsetHeight,
+      offset: el.getBoundingClientRect().top + scrollTop,
       className: value && value.className || this.className,
       distance: value && value.distance || this.distance,
       onFix: value && value.onFix || undefined
@@ -46,66 +42,72 @@ class ScrollFix {
     this.scroller.removeEventListener('scroll', this.onScroll.bind(this), false);
   }
   onFix(cur, index){
-    let stuffEl = document.createElement('div');
-    stuffEl.style.height = `${cur.height}px`
-    cur.el.parentNode.insertBefore(stuffEl, cur.el.nextSibling)
-    cur.el.classList.add(cur.className);
-    cur.el.style.width = `${cur.width}px`
-    cur.el.style.top = `${cur.distance}px`
-
+    let className = cur.className || this.className,
+        distance = cur.distance || this.distance;
+    let elWidth = cur.el.offsetWidth,
+        elHeight = cur.el.offsetHeight;
     //定义onfix 信息对象
-    Object.assign(cur, {
-      stuffEl: stuffEl,
-    })
-    this.fixEl.unshift(cur)
-    this.bindEl.shift()
+    let infoObj = {};
+    infoObj.index = index
+    infoObj.el = cur.el
+    infoObj.width = elWidth
+    infoObj.height = elHeight
+    this.fixEl.unshift(infoObj)
+    cur.el.insertAdjacentHTML('afterend', `<div style="height:${elHeight}px"></div>`);
+    cur.el.classList.add(className);
+    cur.el.style.width = `${elWidth}px`
+    cur.el.style.top = `${distance}px`
   }
   unFix(cur){
-    cur.stuffEl.remove()
-    cur.el.classList.remove(cur.className)
+    let className = cur.className || this.className;
+    this.fixEl.shift()
+    cur.el.nextElementSibling.remove()
+    cur.el.classList.remove(className)
     cur.el.style.width = ''
     cur.el.style.top = ''
-    this.fixEl.shift()
-    this.bindEl.unshift(cur)
   }
-  fixTransform(cur, nearTop, index){
-    if(this.fixEl.length === 0) return;
-    let topObj = this.fixEl[0];
-    if(cur.index !== topObj.index && nearTop <= topObj.height){
-      let daff = nearTop <= 0 ? -topObj.height : nearTop - topObj.height;
-      topObj.el.style.transition = ''
-      topObj.el.style.transform =`translate3d(0, ${daff}px, 0)`
-    }else if(index === 0 && nearTop > topObj.height){
-      topObj.el.style.transition = 'all .2s ease'
-      topObj.el.style.transform =''
-    }
+  isFixEl(index){
+    let vote = this.fixEl.some((cur)=>{
+      return cur.index === index
+    });
+    return vote
   }
   onScroll(){
     let scrollTop = this.scroller === window ? document.body.scrollTop : this.scroller.scrollTop;
     this.bindEl.forEach((cur, index)=>{
       let curEl = cur.el,
-          offsetTop = cur.el.getBoundingClientRect().top,
           distance = cur.distance;
-      let nearTop = offsetTop - distance;
-      $.throttle(this.fixTransform, 100).call(this, cur, nearTop, index)
-      
-      if(nearTop <= 0){
-        cur.onFix && cur.onFix(curEl)
+      let nearTop = cur.offset - distance - scrollTop;
+      if(nearTop <= 0 && !this.isFixEl(index)){
         this.onFix(cur, index)
-        console.log(1, this.bindEl)
-      }
-    });
-    //if(this.fixEl.length === 0) return;
-    this.fixEl.forEach((cur, index)=>{
-      let curEl = cur.stuffEl,
-          offsetTop = cur.stuffEl.getBoundingClientRect().top,
-          distance = cur.distance;
-      let farTop = offsetTop + distance;
-      if(farTop >= 0){
+        cur.onFix && cur.onFix(curEl)
+      }else if(nearTop > 0 && this.isFixEl(index)){
         this.unFix(cur)
-        console.log(0, this.fixEl)
       }
-    });
+      //
+      if(this.fixEl.length > 0 && this.fixEl[0].index === index - 1){
+        let curFixEl = this.fixEl[0].el;
+        let fixElHeight = this.fixEl[0].height;
+        if(nearTop <= fixElHeight){
+          $.debounce(()=>{
+            let daff = nearTop - fixElHeight;
+            curFixEl.style.transform =`translate3d(0, ${daff}px, 0)`
+          }, 20)()
+        }else{
+          curFixEl.style.transform = ''
+        }
+        if(this.fixEl.length > 1){
+          $.debounce(()=>{
+            this.fixEl.forEach((cur, index)=>{
+              if(index > 0){
+                cur.el.style.transform = `translate3d(0,-${cur.height}px,0)`;
+              }
+            })
+          }, 1000)()
+
+        }
+      }
+    })
   }
 }
 export default {
