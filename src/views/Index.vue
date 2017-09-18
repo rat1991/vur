@@ -22,6 +22,7 @@
       return {
         menu: [
           {name:'列表',to:'/cell'},
+          {name:'徽章',to:'/badge'},
           {name:'表单控件',to:'/form'},
           {name:'表单验证',to:'/formValidation'},
           {name:'按钮组件',to:'/button'},
@@ -37,7 +38,8 @@
           {name:'图片懒加载',to:'/lazyload'},
           {name:'数字键盘',to:'/keypad'},
           {name:'滚动固定',to:'/scrollfix'},
-          {name:'反馈页面',to:'/feedback'}
+          {name:'反馈页面',to:'/feedback'},
+          {name:'缺省页',to:'/default'}
         ]
       }
     },

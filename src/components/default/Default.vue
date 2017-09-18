@@ -38,8 +38,12 @@ export default {
     watch: {
     },
     methods: {
-      onLink(url){
-        $.url(url, this.$router)
+      onLink(toVal){
+        if(typeof toVal === 'function'){
+          toVal()
+        }else{
+          $.url(toVal, this.$router)
+        }
       }
     }
 }

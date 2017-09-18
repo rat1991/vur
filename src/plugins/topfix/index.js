@@ -92,7 +92,6 @@ class ScrollFix {
       if(nearTop <= 0){
         cur.onFix && cur.onFix(curEl)
         this.onFix(cur, index)
-        console.log(1, this.bindEl)
       }
     });
     //if(this.fixEl.length === 0) return;
@@ -103,7 +102,6 @@ class ScrollFix {
       let farTop = offsetTop + distance;
       if(farTop >= 0){
         this.unFix(cur)
-        console.log(0, this.fixEl)
       }
     });
   }

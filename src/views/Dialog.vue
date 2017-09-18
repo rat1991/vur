@@ -51,19 +51,21 @@
         this.showDialog = true;
         console.log("show Dialog");
       },
-      onClick(){
+      onClick(vm, next){
        console.log("点击确认")
+       next()
       },
       onAlertPlus(){
-        this.$alert('这是内容','这是标题党', function(){
+        this.$alert('这是内容','这是标题党', ()=>{
           console.log('执行')
         });
       },
       onDialogPlus(){
-        this.$dialog('内容内容', function(){
+        this.$dialog('内容内容', function(vm, next){
           console.log('kkkkkkk');
+          next()
         }, function(){
-          console.log('laiaidas das ');
+          console.log('点击取消');
         });
       }
     }

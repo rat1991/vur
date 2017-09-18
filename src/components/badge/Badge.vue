@@ -28,7 +28,10 @@ export default {
         type: String,
         default: 'md' // md, sm
       },
-      value: Boolean,
+      value: {
+        type: Boolean,
+        default: true
+      },
     },
     data(){
       return {

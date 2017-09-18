@@ -32,6 +32,8 @@
   import ScrollFix from './views/ScrollFix.vue'
   import Feedback from './views/Feedback.vue'
   import Msg from './views/Msg.vue'
+  import Badge from './views/Badge.vue'
+  import Default from './views/Default.vue'
 
   export default {
     name: 'app',
@@ -55,7 +57,9 @@
       Keypad,
       ScrollFix,
       Feedback,
-      Msg
+      Msg,
+      Badge,
+      Default
     },
     data(){
       return {

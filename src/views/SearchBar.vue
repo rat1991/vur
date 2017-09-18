@@ -9,7 +9,7 @@
 <script>
   import Page from '../components/page'
   import UiFooter from '../components/footer'
-  import UiSearch from '../components/searchbar'
+  import {UiSearch} from '../components/searchbar'
   
   export default {
     name: 'searchBar',

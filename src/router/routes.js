@@ -10,6 +10,10 @@ const routes = [{
     name: '列表',
     component: App.components.UiCell
 }, {
+    path: '/badge',
+    name: 'Badge',
+    component: App.components.Badge
+}, {
     path: '/form',
     name: '表单控件',
     component: App.components.UiForm
@@ -77,6 +81,10 @@ const routes = [{
     path: '/feedback/:id',
     name: '反馈页面子',
     component: App.components.Msg
+}, {
+    path: '/default',
+    name: '缺省页',
+    component: App.components.Default
 }];
 
 export default routes;

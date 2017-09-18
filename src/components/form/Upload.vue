@@ -1,6 +1,6 @@
 <template>
   <div class="ui-cell">
-    <div class="ui-cell__bd">label</div>
+    <div class="ui-cell__bd">{{label}}</div>
     <div class="ui-cell__ft">0/{{max}}</div>
     <ul class="ui-upload__files">
       <li class="ui-upload__file" v-for="(img, index) in filesList" :key="index"
@@ -8,7 +8,7 @@
       <progress max="100" value="20"></progress>
       </li>
       <li class="ui-upload__loader icon-addto" v-if="filesList.length < max">
-        <input type="file" accept="image/*" multiple @change="onChange">
+        <input type="file" accept="image/*" multiple=2 @change="onChange">
       </li>
     </ul>
   </div>
@@ -19,6 +19,7 @@
 export default {
   name: "ui-upload",
   props: {
+    label: String,
     max: {
       type: Number,
       default: 8

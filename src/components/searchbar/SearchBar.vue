@@ -1,25 +1,23 @@
 <template>
-    <div class="ui-search" id="searchBar">
-        <form class="ui-search__form" action @submit.prevent="submit">
-            <div class="ui-search__box">
-                <i class="icon-search"></i>
-                <input type="search"
-                class="ui-search__input"
-                id="searchInput"
-                :placeholder="placeholder"
-                v-model="currentVal"
-                ref="input"
-                @focus="isFocus=true"
-                @blur="isFocus=false" required>
-                <a href="javascript:" class="icon-circle-error ui-search__clear" @click="clear"></a>
-            </div>
-            <label class="ui-search__label" for="searchInput" v-show="!isFocus && !currentVal">
-                <i class="icon-search"></i>
-                <span>{{label}}</span>
-            </label>
-        </form>
-        <a class="ui-search__btn-cancel" v-show="isFocus || currentVal" @click="cancel">取消</a>
-    </div>
+<div class="ui-search" id="searchBar">
+    <form class="ui-search__form" action @submit.prevent="submit">
+        <div class="ui-search__box">
+            <i class="icon-search"></i>
+            <input type="search" class="ui-search__input" id="searchInput" 
+            :placeholder="placeholder" 
+            v-model="currentVal" 
+            ref="input" 
+            @focus="isFocus = true" 
+            @blur="isFocus = false" required>
+            <a href="javascript:" class="icon-circle-error ui-search__clear" @click="clear"></a>
+        </div>
+        <label class="ui-search__label" for="searchInput" v-show="!isFocus && !currentVal">
+            <i class="icon-search"></i>
+            <span>{{label}}</span>
+        </label>
+    </form>
+    <a class="ui-search__btn-cancel" v-show="isFocus || currentVal" @click="cancel">取消</a>
+</div>
 </template>
 <style lang="sass">
   @import "./Searchbar";
@@ -39,7 +37,7 @@ export default {
         },
         focus: Boolean
     },
-    data () {
+    data() {
         return {
             currentVal: "",
             isFocus: false
@@ -48,10 +46,10 @@ export default {
     created() {
         this.currentVal = this.value;
     },
-    mounted(){
-      if(this.focus){
-        this.$refs.input.focus();
-      }
+    mounted() {
+        if (this.focus) {
+            this.$refs.input.focus();
+        }
     },
     watch: {
         currentVal(newVal) {
@@ -69,8 +67,8 @@ export default {
             this.currentVal = '';
             this.isFocus = false;
         },
-        submit(event){
-            this.$emit('submit',this.currentVal);
+        submit(event) {
+            this.$emit('submit', this.currentVal);
         }
     }
 }

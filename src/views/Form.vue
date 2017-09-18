@@ -1,8 +1,9 @@
 <template>
   <page current>
     <ui-cells title="输入框">
-        <ui-input label="手机类型" type="phone" v-model="text"></ui-input>
-        <ui-input label="邮箱" type="email" v-model="text"></ui-input>
+        <ui-input label="手机类型" type="phone"></ui-input>
+        <ui-input label="邮箱" type="email"></ui-input>
+        <ui-input label="数字键盘" type="keypad"></ui-input>
         <ui-input label="普通(带清除)" v-model="text" clear></ui-input>
         <ui-cell>{{text}}</ui-cell>
     </ui-cells>
@@ -44,6 +45,7 @@
         v-model="selected"></ui-select>
       <ui-cell>{{selected}}</ui-cell>  
     </ui-cells>
+    <ui-upload></ui-upload>
   </page>
 </template>
 
@@ -51,7 +53,7 @@
 <script>
   import Page from '../components/page'
   import {UiCells,UiCell} from '../components/cell'
-  import {UiInput,UiCheckbox,UiRadio,UiTextarea,UiSwitch,UiSelect} from '../components/form'
+  import {UiInput,UiCheckbox,UiRadio,UiTextarea,UiSwitch,UiSelect,UiUpload} from '../components/form'
 
   export default {
     components:{
@@ -63,7 +65,8 @@
       UiRadio,
       UiSwitch,
       UiSelect,
-      UiTextarea
+      UiTextarea,
+      UiUpload
     },
     data () {
       return {
@@ -71,11 +74,11 @@
         textarea: '',
         checkItem: [],
         checkRadio: '',
-        switchItem: '',
+        switchItem: false,
         selectItem: [
-          { text: 'One', value: 'A' },
-          { text: 'Two', value: 'B' },
-          { text: 'Three', value: 'C' }
+          { label: 'One', value: 'A' },
+          { label: 'Two', value: 'B' },
+          { label: 'Three', value: 'C' }
         ],
         selected: ''
       }
@@ -83,7 +86,7 @@
     created() {
       this.checkList = [
         {
-          label: '选项01',
+          label: '选项01（禁用）',
           value: 'checked01',
           checked: false,
           disabled: true

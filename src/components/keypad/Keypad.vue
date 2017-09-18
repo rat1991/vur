@@ -71,7 +71,7 @@ export default {
       })
     },
     beforeDestroy(){
-        document.body.removeChild(this.$mask.$el);
+        this.$el.parentNode.removeChild(this.$mask.$el);
         this.$mask.$destroy();
         document.body.removeChild(this.$toptips.$el);
         this.$toptips.$destroy();

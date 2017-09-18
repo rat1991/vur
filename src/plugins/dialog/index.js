@@ -7,21 +7,16 @@ export default {
     //定义DIAKOG 函数
     function Dialog (opt, type){
       $vm = new VM().$mount()
-      this.wrapper = document.querySelector('.container')
-      this.wrapper.appendChild($vm.$el)
+      this.container = document.querySelector('.container')
+      this.container.appendChild($vm.$el)
       //destroy watcher
       unwatch && unwatch()
       $vm.type = type && type
-      if(typeof opt === 'string'){
-        $vm.text = opt
-      }else if(typeof opt === 'object'){
+      if(opt.constructor === Object){
         for(let i in opt){
           if(i === "onConfirm" || i === "onCancel") continue;
           $vm[i] = opt[i]
         }
-      }
-      $vm.destroyVm = ()=>{
-        this.wrapper.removeChild($vm.$el)
       }
       unwatch = $vm.$watch("state", (newVal) =>{
         if(typeof opt === 'object' && (opt.onShow || opt.onHide)){
@@ -29,11 +24,15 @@ export default {
           !newVal && opt.onHide && opt.onHide($vm)
         }
       })
-      $vm.$on('on-confirm', () => {
-        opt && opt.onConfirm && opt.onConfirm()
+      $vm.$on('on-confirm', (vm, next) => {
+        opt && opt.onConfirm && opt.onConfirm(vm, next)
       })
       $vm.$on('on-cancel', () => {
         opt && opt.onCancel && opt.onCancel()
+      })
+      $vm.$on('after-leave', () => {
+        $vm.$destroy()
+        this.container.removeChild($vm.$el)
       })
       this.show()
     }
@@ -46,44 +45,46 @@ export default {
         $vm.state = false
       }
     }
-    
+
     //定义插件
     if (!vue.$dialog) {
-      vue.prototype.$dialog = function(opt){
-        new Dialog(opt, 'dialog');
+      vue.prototype.$dialog = function(){
+        let param = {};
+        if(arguments[0].constructor === Object){
+          param = arguments[0]
+        }else if(typeof arguments[0] === 'string'){
+          param.text = arguments[0]
+        }
         if(typeof arguments[1] === 'string'){
-          $vm.title = arguments[1]
+          param.title = arguments[1]
         }else if(typeof arguments[1] === 'function'){
-          $vm.$on('on-confirm', () => {
-            arguments[1]()
-          })
+          param.onConfirm = arguments[1]
         }
         if(typeof arguments[1] === 'string' && typeof arguments[2] === 'function'){
-          $vm.$on('on-confirm', () => {
-            arguments[2]()
-          })
+          param.onConfirm = arguments[2]
         }else if(typeof arguments[1] === 'function' && typeof arguments[2] === 'function'){
-          $vm.$on('on-cancel', () => {
-            arguments[2]()
-          })
+          param.onCancel = arguments[2]
         }
+        new Dialog(param, 'dialog');
       }
     }
     if (!vue.$alert) {
-      vue.prototype.$alert = function(opt){
-        new Dialog(opt, 'alert');
-        if(typeof arguments[1] === 'string'){
-          $vm.title = arguments[1]
-          if(typeof arguments[2] === 'function'){
-            $vm.$on('on-confirm', () => {
-              arguments[2]()
-            })
-          }
-        }else if(typeof arguments[1] === 'function'){
-          $vm.$on('on-confirm', () => {
-            arguments[1]()
-          })
+      vue.prototype.$alert = function(){
+        let param = {};
+        if(arguments[0].constructor === Object){
+          param = arguments[0]
+        }else if(typeof arguments[0] === 'string'){
+          param.text = arguments[0]
         }
+        if(typeof arguments[1] === 'string'){
+          param.title = arguments[1]
+        }else if(typeof arguments[1] === 'function'){
+          param.onConfirm = arguments[1]
+        }
+        if(typeof arguments[1] === 'string' && typeof arguments[2] === 'function'){
+          param.onConfirm = arguments[2]
+        }
+        new Dialog(param, 'alert');
       }
     }
   }

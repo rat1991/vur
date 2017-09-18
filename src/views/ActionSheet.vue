@@ -56,7 +56,6 @@
       },
       onActionSheet(){
         this.$actionsheet({
-          maskClose: true,
           onMask(){
             console.log("click mask")
           },
@@ -66,8 +65,7 @@
               onClick(){
                 alert("成功了")
               }
-            },
-            {
+            },{
               text: "插件装置",
               onClick(){
                 alert("已卸载")
@@ -79,20 +77,27 @@
       onActionSheetb(){
         this.$actionsheet({
           maskClose: true,
+          title: '设置标题',
+          text: '点击mark可返回',
           onMask(){
             console.log("click mask")
           },
           menus: [
             {
-              text: "打击",
-              onClick(){
-                alert("成功打击")
-              }
-            },
-            {
-              text: "死了",
-              onClick(){
-                alert("已死了")
+              text: "删除此条目？",
+              onClick: ()=>{
+                this.$actionsheet({
+                  text: '确认删除？',
+                  menus: [
+                    {
+                      text: "删除",
+                      className: 'text-danger',
+                      onClick(){
+                        alert('删除了')
+                      }
+                    }
+                  ]
+                })
               }
             }
           ]

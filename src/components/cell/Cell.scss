@@ -16,12 +16,14 @@ $cellElGap: torem(20px);
   line-height: 0;
   background-color: #fff;
   @extend %borderVertical;
+  &::after{
+    z-index: 1;
+  }
   &+& {
     margin-top: $gap-20;
   }
   &__title {
     display: flex;
-    margin: 2px 0;
     font-size: $text-14;
     line-height: 1;
     color: #888888;
@@ -69,6 +71,31 @@ $cellElGap: torem(20px);
     &:after {
       left: $gapSides;
     }
+  }
+  &_swipe{
+     padding: 0;
+     >.ui-cell__bd{
+       position: relative;
+       background-color: $white;
+       z-index: 1;
+     }
+     >.ui-cell__ft{
+       position: absolute;
+       top: 0;
+       right: 0;
+       bottom: 0;
+       display: flex;
+       align-items: center;
+       margin-left: 0;
+     }
+     &__btn{
+       display: block;
+       min-height: $cellHeight;
+       line-height: $cellHeight;
+       padding: 0 $gapSides;
+       background-color: $danger;
+     } 
+
   }
   &_dropdown{
     padding: 0;

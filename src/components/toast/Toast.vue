@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" @after-leave="destroyVm">
-    <div :class="['ui-toast', {'ui-toast_text': this.type === 'text'}]" v-if="state">
+    <div :class="['ui-toast', this.type === 'text' && 'ui-toast_text']" v-if="state">
       <i :class="['ui-toast__icon', toastIcon]" v-if="this.type !== 'loading'"></i>
       <ui-loading class="ui-toast__icon" v-if="this.type === 'loading'"></ui-loading>
       <p class="ui-toast__text">{{type !== 'loading' ? text : loadingText}}<slot></slot></p>
@@ -36,7 +36,11 @@ export default {
         },
         duration: {
           type: Number,
-          default: 2600
+          default: 2000
+        },
+        position: {
+          type: String,
+          default: 'center' // center, top
         }
     },
     data () {
@@ -60,8 +64,9 @@ export default {
     mounted(){
       //this.$el.parentNode.insertBefore($mask.$el, this.$el);
     },
-    destroyed(){
-      console.log('toast 实例销毁');
+    beforeDestroy(){
+      this.$el.parentNode.removeChild(this.$mask.$el)
+      this.$mask.$destroy()
     },
     computed: {
         toastIcon(){

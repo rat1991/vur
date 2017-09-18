@@ -81,6 +81,9 @@ export default {
     },
     onConfirm() {
       this.$emit('on-confirm', this, this.next)
+      if(this.type === 'alert'){
+        this.state = false;
+      }
     },
     onCancel() {
       this.state = false

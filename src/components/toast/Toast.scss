@@ -33,7 +33,7 @@ $toastLoadingIconSize: torem(88px);
     &_text{
       width: auto;
       max-width: 80%;
-      min-height: inherit;
+      min-height: auto;
       padding: torem(20px) 0;
       >.ui-toast__icon{
           display: none;
