@@ -1,0 +1,36 @@
+@charset "UTF-8";
+@import "../../style/common";
+// TAG VARIABLES
+// ------------------------------------------->
+$tagHight: torem(48px);
+// TAG COMPONENT
+// ============================================>
+.ui-tag{
+    margin: 0 0 $gap-10 0;
+    clear: both;
+    &__title{
+      padding-bottom: $gap-15;
+      font-size: $text-12;
+      color: $grayLight;
+    }
+    &__item{
+      float: left;
+      padding: 0 $gapSides;
+      margin-right: $gap-20;
+      margin-bottom: $gap-30;
+      height: $tagHight;
+      line-height: $tagHight;
+      font-size: $text-14;
+      @extend %border;
+      &:after{
+        border-radius: $tagHight;
+      }
+      &.active{
+        color: $primary;
+        &:after{
+          border-color: $primary;
+          border-radius: $tagHight;
+        }
+      }
+    }
+  }

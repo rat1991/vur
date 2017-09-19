@@ -36,7 +36,7 @@
         {label:'删除', to: onSwipe, type: 'danger'}
       ]">
       <span slot="bd">swipeCell</span>
-      <span slot="ft">2018-02-15</span>
+      <span slot="ft"><<试试左滑动</span>
       </ui-cell>
     </ui-cells>
   </page>

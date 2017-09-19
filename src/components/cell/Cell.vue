@@ -81,6 +81,7 @@
     data(){
       return {
         dropdownState: this.value,
+        isTransform: false
       }
     },
     computed: {
@@ -150,7 +151,7 @@
           };
           endTime = e.timeStamp;
           endX = e.changedTouches[0].pageX
-          cellEl.style.transition = 'all .4s ease-out'
+          cellEl.style.transition = 'all .4s cubic-bezier(.17,.84,.44,1)'
           if(endTime - startTime < 120 && startX - endX > 20 || startX - endX > maxX){
             setTranslateX(cellEl, -maxX)
             isTransform = true

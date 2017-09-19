@@ -86,7 +86,6 @@ class LazyLoad {
 
 export default {
   install (vue, options = {}){
-    options.loadImg = '//img.lanrentuku.com/img/allimg/1212/5-121204194035-50.gif'
     let lazyLoad = new LazyLoad(options);
     vue.directive('lazy', {
       bind (el, binding, vnode, oldVnode) {
