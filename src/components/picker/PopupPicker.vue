@@ -2,8 +2,8 @@
   <div class="ui-cell-picker">
     <ui-cell access  @click.native="onShowPicker">
       <span slot="hd">{{label}}</span>
-      <p :class="['text-' + textAlign]" v-if="showVal">{{showVal}}</p>
-      <p :class="['text-' + textAlign, 'text-light']" v-else>{{placeholder}}</p>
+      <p slot="bd" :class="['text-' + textAlign]" v-if="showVal">{{showVal}}</p>
+      <p slot="bd" :class="['text-' + textAlign, 'text-light']" v-else>{{placeholder}}</p>
     </ui-cell>
     <transition name="fade">
       <ui-mask :show="state" @click.native="onMask"></ui-mask>

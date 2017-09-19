@@ -93,7 +93,8 @@ $cellElGap: torem(20px);
        min-height: $cellHeight;
        line-height: $cellHeight;
        padding: 0 $gapSides;
-       background-color: $danger;
+       color: $white;
+       background-color: $grayLighter;
      } 
 
   }

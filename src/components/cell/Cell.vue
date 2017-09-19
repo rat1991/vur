@@ -56,7 +56,7 @@
       </section>
     </div>
     <div class="ui-cell__ft" v-if="swipe" ref="swiperMenu">
-      <div class="ui-cell_swipe__btn" v-for="(item, index) in swipe" :key="index" @click="onSwiperMenu(item.to)">{{item.label}}</div>
+      <div :class="['ui-cell_swipe__btn', item.type && `bg-${item.type}`]" v-for="(item, index) in swipe" :key="index" @click="onSwiperMenu(item.to)">{{item.label}}</div>
     </div>
   </section>
 </template>
@@ -151,7 +151,7 @@
           endTime = e.timeStamp;
           endX = e.changedTouches[0].pageX
           cellEl.style.transition = 'all .4s ease-out'
-          if(endTime - startTime < 120 || startX - endX > maxX){
+          if(endTime - startTime < 120 && startX - endX > 20 || startX - endX > maxX){
             setTranslateX(cellEl, -maxX)
             isTransform = true
           }else{

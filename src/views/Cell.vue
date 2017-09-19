@@ -3,7 +3,7 @@
     <ui-cells title="列表带标题" :link="{label:'导航链接', to: titleLink}">
       <ui-cell>
       <span slot="hd">头部</span>
-      cell
+      <span slot="bd">中部</span>
       <span slot="ft">尾部</span>
       </ui-cell>
       <ui-cell access>
@@ -32,10 +32,10 @@
     </ui-cells>
     <ui-cells>
       <ui-cell :swipe="[
-        {label:'删除', to: onSwipe},
-        {label:'取消关注'}
+        {label:'取消关注', to: onSwipe},
+        {label:'删除', to: onSwipe, type: 'danger'}
       ]">
-      <span slot="bd">swipe</span>
+      <span slot="bd">swipeCell</span>
       <span slot="ft">2018-02-15</span>
       </ui-cell>
     </ui-cells>
