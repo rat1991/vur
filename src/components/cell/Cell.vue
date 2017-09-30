@@ -1,8 +1,8 @@
 <template>
   <section :class="[
-    'ui-cell', {'ui-cell_access': access || to}, 
-    dropdown && 'ui-cell_dropdown', 
-    dropdownState && 'open', 
+    'ui-cell', {'ui-cell_access': access || to},
+    dropdown && 'ui-cell_dropdown',
+    dropdownState && 'open',
     swipe && 'ui-cell_swipe']"
    @click="onClick">
     <slot></slot>
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-  import $ from '../../libs/utils.js';
+  import $ from '@/libs/utils.js';
   export default {
     name: 'ui-cell',
     props: {
@@ -158,7 +158,7 @@
           }else{
             setTranslateX(cellEl, 0)
           }
-          
+
         })
       },
       onDropdown(){

@@ -32,7 +32,7 @@ $cellElGap: torem(20px);
       position: -webkit-sticky;
       position: fixed;
       background-color: $bgBody;
-      z-index: $lv1;
+      z-index: $lv2;
       @extend %borderBottom;
     }
     >.content{
@@ -65,7 +65,6 @@ $cellElGap: torem(20px);
   padding: $cellGapV $cellGapH;
   font-size: $cellFontSize;
   line-height: $cellLineHeight;
-  overflow: hidden;
   &:not(:first-child) {
     @extend %borderTop;
     &:after {
@@ -95,7 +94,7 @@ $cellElGap: torem(20px);
        padding: 0 $gapSides;
        color: $white;
        background-color: $grayLighter;
-     } 
+     }
 
   }
   &_dropdown{

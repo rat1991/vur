@@ -30,22 +30,24 @@
     <ui-cells title="多行文本（高度自适应）">
       <ui-textarea v-model="textarea" autoheight placeholder="高度自适应"></ui-textarea>
     </ui-cells>
+    <ui-cells>
+      <ui-upload label="文件上传（长按拖动删除）"></ui-upload>
+    </ui-cells>
     <ui-cells title="开关">
-        <ui-switch 
-        :label="switchDate.label"     
+        <ui-switch
+        :label="switchDate.label"
         :disabled="switchDate.disabled"
         :value="switchDate.value"
         v-model="switchItem"></ui-switch>
         <ui-cell>{{switchItem}}</ui-cell>
     </ui-cells>
     <ui-cells title="选择">
-      <ui-select label="付款" 
-        placeholder="请选择" 
+      <ui-select label="付款"
+        placeholder="请选择"
         :options="selectItem"
         v-model="selected"></ui-select>
-      <ui-cell>{{selected}}</ui-cell>  
+      <ui-cell>{{selected}}</ui-cell>
     </ui-cells>
-    <ui-upload></ui-upload>
   </page>
 </template>
 
@@ -58,7 +60,7 @@
   export default {
     components:{
       Page,
-      UiInput,    
+      UiInput,
       UiCells,
       UiCell,
       UiCheckbox,

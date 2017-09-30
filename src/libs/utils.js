@@ -8,7 +8,9 @@ Object.assign($, {
    * 获取设备系统信息
    * @return {Object} 设备对象信息
    */
-  device: ua.device,
+  device(){
+    return ua.device()
+  },
   /**
    * 设置localStorage缓存
    * @return {Object} 获取或设置localStorage的对象方法
@@ -97,7 +99,20 @@ Object.assign($, {
 });
 
 Object.assign($.fn, {
-
+  transitionEnd(callback){
+    let events = ['webkitTransitionEnd', 'transitionend'];
+    let dom = this;
+    function fireCallBack(e, eventName) {
+      if(e.target !== this) return;
+      callback.call(this, e)
+      for(let i of events){
+        dom[0].removeEventListener(i, fireCallBack)
+      }
+    }
+    for(let i of events){
+      dom[0].addEventListener(i, fireCallBack)
+    }
+  },
   //  只能是一个 HTMLElement 元素或者 HTMLElement 数组，不支持字符串
   //  @param {Element|Element[]} $child
   //  @returns {append}

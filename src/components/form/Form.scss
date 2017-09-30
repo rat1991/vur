@@ -183,24 +183,58 @@ $switchHeight: 30px;
         position: relative;
         width: $iconSize * 2;
         height: $iconSize * 2;
-        background-size: cover;
-        background-position: center;
-        @extend %border;
-        >progress{
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            height: 4px;
-            border: none;
-            background-color: rgba($black,.2);
-            z-index: 2;
-            &::-webkit-progress-bar{
-              background-color: rgba($black,.2);
+        >.preview{
+            position: relative;
+            width: $iconSize * 2;
+            height: $iconSize * 2;
+            background-size: cover;
+            background-position: center;
+            @extend %border;
+            &_drag{
+                position: absolute;
+                width: $iconSize * 2;
+                height: $iconSize * 2;
+                transform: scale3d(1.1,1.1,1);
+                transition: all .3s ease;
+                opacity: .8;
+                z-index: $lv1;
             }
-            &::-webkit-progress-value{
-              background-color: $primary;
+            >progress{
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 4px;
+                border: none;
+                background-color: rgba($black,.2);
+                z-index: 0;
+                &::-webkit-progress-bar{
+                  background-color: rgba($black,.2);
+                }
+                &::-webkit-progress-value{
+                  background-color: $primary;
+                }
             }
+        }
+    }
+    &__del{
+        position: -webkit-sticky;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        padding: torem(14px) 0;
+        color: $white;
+        text-align: center;
+        background-color: rgba($danger, .94);
+        transform: translate3d(0, 100%, 0);
+        transition: transform .3s ease-out;
+        z-index: $lv3;
+        &.active{
+            transform: translate3d(0, 0, 0);
+        }
+        &.mixe{
+            background-color: rgba(#D53F3C, .96);
         }
     }
     &__loader{

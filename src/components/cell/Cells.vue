@@ -11,7 +11,9 @@ export default {
   name: 'ui-cells',
   props: {
     className: [String, Object, Array],
-    align: Boolean,
+    align: {
+      type: String
+    },
     title: String,
     link: Object
   },
@@ -50,7 +52,7 @@ export default {
           }
         }
         hdArry.forEach(cur=>{
-          cur.style.width = `${max + 1}px`
+          cur.style.cssText += `; width: ${max + 2}px; text-align:${this.align}`
         })
       }
     }

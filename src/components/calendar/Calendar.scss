@@ -94,10 +94,15 @@ $currentSize: torem(60px);
     right: 0;
     display: flex;
     flex-wrap: wrap;
-    padding: torem(20px) 0;
+    padding: torem(30px) 0 0 0;
     background-color: $white;
-    z-index: 3;
+    transform: translate3d(0, -100%, 0);
+    transition: transform .3s ease-out;
+    z-index: 2;
     @extend %borderTop;
+    &.open{
+      transform: translate3d(0, 0, 0);
+    }
     >li{
       display: flex;
       align-items: center;

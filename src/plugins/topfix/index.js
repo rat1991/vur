@@ -16,7 +16,7 @@ class ScrollFix {
     this.bindEl = []
     this.fixEl = []
     //绑定事件
-    this.scrollEvent = $.debounce(this.onScroll, 10)
+    this.scrollEvent = $.debounce(this.onScroll, 0)
     this.scroller.addEventListener('scroll', this.scrollEvent.bind(this), false);
   }
   /**
@@ -50,8 +50,7 @@ class ScrollFix {
     stuffEl.style.height = `${cur.height}px`
     cur.el.parentNode.insertBefore(stuffEl, cur.el.nextSibling)
     cur.el.classList.add(cur.className);
-    cur.el.style.width = `${cur.width}px`
-    cur.el.style.top = `${cur.distance}px`
+    cur.el.style.cssText += `; width: ${cur.width}px; top: ${cur.distance}px`;
 
     //定义onfix 信息对象
     Object.assign(cur, {
@@ -74,7 +73,7 @@ class ScrollFix {
     if(cur.index !== topObj.index && nearTop <= topObj.height){
       let daff = nearTop <= 0 ? -topObj.height : nearTop - topObj.height;
       topObj.el.style.transition = ''
-      topObj.el.style.transform =`translate3d(0, ${daff}px, 0)`
+      topObj.el.style.transform = `translate3d(0, ${daff}px, 0)`
     }else if(index === 0 && nearTop > topObj.height){
       topObj.el.style.transition = 'all .2s ease'
       topObj.el.style.transform =''
@@ -87,8 +86,8 @@ class ScrollFix {
           offsetTop = cur.el.getBoundingClientRect().top,
           distance = cur.distance;
       let nearTop = offsetTop - distance;
-      $.throttle(this.fixTransform, 100).call(this, cur, nearTop, index)
-      
+      $.throttle(this.fixTransform, 10).call(this, cur, nearTop, index)
+
       if(nearTop <= 0){
         cur.onFix && cur.onFix(curEl)
         this.onFix(cur, index)

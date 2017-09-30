@@ -18,7 +18,7 @@
       </section>
     </div>
     <div class="ui-calendar__bd">
-      <ul class="ui-calendar__monthslist" v-show="switchMonthState">
+      <ul :class="['ui-calendar__monthslist', switchMonthState && 'open']">
         <li v-for="(item, index) in monthsText" :key="index"
         :class="[index + 1 === curMonth && 'current' ]"
         @click="updateMonthList(index)">{{item}}</li>
@@ -27,7 +27,7 @@
         <span v-for="(item, index) in weeksText" :key="index">{{item}}</span>
       </div>
       <div class="ui-calendar__inner" ref="swiperContainer">
-        <section 
+        <section
         v-for="(month, index) in curData" :key="index"
         class="ui-calendar__months"
         :data-month="month.name"
@@ -39,7 +39,7 @@
               formatStr(day.value) ===  formatStr(todayValue) && 'today',
               day.value[1] !== formatArr(month.name)[1] && 'exclude',
               day.disable && 'disabled'
-              ]" 
+              ]"
               @click.stop="updateCurDay(day)">
               <span>{{day.value[2]}}</span>
             </li>

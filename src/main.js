@@ -17,6 +17,7 @@ import Lazyload from './plugins/lazyload'
 import TopFix from './plugins/topfix'
 import Wechat from './plugins/wechat'
 import Validator from './plugins/validator'
+import Dragdrop from './plugins/dragdrop'
 Vue.use(Validator);
 Vue.use(Toast);
 Vue.use(Dialog);
@@ -29,9 +30,7 @@ Vue.use(Lazyload, {
     effectFadeIn: true
 });
 Vue.use(TopFix);
-Vue.use(Wechat, {
-    debug: false
-});
+Vue.use(Dragdrop);
 
 //Vue默认配置
 Vue.config.productionTip = false;
