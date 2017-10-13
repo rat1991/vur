@@ -1,8 +1,8 @@
 <template>
   <div class="ui-swiper" :style="{height: `${height}px`}">
-    <div class="ui-swiper__wrapper">
-      <section 
-      class="ui-swiper__item" 
+    <div class="ui-swiper__wrapper" ref="wrapper">
+      <section
+      class="ui-swiper__item"
       v-for="(item, index) in list" :key="index"
       :style="{backgroundImage: `url(${item})`}">
         <slot :name="index"></slot>
@@ -29,13 +29,13 @@ export default {
     },
     data (){
       return {
-        active: null
+        active: undefined
       }
     },
     mounted(){
       var _self = this;
       new Swiper({
-        container: '.ui-swiper__wrapper',
+        containerEl: this.$refs.wrapper,
         item: '.ui-swiper__item',
         direction: _self.direction,
         threshold: 80,

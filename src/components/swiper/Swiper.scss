@@ -6,13 +6,14 @@
 // SWIPER COMPONENT
 // ============================================>
 .ui-swiper{
+  position: relative;
   height: 100%;
   overflow: hidden;
   &__wrapper{
     height: 100%;
   }
   &__item{
-    position: relative;
+    position: absolute;
     float: left;
     height: 100%;
     background-position: center center;

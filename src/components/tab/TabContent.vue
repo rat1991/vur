@@ -1,5 +1,5 @@
 <template>
-  <div :class="['ui-tab__content', swiper && 'swiper']">
+  <div :class="['ui-tab__content', swiper && 'swiper']" ref="tabContent">
     <section
     :class="['ui-tab__item', current === index && 'ui-tab__item-active']"
     v-for="(item, index) in navbar" :key="index">
@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import Swiper from '../swiper/swiper.js'
+import Swiper from './swiper'
 export default {
     name: "ui-tab-content",
     props: {
@@ -21,36 +21,49 @@ export default {
     },
     data (){
       return {
-        current: null
+        current: this.value
       }
+    },
+    computed:{
     },
     created (){
-      this.current = this.value
     },
     mounted(){
+      let _self = this;
+      this.setMinHeight();
       if(this.swiper){
-        this.tabSwiper = new Swiper({
-          container: '.ui-tab__content',
+        this.swiperItem = new Swiper({
+          containerEl: this.$refs.tabContent,
           item: '.ui-tab__item',
-          direction: 'horizontal',
-          activeClass: 'ui-tab__item-active',
-          threshold: 100
+          isScroll: true,
+          afterSwipe(event, index){
+            _self.current = index
+          }
         });
-        this.tabSwiper.on('swiped', (prev, current)=>{
-          this.current = current
-        }, false);
-      }
+      };
     },
     watch: {
       value(newVal){
         this.current = newVal
-        if(this.swiper) this.tabSwiper.go(newVal);
       },
       current(newVal){
+        this.swiperItem.go(newVal);
         this.$emit('input', newVal);
       }
     },
     methods: {
+      setMinHeight(){
+        let contentEl = this.$refs.tabContent;
+        let contentOffset = contentEl.getBoundingClientRect().top;
+        contentEl.style.minHeight = `${document.documentElement.clientHeight - contentOffset}px`
+      },
+      setSwiper(){
+        if(!this.swiper) return;
+        return new Swiper({
+          containerEl: this.$refs.tabContent,
+          item: '.ui-tab__item'
+        })
+      }
     }
 }
 </script>

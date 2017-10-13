@@ -1,6 +1,5 @@
 <template>
-  <div :class="['page', current && 'page-current']"
-  :style="{minHeight: `${clientHeight}px`}">
+  <div :class="['page', current && 'page-current']">
     <slot></slot>
   </div>
 </template>

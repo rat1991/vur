@@ -40,24 +40,16 @@ class Swiper {
   init(){
     let _width = this._width;
     let _height = this._height;
-    console.log(this._width, this._height)
     if(this._options.direction === 'horizontal'){
       this.$container.style.width = `${_width * this.count}px`
       Array.prototype.forEach.call(this.$items, ($item, index)=>{
         $item.style.width = `${_width}px`
         $item.style.left = `${_width * index}px`
-        if(!this._options.isScroll) {
-          $item.style.height = `${_height}px`
-        }
       })
     }else{
       this.$container.style.height = `${_height * this.count}px`
-      Array.prototype.forEach.call(this.$items, ($item, index)=>{
+      Array.prototype.forEach.call(this.$items, $item=>{
         $item.style.height = `${_height}px`
-        $item.style.top = `${_height * index}px`
-        if(!this._options.isScroll) {
-          $item.style.width = `${_width}px`
-        }
       })
     }
   }
@@ -85,26 +77,24 @@ class Swiper {
       offsetY = this._move.y - this._start.y
       let transform, isScroll;
       if(this._options.direction === 'horizontal'){
+        // if(this._current === 0 || this._current + 1 === this.count){
+        //   offsetX = offsetX / 4
+        // }
         isScroll = Math.abs(offsetY) - Math.abs(offsetX);
-        if(this._current === 0 && offsetX > 0 || this._current + 1 === this.count && offsetX < 0){
-          offsetX = offsetX / 4
-        }
         transform = `translate3d(${offsetX - this._offset}px, 0, 0)`
       }else{
-        if(this._current === 0 && offsetY > 0 || this._current + 1 === this.count && offsetY < 0){
-          offsetY = offsetY / 4
-          console.log("okok")
-        }
+        // if(this._current === 0 || this._current + 1 === this.count){
+        //   offsetY = offsetY / 4
+        // }
         transform = `translate3d(0, ${offsetY - this._offset}px, 0)`
       }
-
       if(this._options.isScroll){
         isScroll < 0 && e.preventDefault();
-      }else{
-        this.$container.style['-webkit-transform'] = transform;
-        this.$container.style.transform = transform;
-        e.preventDefault();
-      }
+        return
+      };
+      this.$container.style['-webkit-transform'] = transform;
+      this.$container.style.transform = transform;
+      e.preventDefault();
 
     }, false)
 

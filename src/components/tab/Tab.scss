@@ -31,12 +31,20 @@ $tabNavbarHeight:   torem(88px);
     transition: all .3s cubic-bezier(0.35, 0, 0.25, 1);
   }
   &__content{
-    min-height: calc(100% - #{$tabNavbarHeight});
+    min-height: calc(100vh - #{$tabNavbarHeight});
     &.swiper{
-      display: flex;
+      position: relative;
       >.ui-tab__item{
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
         display: block;
-        flex: 1;
+        overflow: hidden;
+        &-active{
+          position: relative;
+        }
       }
     }
   }
